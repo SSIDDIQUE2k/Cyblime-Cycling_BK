@@ -1,1 +1,1 @@
-web: bash -lc "./entrypoint.sh"
+web: bash -lc "bash entrypoint.sh"
