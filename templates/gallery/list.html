@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+
+{% block title %}Gallery - Cyblime Cycling Club{% endblock %}
+
+{% block content %}
+<div class="bg-white py-8">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">Photo Gallery</h1>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Capturing the spirit of cycling in Brooklyn - our rides, events, and community moments.
+            </p>
+            {% if user.is_staff %}
+                <div class="mt-6">
+                    <a href="{% url 'gallery:upload' %}" class="bg-cyblime-green hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition">
+                        <i class="fas fa-plus mr-2"></i>
+                        Upload New Photo
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Gallery Grid -->
+        {% if photos %}
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {% for photo in photos %}
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:scale-105 group">
+                        <!-- Photo -->
+                        <div class="relative overflow-hidden cursor-pointer" onclick="openModal('{{ photo.image.url }}', '{{ photo.title|escapejs }}', '{{ photo.description|escapejs }}', '{{ photo.uploaded_by.username }}', '{{ photo.uploaded_at|date:"F d, Y" }}')">
+                            <img src="{{ photo.image.url }}" alt="{{ photo.title }}" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300">
+                            
+                            <!-- Overlay -->
+                            <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
+                                <i class="fas fa-expand text-white text-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></i>
+                            </div>
+                        </div>
+                        
+                        <!-- Photo Info -->
+                        <div class="p-4">
+                            <h3 class="font-bold text-gray-800 mb-2 truncate">{{ photo.title }}</h3>
+                            
+                            {% if photo.description %}
+                                <p class="text-gray-600 text-sm mb-3 line-clamp-2">{{ photo.description|truncatewords:10 }}</p>
+                            {% endif %}
+                            
+                            <div class="flex items-center justify-between text-sm text-gray-500">
+                                <div class="flex items-center">
+                                    {% if photo.uploaded_by.profile_picture %}
+                                        <img src="{{ photo.uploaded_by.profile_picture.url }}" alt="{{ photo.uploaded_by.username }}" class="w-6 h-6 rounded-full mr-2">
+                                    {% else %}
+                                        <div class="w-6 h-6 bg-cyblime-blue text-white rounded-full flex items-center justify-center mr-2 text-xs">
+                                            <i class="fas fa-user"></i>
+                                        </div>
+                                    {% endif %}
+                                    <span>{{ photo.uploaded_by.username }}</span>
+                                </div>
+                                
+                                <span>{{ photo.uploaded_at|date:"M d, Y" }}</span>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Pagination -->
+            {% if is_paginated %}
+                <div class="flex justify-center mt-12">
+                    <nav class="flex space-x-2">
+                        {% if page_obj.has_previous %}
+                            <a href="?page=1" class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">First</a>
+                            <a href="?page={{ page_obj.previous_page_number }}" class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">Previous</a>
+                        {% endif %}
+                        
+                        <span class="px-4 py-2 bg-cyblime-blue text-white rounded-lg">
+                            {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                        </span>
+                        
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}" class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">Next</a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}" class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">Last</a>
+                        {% endif %}
+                    </nav>
+                </div>
+            {% endif %}
+        {% else %}
+            <!-- Empty State -->
+            <div class="text-center py-16">
+                <div class="mb-6">
+                    <i class="fas fa-camera text-6xl text-gray-300"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">No photos yet</h3>
+                <p class="text-gray-600 mb-8">Share the beauty of cycling with our community by uploading photos!</p>
+                {% if user.is_staff %}
+                    <a href="{% url 'gallery:upload' %}" class="bg-cyblime-green hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition">
+                        <i class="fas fa-plus mr-2"></i>
+                        Upload First Photo
+                    </a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Photo Modal -->
+<div id="photo-modal" class="fixed inset-0 bg-black bg-opacity-90 z-50 hidden flex items-center justify-center p-4">
+    <div class="max-w-4xl w-full max-h-full overflow-auto">
+        <!-- Close Button -->
+        <button onclick="closeModal()" class="absolute top-4 right-4 text-white hover:text-gray-300 text-3xl z-10">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <!-- Modal Content -->
+        <div class="bg-white rounded-lg overflow-hidden">
+            <img id="modal-image" src="" alt="" class="w-full h-auto max-h-96 object-contain">
+            
+            <div class="p-6">
+                <h3 id="modal-title" class="text-2xl font-bold text-gray-800 mb-2"></h3>
+                <p id="modal-description" class="text-gray-600 mb-4"></p>
+                
+                <div class="flex items-center justify-between text-sm text-gray-500">
+                    <span id="modal-photographer"></span>
+                    <span id="modal-date"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+function openModal(imageUrl, title, description, photographer, date) {
+    document.getElementById('modal-image').src = imageUrl;
+    document.getElementById('modal-title').textContent = title;
+    document.getElementById('modal-description').textContent = description || 'No description available';
+    document.getElementById('modal-photographer').textContent = 'By ' + photographer;
+    document.getElementById('modal-date').textContent = date;
+    document.getElementById('photo-modal').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    document.getElementById('photo-modal').classList.add('hidden');
+    document.body.style.overflow = 'auto';
+}
+
+// Close modal when clicking outside the content
+document.getElementById('photo-modal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeModal();
+    }
+});
+
+// Close modal with Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeModal();
+    }
+});
+</script>
+{% endblock %}
+{% endblock %}

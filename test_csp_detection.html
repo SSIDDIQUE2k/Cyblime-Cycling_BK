@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSP Iframe Detection Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .status {
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        .warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        iframe {
+            width: 100%;
+            height: 400px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        #log {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🛡️ CSP Iframe Detection Test</h1>
+        <p>This test demonstrates how Voler.com's CSP policy blocks iframe embedding and how to detect it.</p>
+        
+        <div id="status" class="status info">
+            ⏳ Initializing test...
+        </div>
+        
+        <h3>Test Iframe (Voler Store):</h3>
+        <iframe 
+            id="testFrame"
+            src="https://www.voler.com/browse/cat2/?cat=grp&store=53255"
+            title="Voler Store Test">
+        </iframe>
+        
+        <h3>Detection Log:</h3>
+        <div id="log"></div>
+        
+        <div class="status info">
+            <strong>Expected Result:</strong> CSP violation detected, iframe blocked by Voler.com security policy.
+        </div>
+    </div>
+
+    <script>
+        const statusDiv = document.getElementById('status');
+        const logDiv = document.getElementById('log');
+        const iframe = document.getElementById('testFrame');
+        
+        function log(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            logDiv.innerHTML += `[${timestamp}] ${message}<br>`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(message);
+        }
+        
+        function updateStatus(message, type = 'info') {
+            statusDiv.textContent = message;
+            statusDiv.className = `status ${type}`;
+        }
+        
+        // Test 1: CSP Violation Detection
+        document.addEventListener('securitypolicyviolation', function(e) {
+            log(`🚨 CSP Violation Detected!`);
+            log(`   Directive: ${e.violatedDirective}`);
+            log(`   Blocked URI: ${e.blockedURI}`);
+            log(`   Source File: ${e.sourceFile}`);
+            
+            if (e.violatedDirective === 'frame-ancestors') {
+                updateStatus('✅ CSP frame-ancestors violation detected!', 'success');
+                log(`✅ This confirms Voler.com blocks iframe embedding`);
+            }
+        });
+        
+        // Test 2: Iframe Load Events
+        iframe.addEventListener('load', function() {
+            log(`📄 Iframe 'load' event fired`);
+            
+            // Test 3: Cross-origin Access
+            setTimeout(() => {
+                try {
+                    const doc = iframe.contentDocument || iframe.contentWindow.document;
+                    if (doc) {
+                        log(`✅ Can access iframe document`);
+                        updateStatus('✅ Iframe loaded successfully', 'success');
+                    } else {
+                        log(`❌ Cannot access iframe document (null)`);
+                        updateStatus('⚠️ Iframe blocked - no document access', 'warning');
+                    }
+                } catch(e) {
+                    log(`❌ Cross-origin access error: ${e.message}`);
+                    updateStatus('🚨 Iframe blocked - CSP or CORS restriction', 'error');
+                }
+            }, 1000);
+        });
+        
+        iframe.addEventListener('error', function() {
+            log(`❌ Iframe 'error' event fired`);
+            updateStatus('❌ Iframe failed to load', 'error');
+        });
+        
+        // Test 4: Timeout Detection
+        setTimeout(() => {
+            if (statusDiv.textContent.includes('Initializing')) {
+                log(`⏰ No events detected after 5 seconds`);
+                updateStatus('⚠️ No CSP events - may be blocked silently', 'warning');
+            }
+        }, 5000);
+        
+        // Initialize
+        updateStatus('🔍 Testing CSP detection...', 'info');
+        log(`🚀 Starting CSP iframe detection test`);
+        log(`📍 Target URL: ${iframe.src}`);
+        log(`⌚ Waiting for CSP violations or load events...`);
+    </script>
+</body>
+</html>

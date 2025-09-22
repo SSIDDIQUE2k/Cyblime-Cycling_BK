@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block title %}Articles - Cyblime Cycling Club{% endblock %}
+
+{% block content %}
+<div class="bg-white py-8">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">Cycling Articles</h1>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Expert insights, tips, and guides from our staff to help you become a better cyclist.
+            </p>
+            {% if user.is_staff %}
+                <div class="mt-6">
+                    <a href="{% url 'articles:create' %}" class="bg-cyblime-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition">
+                        <i class="fas fa-plus mr-2"></i>
+                        Create New Article
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Articles -->
+        {% if articles %}
+            <div class="space-y-8">
+                {% for article in articles %}
+                    <article class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                        <div class="md:flex">
+                            <!-- Image -->
+                            <div class="md:w-1/3">
+                                {% if article.image %}
+                                    <img src="{{ article.image.url }}" alt="{{ article.title }}" class="w-full h-64 md:h-full object-cover">
+                                {% else %}
+                                    <div class="w-full h-64 md:h-full bg-gradient-to-br from-cyblime-blue to-purple-600 flex items-center justify-center">
+                                        <i class="fas fa-newspaper text-white text-4xl"></i>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            
+                            <!-- Content -->
+                            <div class="md:w-2/3 p-8">
+                                <div class="flex items-center mb-4">
+                                    <div class="flex items-center">
+                                        {% if article.created_by.profile_picture %}
+                                            <img src="{{ article.created_by.profile_picture.url }}" alt="{{ article.created_by.username }}" class="w-10 h-10 rounded-full mr-3">
+                                        {% else %}
+                                            <div class="w-10 h-10 bg-cyblime-blue text-white rounded-full flex items-center justify-center mr-3">
+                                                <i class="fas fa-user"></i>
+                                            </div>
+                                        {% endif %}
+                                        <div>
+                                            <p class="font-semibold text-gray-800">{{ article.created_by.username }}</p>
+                                            <p class="text-sm text-gray-600">{{ article.created_at|date:"F d, Y" }}</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="ml-auto">
+                                        <span class="bg-cyblime-blue text-white px-3 py-1 rounded-full text-sm font-semibold">
+                                            Staff Article
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                <h2 class="text-2xl font-bold text-gray-800 mb-4">
+                                    <a href="{{ article.get_absolute_url }}" class="hover:text-cyblime-blue transition">
+                                        {{ article.title }}
+                                    </a>
+                                </h2>
+                                
+                                <p class="text-gray-600 mb-6 leading-relaxed">{{ article.content|truncatewords:30 }}</p>
+                                
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center text-sm text-gray-500 space-x-4">
+                                        <span>
+                                            <i class="fas fa-clock mr-1"></i>
+                                            {{ article.content|wordcount }} words
+                                        </span>
+                                        {% if article.updated_at != article.created_at %}
+                                            <span>
+                                                <i class="fas fa-edit mr-1"></i>
+                                                Updated {{ article.updated_at|date:"M d, Y" }}
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <a href="{{ article.get_absolute_url }}" class="bg-cyblime-blue hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition">
+                                        Read Full Article
+                                        <i class="fas fa-arrow-right ml-2"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+
+            <!-- Pagination -->
+            {% if is_paginated %}
+                <div class="flex justify-center mt-12">
+                    <nav class="flex space-x-2">
+                        {% if page_obj.has_previous %}
+                            <a href="?page=1" class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">First</a>
+                            <a href="?page={{ page_obj.previous_page_number }}" class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">Previous</a>
+                        {% endif %}
+                        
+                        <span class="px-4 py-2 bg-cyblime-blue text-white rounded-lg">
+                            {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                        </span>
+                        
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}" class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">Next</a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}" class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">Last</a>
+                        {% endif %}
+                    </nav>
+                </div>
+            {% endif %}
+        {% else %}
+            <!-- Empty State -->
+            <div class="text-center py-16">
+                <div class="mb-6">
+                    <i class="fas fa-newspaper text-6xl text-gray-300"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">No articles published yet</h3>
+                <p class="text-gray-600 mb-8">Our team is working on bringing you expert cycling content. Check back soon!</p>
+                {% if user.is_staff %}
+                    <a href="{% url 'articles:create' %}" class="bg-cyblime-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition">
+                        <i class="fas fa-plus mr-2"></i>
+                        Publish First Article
+                    </a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
