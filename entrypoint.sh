@@ -2,13 +2,13 @@
 set -euo pipefail
 
 # Apply database migrations
-python manage.py migrate --noinput
+python3 manage.py migrate --noinput
 
 # Collect static files
-python manage.py collectstatic --noinput
+python3 manage.py collectstatic --noinput
 
 # Start Gunicorn (bind to PORT provided by Railway)
-exec gunicorn cyblime_cycling.wsgi:application \
+exec python3 -m gunicorn cyblime_cycling.wsgi:application \
   --bind 0.0.0.0:${PORT:-8000} \
   --workers ${WEB_CONCURRENCY:-2} \
   --timeout 60
