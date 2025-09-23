@@ -39,6 +39,10 @@ RAILWAY_DOMAIN = os.environ.get('RAILWAY_PUBLIC_DOMAIN')
 if RAILWAY_DOMAIN and RAILWAY_DOMAIN not in ALLOWED_HOSTS:
     ALLOWED_HOSTS.append(RAILWAY_DOMAIN)
 
+# Add Railway healthcheck domain
+if 'healthcheck.railway.app' not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append('healthcheck.railway.app')
+
 # Add CSRF trusted origins for any non-local hosts
 CSRF_TRUSTED_ORIGINS = []
 for host in ALLOWED_HOSTS:
