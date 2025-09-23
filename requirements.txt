@@ -20,3 +20,4 @@ urllib3==2.5.0
 whitenoise==6.11.0
 psycopg[binary]==3.2.10
 django-widget-tweaks==1.5.0
+python-dotenv==1.0.0
