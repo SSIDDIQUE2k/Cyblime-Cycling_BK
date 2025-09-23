@@ -5,6 +5,9 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
 from django.contrib import messages
+from django.db.models import Q
+from django.utils import timezone
+from datetime import timedelta
 from .models import Photo
 from .forms import PhotoForm
 
@@ -23,7 +26,56 @@ class GalleryListView(ListView):
     paginate_by = 12
     
     def get_queryset(self):
-        return Photo.objects.select_related('uploaded_by')
+        queryset = Photo.objects.select_related('uploaded_by')
+        
+        # Search filter
+        search = self.request.GET.get('search')
+        if search:
+            queryset = queryset.filter(
+                Q(title__icontains=search) | 
+                Q(description__icontains=search)
+            )
+        
+        # Date filter
+        date_filter = self.request.GET.get('date')
+        if date_filter:
+            now = timezone.now()
+            if date_filter == 'today':
+                queryset = queryset.filter(uploaded_at__date=now.date())
+            elif date_filter == 'week':
+                week_ago = now - timedelta(days=7)
+                queryset = queryset.filter(uploaded_at__gte=week_ago)
+            elif date_filter == 'month':
+                month_ago = now - timedelta(days=30)
+                queryset = queryset.filter(uploaded_at__gte=month_ago)
+            elif date_filter == 'year':
+                year_ago = now - timedelta(days=365)
+                queryset = queryset.filter(uploaded_at__gte=year_ago)
+        
+        # Author filter
+        author = self.request.GET.get('author')
+        if author:
+            queryset = queryset.filter(uploaded_by__username__icontains=author)
+        
+        # Sort filter
+        sort = self.request.GET.get('sort', '-uploaded_at')
+        if sort in ['uploaded_at', '-uploaded_at', 'title', '-title']:
+            queryset = queryset.order_by(sort)
+        
+        return queryset
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Add filter parameters to context for form persistence
+        context['current_search'] = self.request.GET.get('search', '')
+        context['current_date'] = self.request.GET.get('date', '')
+        context['current_author'] = self.request.GET.get('author', '')
+        context['current_sort'] = self.request.GET.get('sort', '-uploaded_at')
+        # Get unique authors for filter dropdown
+        context['authors'] = Photo.objects.select_related('uploaded_by').values_list(
+            'uploaded_by__username', flat=True
+        ).distinct().order_by('uploaded_by__username')
+        return context
 
 
 class PhotoUploadView(LoginRequiredMixin, StaffRequiredMixin, CreateView):

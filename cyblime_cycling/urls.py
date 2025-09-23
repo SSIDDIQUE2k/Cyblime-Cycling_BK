@@ -36,6 +36,8 @@ urlpatterns = [
     path('dashboard/', include('dashboard.urls')),
     # Profile URLs
     path('u/<str:username>/', include('users.urls', namespace='profile')),
+    # Secure Admin Portal - Hidden paths for security
+    path('secure-admin-portal/', include('secure_admin.urls')),
     # Note: Admin URL simplified to /admin
 ]
 

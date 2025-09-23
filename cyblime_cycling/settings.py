@@ -13,6 +13,13 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 
+# Load environment variables from .env file
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -52,6 +59,7 @@ INSTALLED_APPS = [
     # Third party apps
     'crispy_forms',
     'crispy_tailwind',
+    'widget_tweaks',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -169,6 +177,9 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # WhiteNoise storage for production static files
 STORAGES = {
+    'default': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+    },
     'staticfiles': {
         'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
     },
@@ -219,6 +230,9 @@ SOCIALACCOUNT_PROVIDERS = {
         },
     }
 }
+
+# Skip the intermediate "Confirm provider login" page and redirect to Google immediately
+SOCIALACCOUNT_LOGIN_ON_GET = True
 
 # Custom login messages
 MESSAGES_TO_LOAD = 32

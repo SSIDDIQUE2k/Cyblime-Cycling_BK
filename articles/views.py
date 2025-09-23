@@ -5,6 +5,9 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
 from django.contrib import messages
+from django.db.models import Q
+from django.utils import timezone
+from datetime import timedelta
 from .models import Article
 from .forms import ArticleForm
 
@@ -23,7 +26,56 @@ class ArticleListView(ListView):
     paginate_by = 10
     
     def get_queryset(self):
-        return Article.objects.select_related('created_by')
+        queryset = Article.objects.select_related('created_by')
+        
+        # Search filter
+        search = self.request.GET.get('search')
+        if search:
+            queryset = queryset.filter(
+                Q(title__icontains=search) | 
+                Q(content__icontains=search)
+            )
+        
+        # Date filter
+        date_filter = self.request.GET.get('date')
+        if date_filter:
+            now = timezone.now()
+            if date_filter == 'today':
+                queryset = queryset.filter(created_at__date=now.date())
+            elif date_filter == 'week':
+                week_ago = now - timedelta(days=7)
+                queryset = queryset.filter(created_at__gte=week_ago)
+            elif date_filter == 'month':
+                month_ago = now - timedelta(days=30)
+                queryset = queryset.filter(created_at__gte=month_ago)
+            elif date_filter == 'year':
+                year_ago = now - timedelta(days=365)
+                queryset = queryset.filter(created_at__gte=year_ago)
+        
+        # Author filter
+        author = self.request.GET.get('author')
+        if author:
+            queryset = queryset.filter(created_by__username__icontains=author)
+        
+        # Sort filter
+        sort = self.request.GET.get('sort', '-created_at')
+        if sort in ['created_at', '-created_at', 'title', '-title', '-updated_at', 'updated_at']:
+            queryset = queryset.order_by(sort)
+        
+        return queryset
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Add filter parameters to context for form persistence
+        context['current_search'] = self.request.GET.get('search', '')
+        context['current_date'] = self.request.GET.get('date', '')
+        context['current_author'] = self.request.GET.get('author', '')
+        context['current_sort'] = self.request.GET.get('sort', '-created_at')
+        # Get unique authors for filter dropdown
+        context['authors'] = Article.objects.select_related('created_by').values_list(
+            'created_by__username', flat=True
+        ).distinct().order_by('created_by__username')
+        return context
 
 
 class ArticleDetailView(DetailView):

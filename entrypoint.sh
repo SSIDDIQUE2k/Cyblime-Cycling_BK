@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Ensure runtime directories exist
+mkdir -p logs
+
 # Apply database migrations
 python3 manage.py migrate --noinput
 
