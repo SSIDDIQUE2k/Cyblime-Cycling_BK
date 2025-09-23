@@ -6,7 +6,9 @@ This guide will help you deploy your Django Cyblime Cycling project to Railway.
 
 ✅ All issues have been fixed:
 - Added missing `python-dotenv` dependency to requirements.txt
-- Created railway.json configuration file
+- **FIXED NIXPACKS ISSUE**: Replaced `psycopg[binary]` with `psycopg2-binary` to avoid PostgreSQL dev headers error
+- Created Dockerfile for more reliable deployment (alternative to Nixpacks)
+- Updated railway.json to use Docker instead of Nixpacks
 - Created runtime.txt to specify Python version
 - Verified all Django apps exist and are properly configured
 - Admin access restriction is properly implemented via `secure_admin` middleware
@@ -77,9 +79,14 @@ Your Django admin is secured and only accessible to admin users at:
    - Check that all requirements are in requirements.txt
    - Verify Python version in runtime.txt matches your local version
 
-2. **Database Connection Issues**
+2. **Nixpacks PostgreSQL Error** (FIXED)
+   - Error: `attribute 'dev' missing at postgresql_16.dev`
+   - **Solution**: Switched from `psycopg[binary]` to `psycopg2-binary` in requirements.txt
+   - **Alternative**: Use Dockerfile instead of Nixpacks (now default)
+
+3. **Database Connection Issues**
    - Railway automatically provides DATABASE_URL
-   - Check that `dj-database-url` and `psycopg[binary]` are in requirements.txt
+   - Check that `dj-database-url` and `psycopg2-binary` are in requirements.txt
 
 3. **Static Files Not Loading**
    - Railway runs `collectstatic` automatically via entrypoint.sh
@@ -118,7 +125,11 @@ Your deployment includes several security features:
 
 ## Files Added/Modified for Deployment:
 - ✅ Added `python-dotenv==1.0.0` to requirements.txt
-- ✅ Created railway.json configuration
+- ✅ **FIXED**: Replaced `psycopg[binary]` with `psycopg2-binary` in requirements.txt
+- ✅ Created Dockerfile for reliable Docker-based deployment
+- ✅ Created .dockerignore to optimize builds
+- ✅ Updated railway.json to use Docker instead of Nixpacks
+- ✅ Fixed nixpacks.toml configuration (backup option)
 - ✅ Created runtime.txt for Python version
 - ✅ Created .env.example for environment variables documentation
 - ✅ Verified entrypoint.sh has proper permissions

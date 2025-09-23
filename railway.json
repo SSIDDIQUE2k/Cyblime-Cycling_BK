@@ -1,9 +1,8 @@
 {
   "build": {
-    "builder": "nixpacks"
+    "builder": "dockerfile"
   },
   "deploy": {
-    "startCommand": "bash entrypoint.sh",
     "healthcheckPath": "/",
     "healthcheckTimeout": 100,
     "sleepApplication": false,
