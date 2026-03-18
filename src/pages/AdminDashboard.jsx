@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
+import { createPageUrl } from "../utils";
 import { motion } from "framer-motion";
 import AdminLayout from "../components/admin/AdminLayout";
 import {
@@ -78,7 +80,25 @@ const ActivityItem = ({ icon: Icon, title, description, time, color }) => (
   </div>
 );
 
+function formatTimeAgo(dateStr) {
+  if (!dateStr) return "";
+  const date = new Date(dateStr);
+  const now = new Date();
+  const diffMs = now - date;
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMs / 3600000);
+  const diffDays = Math.floor(diffMs / 86400000);
+
+  if (diffMins < 1) return "Just now";
+  if (diffMins < 60) return `${diffMins}m ago`;
+  if (diffHours < 24) return `${diffHours}h ago`;
+  if (diffDays < 30) return `${diffDays}d ago`;
+  return date.toLocaleDateString();
+}
+
 export default function AdminDashboard() {
+  const navigate = useNavigate();
+
   const { data: users = [] } = useQuery({
     queryKey: ['adminUsers'],
     queryFn: () => base44.entities.User.list()
@@ -86,17 +106,17 @@ export default function AdminDashboard() {
 
   const { data: posts = [] } = useQuery({
     queryKey: ['adminBlogPosts'],
-    queryFn: () => base44.entities.BlogPost.list()
+    queryFn: () => base44.entities.BlogPost.list('-created_date')
   });
 
   const { data: events = [] } = useQuery({
     queryKey: ['adminEvents'],
-    queryFn: () => base44.entities.Event.list()
+    queryFn: () => base44.entities.Event.list('-created_date')
   });
 
   const { data: routes = [] } = useQuery({
     queryKey: ['adminRoutes'],
-    queryFn: () => base44.entities.Route.list()
+    queryFn: () => base44.entities.Route.list('-created_date')
   });
 
   const { data: reports = [] } = useQuery({
@@ -104,7 +124,65 @@ export default function AdminDashboard() {
     queryFn: () => base44.entities.Report.list()
   });
 
+  const { data: forumPosts = [] } = useQuery({
+    queryKey: ['adminForumPosts'],
+    queryFn: () => base44.entities.ForumPost.list('-created_date')
+  });
+
   const pendingReports = reports.filter(r => r.status === 'pending').length;
+
+  // Build real activity feed from recent blog posts, events, forum posts, and routes
+  const activityFeed = useMemo(() => {
+    const items = [];
+
+    posts.slice(0, 5).forEach(post => {
+      items.push({
+        icon: FileText,
+        title: "Blog Post",
+        description: post.title || "Untitled post",
+        time: formatTimeAgo(post.created_date),
+        date: new Date(post.created_date),
+        color: "bg-purple-500"
+      });
+    });
+
+    events.slice(0, 5).forEach(event => {
+      items.push({
+        icon: Calendar,
+        title: "Event",
+        description: event.title || event.name || "Untitled event",
+        time: formatTimeAgo(event.created_date || event.date),
+        date: new Date(event.created_date || event.date),
+        color: "bg-green-500"
+      });
+    });
+
+    forumPosts.slice(0, 5).forEach(fp => {
+      items.push({
+        icon: MessageSquare,
+        title: "Forum Post",
+        description: fp.title || fp.content?.substring(0, 60) || "New forum post",
+        time: formatTimeAgo(fp.created_date),
+        date: new Date(fp.created_date),
+        color: "bg-blue-500"
+      });
+    });
+
+    routes.slice(0, 5).forEach(route => {
+      items.push({
+        icon: Map,
+        title: "Route Added",
+        description: `${route.name || "Untitled route"}${route.distance ? ` - ${route.distance}km` : ""}`,
+        time: formatTimeAgo(route.created_date),
+        date: new Date(route.created_date),
+        color: "bg-[#c9a227]"
+      });
+    });
+
+    // Sort by date descending, take most recent 8
+    items.sort((a, b) => b.date - a.date);
+    return items.slice(0, 8);
+  }, [posts, events, forumPosts, routes]);
 
   return (
     <AdminLayout>
@@ -161,21 +239,25 @@ export default function AdminDashboard() {
               <QuickAction
                 icon={FileText}
                 label="New Post"
+                onClick={() => navigate(createPageUrl("AdminBlogManagement"))}
                 color="bg-gradient-to-br from-[#c9a227] to-[#b89123]"
               />
               <QuickAction
                 icon={Calendar}
                 label="New Event"
+                onClick={() => navigate(createPageUrl("AdminEventManagement"))}
                 color="bg-gradient-to-br from-green-500 to-green-600"
               />
               <QuickAction
                 icon={Map}
                 label="New Route"
+                onClick={() => navigate(createPageUrl("AdminRouteManagement"))}
                 color="bg-gradient-to-br from-blue-500 to-blue-600"
               />
               <QuickAction
                 icon={Flag}
                 label="Moderation"
+                onClick={() => navigate(createPageUrl("AdminModeration"))}
                 color="bg-gradient-to-br from-red-500 to-red-600"
               />
             </div>
@@ -184,7 +266,7 @@ export default function AdminDashboard() {
 
         {/* Content Grid */}
         <div className="grid lg:grid-cols-2 gap-6">
-          {/* Recent Activity */}
+          {/* Recent Activity - real data */}
           <Card className="admin-card dark:bg-gray-800/50 dark:border-white/5">
             <CardHeader>
               <CardTitle className="dark:text-white flex items-center gap-2">
@@ -193,41 +275,20 @@ export default function AdminDashboard() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
-              <ActivityItem
-                icon={Users}
-                title="New User Registered"
-                description="john.doe@example.com joined"
-                time="2m ago"
-                color="bg-blue-500"
-              />
-              <ActivityItem
-                icon={FileText}
-                title="Blog Post Published"
-                description="Winter Training Tips"
-                time="1h ago"
-                color="bg-purple-500"
-              />
-              <ActivityItem
-                icon={Calendar}
-                title="Event Created"
-                description="Mountain Trail Ride - March 15"
-                time="3h ago"
-                color="bg-green-500"
-              />
-              <ActivityItem
-                icon={Flag}
-                title="New Report"
-                description="Spam content reported"
-                time="5h ago"
-                color="bg-red-500"
-              />
-              <ActivityItem
-                icon={Map}
-                title="Route Uploaded"
-                description="Coastal Loop - 45km"
-                time="1d ago"
-                color="bg-[#c9a227]"
-              />
+              {activityFeed.length > 0 ? (
+                activityFeed.map((item, i) => (
+                  <ActivityItem
+                    key={i}
+                    icon={item.icon}
+                    title={item.title}
+                    description={item.description}
+                    time={item.time}
+                    color={item.color}
+                  />
+                ))
+              ) : (
+                <p className="text-sm text-gray-500 dark:text-gray-400 p-4">No recent activity yet.</p>
+              )}
             </CardContent>
           </Card>
 
@@ -249,7 +310,7 @@ export default function AdminDashboard() {
                     <p className="font-semibold text-gray-900 dark:text-white truncate">{post.title}</p>
                     <div className="flex items-center gap-3 mt-1">
                       <span className="text-sm text-gray-600 dark:text-gray-400">{post.view_count || 0} views</span>
-                      <span className="text-sm text-gray-400 dark:text-gray-500">•</span>
+                      <span className="text-sm text-gray-400 dark:text-gray-500">&bull;</span>
                       <span className="text-sm text-gray-600 dark:text-gray-400">{post.category}</span>
                     </div>
                   </div>
@@ -277,7 +338,7 @@ export default function AdminDashboard() {
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center mx-auto mb-3">
                   <MessageSquare className="w-8 h-8 text-white" />
                 </div>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">0</p>
+                <p className="text-2xl font-bold text-gray-900 dark:text-white">{forumPosts.length}</p>
                 <p className="text-sm text-gray-600 dark:text-gray-400">Forum Posts</p>
               </div>
               <div className="text-center">

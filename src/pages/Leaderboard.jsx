@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
 import { motion } from "framer-motion";
@@ -91,6 +91,21 @@ export default function Leaderboard() {
       );
     }
   });
+
+  const filteredLeaderboardData = useMemo(() => {
+    if (timeFrame === "all") return leaderboardData;
+    const now = new Date();
+    const cutoff = new Date();
+    if (timeFrame === "week") {
+      cutoff.setDate(now.getDate() - 7);
+    } else if (timeFrame === "month") {
+      cutoff.setDate(now.getDate() - 30);
+    }
+    return leaderboardData.filter(item => {
+      const createdDate = new Date(item.created_date);
+      return createdDate >= cutoff;
+    });
+  }, [leaderboardData, timeFrame]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12">
@@ -192,7 +207,7 @@ export default function Leaderboard() {
             <CardTitle>Full Rankings</CardTitle>
           </CardHeader>
           <CardContent>
-            <Tabs defaultValue="all" className="mb-6">
+            <Tabs value={timeFrame} onValueChange={setTimeFrame} className="mb-6">
               <TabsList>
                 <TabsTrigger value="all">All Time</TabsTrigger>
                 <TabsTrigger value="month">This Month</TabsTrigger>
@@ -201,7 +216,7 @@ export default function Leaderboard() {
             </Tabs>
 
             <div className="space-y-3">
-              {leaderboardData.map((item, index) => (
+              {filteredLeaderboardData.map((item, index) => (
                 <LeaderboardCard
                   key={item.id}
                   rank={index + 1}

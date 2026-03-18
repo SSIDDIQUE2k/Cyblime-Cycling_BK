@@ -6,13 +6,13 @@ import { Calendar, User, Eye, Tag, ArrowLeft, MessageCircle, Send } from "lucide
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { createPageUrl } from "../utils";
 
 export default function BlogPost() {
   const queryClient = useQueryClient();
-  const urlParams = new URLSearchParams(window.location.search);
-  const postId = urlParams.get('id');
+  const [searchParams] = useSearchParams();
+  const postId = searchParams.get('id');
   const [commentText, setCommentText] = useState("");
   const [user, setUser] = useState(null);
 
@@ -74,8 +74,12 @@ export default function BlogPost() {
   };
 
   useEffect(() => {
-    if (post) {
-      incrementViewMutation.mutate();
+    if (post?.id) {
+      const viewedKey = `blog_viewed_${post.id}`;
+      if (!sessionStorage.getItem(viewedKey)) {
+        sessionStorage.setItem(viewedKey, 'true');
+        incrementViewMutation.mutate();
+      }
     }
   }, [post?.id]);
 
@@ -404,7 +408,7 @@ export default function BlogPost() {
         </div>
       </section>
 
-      <style jsx>{`
+      <style>{`
         .article-content {
           font-family: Georgia, 'Times New Roman', serif;
         }

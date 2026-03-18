@@ -11,7 +11,8 @@ import {
   Trash2,
   AlertTriangle,
   ChevronRight,
-  Filter
+  Filter,
+  X
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -23,6 +24,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 const ReportCard = ({ report, onApprove, onReject, onView }) => {
   const reasonColors = {
@@ -125,6 +132,7 @@ export default function AdminModeration() {
   const queryClient = useQueryClient();
   const [filter, setFilter] = useState("all");
   const [typeFilter, setTypeFilter] = useState("all");
+  const [selectedReport, setSelectedReport] = useState(null);
 
   const { data: reports = [], isLoading } = useQuery({
     queryKey: ['adminReports'],
@@ -270,12 +278,80 @@ export default function AdminModeration() {
                 report={report}
                 onApprove={(id) => updateMutation.mutate({ id, status: 'resolved' })}
                 onReject={(id) => updateMutation.mutate({ id, status: 'dismissed' })}
-                onView={(report) => console.log('View', report)}
+                onView={(report) => setSelectedReport(report)}
               />
             ))
           )}
         </div>
       </div>
+
+        {/* Report Detail Dialog */}
+        <Dialog open={!!selectedReport} onOpenChange={() => setSelectedReport(null)}>
+          <DialogContent className="max-w-lg dark:bg-gray-800 dark:border-white/10">
+            <DialogHeader>
+              <DialogTitle className="dark:text-white">Report Details</DialogTitle>
+            </DialogHeader>
+            {selectedReport && (
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <p className="text-gray-500 dark:text-gray-400">Type</p>
+                    <p className="font-medium dark:text-white">{selectedReport.content_type?.replace('_', ' ')}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-500 dark:text-gray-400">Reason</p>
+                    <p className="font-medium dark:text-white capitalize">{selectedReport.reason}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-500 dark:text-gray-400">Status</p>
+                    <p className="font-medium dark:text-white capitalize">{selectedReport.status}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-500 dark:text-gray-400">Date</p>
+                    <p className="font-medium dark:text-white">{new Date(selectedReport.created_date).toLocaleString()}</p>
+                  </div>
+                  <div className="col-span-2">
+                    <p className="text-gray-500 dark:text-gray-400">Reported By</p>
+                    <p className="font-medium dark:text-white">{selectedReport.created_by}</p>
+                  </div>
+                  <div className="col-span-2">
+                    <p className="text-gray-500 dark:text-gray-400">Content ID</p>
+                    <p className="font-mono text-xs dark:text-white bg-gray-100 dark:bg-gray-700 p-2 rounded">{selectedReport.content_id}</p>
+                  </div>
+                  {selectedReport.description && (
+                    <div className="col-span-2">
+                      <p className="text-gray-500 dark:text-gray-400">Description</p>
+                      <p className="dark:text-white mt-1">{selectedReport.description}</p>
+                    </div>
+                  )}
+                </div>
+                <div className="flex gap-2 pt-4 border-t dark:border-white/10">
+                  <Button
+                    onClick={() => {
+                      updateMutation.mutate({ id: selectedReport.id, status: 'resolved' });
+                      setSelectedReport(null);
+                    }}
+                    className="bg-green-600 hover:bg-green-700 text-white"
+                  >
+                    <CheckCircle className="w-4 h-4 mr-2" />
+                    Resolve
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      updateMutation.mutate({ id: selectedReport.id, status: 'dismissed' });
+                      setSelectedReport(null);
+                    }}
+                    className="border-red-200 text-red-600 hover:bg-red-50"
+                  >
+                    <XCircle className="w-4 h-4 mr-2" />
+                    Dismiss
+                  </Button>
+                </div>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
     </AdminLayout>
   );
 }

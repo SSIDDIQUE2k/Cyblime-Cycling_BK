@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { base44 } from "@/api/base44Client";
 import { useQuery } from "@tanstack/react-query";
@@ -13,13 +13,13 @@ import {
   Trophy,
   Users,
   Calendar,
-  ChevronRight
+  ChevronRight,
+  BarChart3
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PremiumLoader from "../components/cycling/PremiumLoader";
-import StravaEmbed from "../components/cycling/StravaEmbed";
 
 const RouteCard = ({ route, index }) => {
   const difficultyColors = {
@@ -46,7 +46,7 @@ const RouteCard = ({ route, index }) => {
           {route.difficulty}
         </Badge>
       </div>
-      
+
       <div className="p-6">
         <div className="flex items-start justify-between mb-3">
           <h3 className="text-xl font-bold text-[#2A2A2A] flex-1">{route.name}</h3>
@@ -55,9 +55,9 @@ const RouteCard = ({ route, index }) => {
             <span className="font-semibold">{route.rating || "5.0"}</span>
           </div>
         </div>
-        
+
         <p className="text-sm text-[#555555] mb-4 line-clamp-2">{route.description}</p>
-        
+
         <div className="grid grid-cols-3 gap-3 mb-4">
           <div className="flex items-center gap-2 text-sm">
             <MapPin className="w-4 h-4 text-[#FC4C02]" />
@@ -72,7 +72,7 @@ const RouteCard = ({ route, index }) => {
             <span className="text-[#555555]">{route.surface_type}</span>
           </div>
         </div>
-        
+
         <Link to={createPageUrl("RouteDetails") + `?id=${route.id}`}>
           <Button className="w-full bg-[#FC4C02] hover:bg-[#E34402] text-white rounded-xl">
             View Route
@@ -94,6 +94,12 @@ export default function CyclingHub() {
     initialData: []
   });
 
+  const { data: events = [], isLoading: eventsLoading } = useQuery({
+    queryKey: ['hubEvents'],
+    queryFn: () => base44.entities.Event.list('-date'),
+    initialData: []
+  });
+
   const handleTabChange = (value) => {
     setIsLoadingTab(true);
     setActiveTab(value);
@@ -102,16 +108,50 @@ export default function CyclingHub() {
 
   const featuredRoutes = routes.slice(0, 6);
 
+  // Compute real club stats from route and event data
+  const clubStats = useMemo(() => {
+    const totalDistance = routes.reduce((sum, r) => sum + (r.distance || 0), 0);
+    const totalElevation = routes.reduce((sum, r) => sum + (r.elevation_gain || 0), 0);
+    const avgDistance = routes.length > 0 ? Math.round(totalDistance / routes.length) : 0;
+
+    const difficultyCounts = {};
+    routes.forEach(r => {
+      const d = r.difficulty || "Unknown";
+      difficultyCounts[d] = (difficultyCounts[d] || 0) + 1;
+    });
+
+    const surfaceCounts = {};
+    routes.forEach(r => {
+      const s = r.surface_type || "Unknown";
+      surfaceCounts[s] = (surfaceCounts[s] || 0) + 1;
+    });
+
+    const upcomingEvents = events.filter(e => new Date(e.date) >= new Date());
+    const pastEvents = events.filter(e => new Date(e.date) < new Date());
+
+    return {
+      totalDistance,
+      totalElevation,
+      avgDistance,
+      difficultyCounts,
+      surfaceCounts,
+      upcomingEvents: upcomingEvents.length,
+      pastEvents: pastEvents.length,
+      totalEvents: events.length,
+      totalRoutes: routes.length
+    };
+  }, [routes, events]);
+
   return (
     <div className="min-h-screen bg-[#fafafa]">
-      <PremiumLoader isLoading={routesLoading || isLoadingTab} />
+      <PremiumLoader isLoading={routesLoading || eventsLoading || isLoadingTab} />
 
       {/* Hero */}
       <section className="relative bg-gradient-to-br from-[#FC4C02] to-[#FF7A00] py-20 md:py-32 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 right-1/4 w-96 h-96 rounded-full bg-white blur-3xl" />
         </div>
-        
+
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -137,16 +177,16 @@ export default function CyclingHub() {
               <div className="text-sm text-[#555555]">Routes Available</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-[#FC4C02] mb-1">150+</div>
-              <div className="text-sm text-[#555555]">Active Members</div>
+              <div className="text-3xl font-bold text-[#FC4C02] mb-1">{events.length}</div>
+              <div className="text-sm text-[#555555]">Total Events</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-[#FC4C02] mb-1">5,000+</div>
-              <div className="text-sm text-[#555555]">Weekly km</div>
+              <div className="text-3xl font-bold text-[#FC4C02] mb-1">{clubStats.totalDistance.toLocaleString()}</div>
+              <div className="text-sm text-[#555555]">Total km in Routes</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-[#FC4C02] mb-1">250+</div>
-              <div className="text-sm text-[#555555]">Group Rides</div>
+              <div className="text-3xl font-bold text-[#FC4C02] mb-1">{clubStats.totalElevation.toLocaleString()}</div>
+              <div className="text-sm text-[#555555]">Total Elevation (m)</div>
             </div>
           </div>
         </div>
@@ -157,40 +197,26 @@ export default function CyclingHub() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <Tabs value={activeTab} onValueChange={handleTabChange}>
             <TabsList className="mb-8 bg-white p-2 rounded-2xl shadow-sm">
-              <TabsTrigger 
-                value="routes" 
+              <TabsTrigger
+                value="routes"
                 className="rounded-xl data-[state=active]:bg-[#FC4C02] data-[state=active]:text-white px-6 py-3"
               >
                 <MapPin className="w-4 h-4 mr-2" />
                 Featured Routes
               </TabsTrigger>
-              <TabsTrigger 
-                value="feed" 
+              <TabsTrigger
+                value="strava"
                 className="rounded-xl data-[state=active]:bg-[#FC4C02] data-[state=active]:text-white px-6 py-3"
               >
                 <Activity className="w-4 h-4 mr-2" />
-                Club Feed
+                Strava Club
               </TabsTrigger>
-              <TabsTrigger 
-                value="activities" 
+              <TabsTrigger
+                value="stats"
                 className="rounded-xl data-[state=active]:bg-[#FC4C02] data-[state=active]:text-white px-6 py-3"
               >
-                <TrendingUp className="w-4 h-4 mr-2" />
-                Recent Activities
-              </TabsTrigger>
-              <TabsTrigger 
-                value="leaderboard" 
-                className="rounded-xl data-[state=active]:bg-[#FC4C02] data-[state=active]:text-white px-6 py-3"
-              >
-                <Trophy className="w-4 h-4 mr-2" />
-                Leaderboard
-              </TabsTrigger>
-              <TabsTrigger 
-                value="events" 
-                className="rounded-xl data-[state=active]:bg-[#FC4C02] data-[state=active]:text-white px-6 py-3"
-              >
-                <Calendar className="w-4 h-4 mr-2" />
-                Events
+                <BarChart3 className="w-4 h-4 mr-2" />
+                Club Stats
               </TabsTrigger>
             </TabsList>
 
@@ -213,40 +239,157 @@ export default function CyclingHub() {
               </div>
             </TabsContent>
 
-            {/* Club Feed Tab */}
-            <TabsContent value="feed" className="h-[calc(100vh-250px)]">
-              <iframe
-                src="https://www.strava.com/clubs/762372?oq=cy"
-                className="w-full h-full border-0"
-                title="Strava Club Feed"
-              />
+            {/* Strava Club Tab - single embed */}
+            <TabsContent value="strava" className="h-[calc(100vh-250px)]">
+              <div className="bg-white rounded-2xl overflow-hidden shadow-sm h-full flex flex-col">
+                <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-[#FC4C02] flex items-center justify-center">
+                      <Activity className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-[#2A2A2A]">CYBLIME on Strava</h3>
+                      <p className="text-sm text-[#555555]">Club feed, activities, leaderboard & events</p>
+                    </div>
+                  </div>
+                  <a href="https://www.strava.com/clubs/762372" target="_blank" rel="noopener noreferrer">
+                    <Button variant="outline" className="rounded-full text-sm">
+                      Open in Strava
+                      <ChevronRight className="w-4 h-4 ml-1" />
+                    </Button>
+                  </a>
+                </div>
+                <iframe
+                  src="https://www.strava.com/clubs/762372?oq=cy"
+                  className="w-full flex-1 border-0"
+                  title="Strava Club"
+                />
+              </div>
             </TabsContent>
 
-            {/* Recent Activities Tab */}
-            <TabsContent value="activities" className="h-[calc(100vh-250px)]">
-              <iframe
-                src="https://www.strava.com/clubs/762372?oq=cy"
-                className="w-full h-full border-0"
-                title="Strava Recent Activities"
-              />
-            </TabsContent>
+            {/* Club Stats Tab - real data from Route & Event entities */}
+            <TabsContent value="stats" className="space-y-8">
+              <h2 className="text-3xl font-bold text-[#2A2A2A]">Club Stats</h2>
 
-            {/* Leaderboard Tab */}
-            <TabsContent value="leaderboard" className="h-[calc(100vh-250px)]">
-              <iframe
-                src="https://www.strava.com/clubs/762372?oq=cy"
-                className="w-full h-full border-0"
-                title="Strava Leaderboard"
-              />
-            </TabsContent>
+              {/* Summary cards */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div className="bg-white rounded-2xl p-6 shadow-sm text-center">
+                  <MapPin className="w-8 h-8 text-[#FC4C02] mx-auto mb-3" />
+                  <div className="text-3xl font-bold text-[#2A2A2A]">{clubStats.totalRoutes}</div>
+                  <div className="text-sm text-[#555555] mt-1">Total Routes</div>
+                </div>
+                <div className="bg-white rounded-2xl p-6 shadow-sm text-center">
+                  <TrendingUp className="w-8 h-8 text-[#FC4C02] mx-auto mb-3" />
+                  <div className="text-3xl font-bold text-[#2A2A2A]">{clubStats.avgDistance}</div>
+                  <div className="text-sm text-[#555555] mt-1">Avg Distance (km)</div>
+                </div>
+                <div className="bg-white rounded-2xl p-6 shadow-sm text-center">
+                  <Mountain className="w-8 h-8 text-[#FC4C02] mx-auto mb-3" />
+                  <div className="text-3xl font-bold text-[#2A2A2A]">{clubStats.totalElevation.toLocaleString()}</div>
+                  <div className="text-sm text-[#555555] mt-1">Total Elevation (m)</div>
+                </div>
+                <div className="bg-white rounded-2xl p-6 shadow-sm text-center">
+                  <Calendar className="w-8 h-8 text-[#FC4C02] mx-auto mb-3" />
+                  <div className="text-3xl font-bold text-[#2A2A2A]">{clubStats.upcomingEvents}</div>
+                  <div className="text-sm text-[#555555] mt-1">Upcoming Events</div>
+                </div>
+              </div>
 
-            {/* Events Tab */}
-            <TabsContent value="events" className="h-[calc(100vh-250px)]">
-              <iframe
-                src="https://www.strava.com/clubs/762372?oq=cy"
-                className="w-full h-full border-0"
-                title="Strava Events"
-              />
+              {/* Route difficulty breakdown */}
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-white rounded-2xl p-6 shadow-sm">
+                  <h3 className="text-lg font-bold text-[#2A2A2A] mb-4 flex items-center gap-2">
+                    <Trophy className="w-5 h-5 text-[#FC4C02]" />
+                    Routes by Difficulty
+                  </h3>
+                  <div className="space-y-3">
+                    {Object.entries(clubStats.difficultyCounts).map(([difficulty, count]) => {
+                      const colors = {
+                        Easy: "bg-[#A4FF4F]",
+                        Moderate: "bg-yellow-400",
+                        Challenging: "bg-orange-500",
+                        Expert: "bg-red-600",
+                        Unknown: "bg-gray-400"
+                      };
+                      const pct = clubStats.totalRoutes > 0 ? Math.round((count / clubStats.totalRoutes) * 100) : 0;
+                      return (
+                        <div key={difficulty}>
+                          <div className="flex justify-between text-sm mb-1">
+                            <span className="font-medium text-[#2A2A2A]">{difficulty}</span>
+                            <span className="text-[#555555]">{count} ({pct}%)</span>
+                          </div>
+                          <div className="w-full bg-gray-100 rounded-full h-2.5">
+                            <div
+                              className={`h-2.5 rounded-full ${colors[difficulty] || colors.Unknown}`}
+                              style={{ width: `${pct}%` }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                    {Object.keys(clubStats.difficultyCounts).length === 0 && (
+                      <p className="text-sm text-[#555555]">No routes yet.</p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-2xl p-6 shadow-sm">
+                  <h3 className="text-lg font-bold text-[#2A2A2A] mb-4 flex items-center gap-2">
+                    <Mountain className="w-5 h-5 text-[#FC4C02]" />
+                    Routes by Surface
+                  </h3>
+                  <div className="space-y-3">
+                    {Object.entries(clubStats.surfaceCounts).map(([surface, count]) => {
+                      const pct = clubStats.totalRoutes > 0 ? Math.round((count / clubStats.totalRoutes) * 100) : 0;
+                      return (
+                        <div key={surface}>
+                          <div className="flex justify-between text-sm mb-1">
+                            <span className="font-medium text-[#2A2A2A]">{surface}</span>
+                            <span className="text-[#555555]">{count} ({pct}%)</span>
+                          </div>
+                          <div className="w-full bg-gray-100 rounded-full h-2.5">
+                            <div
+                              className="h-2.5 rounded-full bg-[#FC4C02]"
+                              style={{ width: `${pct}%` }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                    {Object.keys(clubStats.surfaceCounts).length === 0 && (
+                      <p className="text-sm text-[#555555]">No routes yet.</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Upcoming events list */}
+              <div className="bg-white rounded-2xl p-6 shadow-sm">
+                <h3 className="text-lg font-bold text-[#2A2A2A] mb-4 flex items-center gap-2">
+                  <Calendar className="w-5 h-5 text-[#FC4C02]" />
+                  Upcoming Events
+                </h3>
+                <div className="space-y-3">
+                  {events
+                    .filter(e => new Date(e.date) >= new Date())
+                    .sort((a, b) => new Date(a.date) - new Date(b.date))
+                    .slice(0, 5)
+                    .map(event => (
+                      <div key={event.id} className="flex items-center gap-4 p-3 rounded-xl hover:bg-gray-50 transition-colors">
+                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#FC4C02] to-[#FF7A00] flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+                          {new Date(event.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="font-semibold text-[#2A2A2A] truncate">{event.title || event.name}</p>
+                          <p className="text-sm text-[#555555] truncate">{event.location || "Location TBD"}</p>
+                        </div>
+                      </div>
+                    ))}
+                  {events.filter(e => new Date(e.date) >= new Date()).length === 0 && (
+                    <p className="text-sm text-[#555555]">No upcoming events scheduled.</p>
+                  )}
+                </div>
+              </div>
             </TabsContent>
           </Tabs>
         </div>

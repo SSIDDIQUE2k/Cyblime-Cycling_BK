@@ -30,7 +30,7 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs";
 
-const ChallengeCard = ({ challenge, userProgress, onJoin }) => {
+const ChallengeCard = ({ challenge, userProgress, onJoin, isJoined, isJoining }) => {
   const progress = userProgress || 0;
   const isCompleted = progress >= challenge.goal_value;
   const progressPercent = Math.min((progress / challenge.goal_value) * 100, 100);
@@ -83,13 +83,19 @@ const ChallengeCard = ({ challenge, userProgress, onJoin }) => {
             <CheckCircle2 className="w-3 h-3 mr-1" />
             Completed
           </Badge>
+        ) : isJoined ? (
+          <Badge className="bg-[#A4FF4F] text-[#2A2A2A] border-0">
+            <CheckCircle2 className="w-3 h-3 mr-1" />
+            Joined
+          </Badge>
         ) : (
           <Button
             size="sm"
             onClick={() => onJoin(challenge)}
+            disabled={isJoining}
             className="bg-[#ff6b35] hover:bg-[#ff4500] text-white"
           >
-            Join Challenge
+            {isJoining ? 'Joining...' : 'Join Challenge'}
           </Button>
         )}
       </div>
@@ -140,6 +146,7 @@ const LeaderboardRow = ({ user, rank }) => {
 export default function Challenges() {
   const queryClient = useQueryClient();
   const [user, setUser] = useState(null);
+  const [joinedChallenges, setJoinedChallenges] = useState(new Set());
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -184,11 +191,15 @@ export default function Challenges() {
 
   const joinChallengeMutation = useMutation({
     mutationFn: async (challenge) => {
-      // Here you would track user joining the challenge
-      // For now, we'll just show a toast or update state
-      alert(`You've joined the challenge: ${challenge.title}!`);
+      if (challenge.participant_count !== undefined) {
+        await base44.entities.Challenge.update(challenge.id, {
+          participant_count: (challenge.participant_count || 0) + 1
+        });
+      }
+      return challenge;
     },
-    onSuccess: () => {
+    onSuccess: (challenge) => {
+      setJoinedChallenges(prev => new Set([...prev, challenge.id]));
       queryClient.invalidateQueries({ queryKey: ['challenges'] });
     }
   });
@@ -284,6 +295,8 @@ export default function Challenges() {
                     challenge={challenge}
                     userProgress={0}
                     onJoin={joinChallengeMutation.mutate}
+                    isJoined={joinedChallenges.has(challenge.id)}
+                    isJoining={joinChallengeMutation.isPending}
                   />
                 ))}
               </div>
@@ -302,6 +315,8 @@ export default function Challenges() {
                     challenge={challenge}
                     userProgress={0}
                     onJoin={joinChallengeMutation.mutate}
+                    isJoined={joinedChallenges.has(challenge.id)}
+                    isJoining={joinChallengeMutation.isPending}
                   />
                 ))}
               </div>

@@ -324,6 +324,7 @@ export default function Layout({ children, currentPageName }) {
             
             <div>
               <h4 className="text-white font-semibold mb-3">Connect</h4>
+              {/* TODO: Social media links should be configured via admin settings */}
               <ul className="space-y-2">
                 <li><a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">Instagram</a></li>
                 <li><a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">Facebook</a></li>
@@ -334,7 +335,7 @@ export default function Layout({ children, currentPageName }) {
           
           <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm text-gray-500">
-              © 2024 Cyblime Cycling Club. All rights reserved.
+              © {new Date().getFullYear()} Cyblime Cycling Club. All rights reserved.
             </p>
 
             <div className="flex items-center gap-6">

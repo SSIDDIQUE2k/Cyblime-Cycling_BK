@@ -22,7 +22,7 @@ const ValueCard = ({ icon: Icon, title, description, index }) => {
       transition={{ duration: 0.6, delay: index * 0.1 }}
       className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-all duration-300"
     >
-      <div className="w-14 h-14 rounded-2xl bg-[#c4e92e] flex items-center justify-center mb-6">
+      <div className="w-14 h-14 rounded-2xl bg-[#ff6b35] flex items-center justify-center mb-6">
         <Icon className="w-7 h-7 text-[#1a1a1a]" />
       </div>
       <h3 className="text-2xl font-bold text-[#1a1a1a] mb-4">{title}</h3>
@@ -40,7 +40,7 @@ const TestimonialCard = ({ quote, author, role, index }) => {
       transition={{ duration: 0.6, delay: index * 0.1 }}
       className="bg-white rounded-2xl p-8 shadow-sm"
     >
-      <Quote className="w-10 h-10 text-[#c4e92e] mb-4" />
+      <Quote className="w-10 h-10 text-[#ff6b35] mb-4" />
       <p className="text-gray-700 text-lg mb-6 leading-relaxed">{quote}</p>
       <div>
         <div className="font-semibold text-[#1a1a1a]">{author}</div>
@@ -108,7 +108,7 @@ export default function About() {
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] py-24 md:py-32 overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-[#c4e92e]/10 blur-3xl" />
+          <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-[#ff6b35]/10 blur-3xl" />
         </div>
         
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
@@ -121,7 +121,7 @@ export default function About() {
             <h1 className="text-5xl md:text-6xl font-bold text-white tracking-tight mb-6">
               More Than a Club.
               <br />
-              <span className="text-[#c4e92e]">A Movement.</span>
+              <span className="text-[#ff6b35]">A Movement.</span>
             </h1>
             <p className="text-xl text-gray-300 leading-relaxed">
               At Cyblime, we're building a culture where endurance meets excellence, where every pedal stroke brings you closer to your goals, and where community is at the heart of everything we do.
@@ -140,7 +140,7 @@ export default function About() {
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
-              <span className="inline-block text-xs font-semibold tracking-widest text-[#c4e92e] uppercase mb-4">Our Story</span>
+              <span className="inline-block text-xs font-semibold tracking-widest text-[#ff6b35] uppercase mb-4">Our Story</span>
               <h2 className="text-4xl md:text-5xl font-bold text-[#1a1a1a] mb-6">
                 Founded by Cyclists,
                 <br />
@@ -205,7 +205,7 @@ export default function About() {
             transition={{ duration: 0.8 }}
             className="text-center max-w-2xl mx-auto mb-16"
           >
-            <span className="inline-block text-xs font-semibold tracking-widest text-[#c4e92e] uppercase mb-4">Our Values</span>
+            <span className="inline-block text-xs font-semibold tracking-widest text-[#ff6b35] uppercase mb-4">Our Values</span>
             <h2 className="text-4xl md:text-5xl font-bold text-[#1a1a1a] mb-6">
               What We Stand For
             </h2>
@@ -232,7 +232,7 @@ export default function About() {
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
-              <span className="inline-block text-xs font-semibold tracking-widest text-[#c4e92e] uppercase mb-4">Member Benefits</span>
+              <span className="inline-block text-xs font-semibold tracking-widest text-[#ff6b35] uppercase mb-4">Member Benefits</span>
               <h2 className="text-4xl md:text-5xl font-bold text-[#1a1a1a] mb-6">
                 Why Ride With Cyblime?
               </h2>
@@ -250,7 +250,7 @@ export default function About() {
                     transition={{ delay: index * 0.05 }}
                     className="flex items-center gap-3"
                   >
-                    <div className="w-6 h-6 rounded-full bg-[#c4e92e] flex items-center justify-center flex-shrink-0">
+                    <div className="w-6 h-6 rounded-full bg-[#ff6b35] flex items-center justify-center flex-shrink-0">
                       <CheckCircle2 className="w-4 h-4 text-[#1a1a1a]" />
                     </div>
                     <span className="text-gray-700">{benefit}</span>
@@ -288,7 +288,7 @@ export default function About() {
             transition={{ duration: 0.8 }}
             className="text-center max-w-2xl mx-auto mb-16"
           >
-            <span className="inline-block text-xs font-semibold tracking-widest text-[#c4e92e] uppercase mb-4">Testimonials</span>
+            <span className="inline-block text-xs font-semibold tracking-widest text-[#ff6b35] uppercase mb-4">Testimonials</span>
             <h2 className="text-4xl md:text-5xl font-bold text-[#1a1a1a] mb-6">
               What Our Members Say
             </h2>

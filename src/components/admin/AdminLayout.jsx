@@ -146,7 +146,7 @@ export default function AdminLayout({ children }) {
               {sidebarOpen && (
                 <div>
                   <h1 className={`font-bold text-lg ${darkMode ? 'text-white' : 'text-gray-900'}`}>Admin Portal</h1>
-                  <p className="text-xs text-gray-500">Cymblime Cycling</p>
+                  <p className="text-xs text-gray-500">Cyblime Cycling</p>
                 </div>
               )}
             </div>

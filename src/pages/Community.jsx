@@ -49,6 +49,10 @@ export default function Community() {
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
   const [replyContent, setReplyContent] = useState("");
+  const [reportDialogOpen, setReportDialogOpen] = useState(false);
+  const [reportTarget, setReportTarget] = useState(null);
+  const [reportReason, setReportReason] = useState("spam");
+  const [reportDescription, setReportDescription] = useState("");
 
   const [newPost, setNewPost] = useState({
     title: "",
@@ -95,20 +99,25 @@ export default function Community() {
   const reportMutation = useMutation({
     mutationFn: (data) => base44.entities.Report.create(data),
     onSuccess: () => {
-      alert('Report submitted. Thank you for helping keep our community safe.');
+      setReportDialogOpen(false);
+      setReportTarget(null);
+      setReportReason("spam");
+      setReportDescription("");
     }
   });
 
   const handleReport = (contentType, contentId) => {
-    const reason = prompt('Reason for reporting? (spam, inappropriate, harassment, other)');
-    if (!reason) return;
-    
-    const description = prompt('Additional details (optional):');
+    setReportTarget({ contentType, contentId });
+    setReportDialogOpen(true);
+  };
+
+  const submitReport = () => {
+    if (!reportTarget) return;
     reportMutation.mutate({
-      content_type: contentType,
-      content_id: contentId,
-      reason: reason.toLowerCase(),
-      description: description || ''
+      content_type: reportTarget.contentType,
+      content_id: reportTarget.contentId,
+      reason: reportReason,
+      description: reportDescription
     });
   };
 
@@ -379,6 +388,53 @@ export default function Community() {
               </div>
             </>
           )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Report Dialog */}
+      <Dialog open={reportDialogOpen} onOpenChange={setReportDialogOpen}>
+        <DialogContent className="max-w-md bg-[#1a1a1a] border-white/10 text-white">
+          <DialogHeader>
+            <DialogTitle>Report Content</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <Label className="text-gray-300">Reason</Label>
+              <Select value={reportReason} onValueChange={setReportReason}>
+                <SelectTrigger className="bg-[#2a2a2a] border-white/10 text-white mt-1">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="spam">Spam</SelectItem>
+                  <SelectItem value="inappropriate">Inappropriate Content</SelectItem>
+                  <SelectItem value="harassment">Harassment</SelectItem>
+                  <SelectItem value="other">Other</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label className="text-gray-300">Additional details (optional)</Label>
+              <Textarea
+                value={reportDescription}
+                onChange={(e) => setReportDescription(e.target.value)}
+                placeholder="Describe the issue..."
+                className="bg-[#2a2a2a] border-white/10 text-white mt-1"
+                rows={3}
+              />
+            </div>
+            <div className="flex gap-2 justify-end">
+              <Button variant="outline" onClick={() => setReportDialogOpen(false)} className="border-white/10 text-gray-300">
+                Cancel
+              </Button>
+              <Button onClick={submitReport} disabled={reportMutation.isPending} className="bg-red-600 hover:bg-red-700 text-white">
+                <Flag className="w-4 h-4 mr-2" />
+                {reportMutation.isPending ? "Submitting..." : "Submit Report"}
+              </Button>
+            </div>
+            {reportMutation.isSuccess && (
+              <p className="text-green-400 text-sm text-center">Report submitted. Thank you for keeping our community safe.</p>
+            )}
+          </div>
         </DialogContent>
       </Dialog>
     </div>
