@@ -1,0 +1,417 @@
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { base44 } from "@/api/base44Client";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { Calendar, User, Eye, Tag, ArrowLeft, MessageCircle, Send } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Link } from "react-router-dom";
+import { createPageUrl } from "../utils";
+
+export default function BlogPost() {
+  const queryClient = useQueryClient();
+  const urlParams = new URLSearchParams(window.location.search);
+  const postId = urlParams.get('id');
+  const [commentText, setCommentText] = useState("");
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const currentUser = await base44.auth.me();
+        setUser(currentUser);
+      } catch (error) {
+        console.log("Not authenticated");
+      }
+    };
+    fetchUser();
+  }, []);
+
+  const { data: post, isLoading } = useQuery({
+    queryKey: ['blogPost', postId],
+    queryFn: async () => {
+      const posts = await base44.entities.BlogPost.list();
+      return posts.find(p => p.id === postId);
+    },
+    enabled: !!postId
+  });
+
+  const { data: comments = [] } = useQuery({
+    queryKey: ['blogComments', postId],
+    queryFn: () => base44.entities.BlogComment.filter({ post_id: postId }, '-created_date'),
+    enabled: !!postId
+  });
+
+  const incrementViewMutation = useMutation({
+    mutationFn: () => base44.entities.BlogPost.update(post.id, {
+      view_count: (post.view_count || 0) + 1
+    }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['blogPost', postId] });
+      queryClient.invalidateQueries({ queryKey: ['blogPosts'] });
+    }
+  });
+
+  const createCommentMutation = useMutation({
+    mutationFn: (commentData) => base44.entities.BlogComment.create(commentData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['blogComments', postId] });
+      setCommentText("");
+    }
+  });
+
+  const handleSubmitComment = (e) => {
+    e.preventDefault();
+    if (!commentText.trim()) return;
+    
+    createCommentMutation.mutate({
+      post_id: postId,
+      comment_text: commentText,
+      user_name: user?.full_name || user?.email?.split('@')[0] || 'Anonymous',
+      user_email: user?.email || ''
+    });
+  };
+
+  useEffect(() => {
+    if (post) {
+      incrementViewMutation.mutate();
+    }
+  }, [post?.id]);
+
+  // Parse content and insert images at specified positions
+  const renderContentWithImages = () => {
+    if (!post.content) return null;
+
+    // Split content into paragraphs
+    const paragraphs = post.content.split('\n\n').filter(p => p.trim());
+    const contentImages = post.content_images || [];
+    
+    // Create a map of position -> image
+    const imageMap = {};
+    contentImages.forEach(img => {
+      if (!imageMap[img.position]) {
+        imageMap[img.position] = [];
+      }
+      imageMap[img.position].push(img);
+    });
+
+    const elements = [];
+    
+    paragraphs.forEach((paragraph, index) => {
+      // Add paragraph
+      elements.push(
+        <p key={`p-${index}`} className="text-[#2A2A2A] text-lg leading-relaxed mb-6">
+          {paragraph}
+        </p>
+      );
+      
+      // Add images after this paragraph if any
+      if (imageMap[index]) {
+        imageMap[index].forEach((img, imgIndex) => {
+          elements.push(
+            <figure key={`img-${index}-${imgIndex}`} className="my-8">
+              <div className="relative rounded-2xl overflow-hidden shadow-lg">
+                <img
+                  src={img.url}
+                  alt={img.caption || ''}
+                  className="w-full h-auto"
+                />
+              </div>
+              {img.caption && (
+                <figcaption className="text-sm text-[#555555] italic mt-3 text-center">
+                  {img.caption}
+                </figcaption>
+              )}
+            </figure>
+          );
+        });
+      }
+    });
+
+    return elements;
+  };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#fafafa] flex items-center justify-center">
+        <div className="text-[#555555]">Loading article...</div>
+      </div>
+    );
+  }
+
+  if (!post) {
+    return (
+      <div className="min-h-screen bg-[#fafafa] flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-[#2A2A2A] mb-4">Article not found</h2>
+          <Link to={createPageUrl("Blog")}>
+            <Button className="bg-[#c9a227] hover:bg-[#b89123] text-white">
+              Back to Blog
+            </Button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-[#f8f8f8]">
+      {/* Top Navigation Bar */}
+      <div className="bg-white border-b border-gray-200">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <Link to={createPageUrl("Blog")}>
+            <Button variant="ghost" className="text-[#555555] hover:bg-gray-100">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Blog
+            </Button>
+          </Link>
+        </div>
+      </div>
+
+      {/* Hero Media Area */}
+      <div className="bg-black">
+        <div className="max-w-7xl mx-auto">
+          {post.video_url ? (
+            // Video Player
+            <div className="relative" style={{ paddingBottom: '56.25%' }}>
+              <iframe
+                src={post.video_url}
+                className="absolute inset-0 w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                title={post.title}
+              />
+            </div>
+          ) : post.featured_image ? (
+            // Featured Image
+            <div className="relative h-[400px] md:h-[600px]">
+              <img
+                src={post.featured_image}
+                alt={post.title}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          ) : null}
+        </div>
+      </div>
+
+      {/* Article Content */}
+      <article className="bg-white">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+          {/* Category Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            className="mb-4"
+          >
+            <Badge className="bg-[#c9a227] text-white border-0 uppercase tracking-wide text-xs font-bold px-3 py-1">
+              {post.category}
+            </Badge>
+          </motion.div>
+
+          {/* Title */}
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#1a1a1a] leading-tight mb-6"
+          >
+            {post.title}
+          </motion.h1>
+
+          {/* Excerpt */}
+          {post.excerpt && (
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+              className="text-xl md:text-2xl text-[#555555] leading-relaxed mb-8 font-light"
+            >
+              {post.excerpt}
+            </motion.p>
+          )}
+
+          {/* Meta Information */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4, delay: 0.3 }}
+            className="flex items-center gap-4 text-sm text-[#888888] pb-8 mb-8 border-b border-gray-200"
+          >
+            <Link 
+              to={createPageUrl("AuthorPosts") + `?author=${encodeURIComponent(post.created_by)}`}
+              className="flex items-center gap-2 hover:text-[#c9a227] transition-colors"
+            >
+              <User className="w-4 h-4" />
+              <span className="font-medium">{post.created_by?.split('@')[0] || 'Author'}</span>
+            </Link>
+            <span className="text-gray-300">|</span>
+            <div className="flex items-center gap-2">
+              <Calendar className="w-4 h-4" />
+              <span>{new Date(post.created_date).toLocaleDateString('en-US', { 
+                month: 'long', 
+                day: 'numeric', 
+                year: 'numeric' 
+              })}</span>
+            </div>
+            <span className="text-gray-300">|</span>
+            <div className="flex items-center gap-2">
+              <Eye className="w-4 h-4" />
+              <span>{post.view_count || 0} views</span>
+            </div>
+          </motion.div>
+
+          {/* Article Body */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.4 }}
+            className="article-content"
+          >
+            <div className="max-w-3xl">
+              {renderContentWithImages()}
+            </div>
+          </motion.div>
+
+          {/* Tags */}
+          {post.tags && post.tags.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4, delay: 0.5 }}
+              className="mt-12 pt-8 border-t border-gray-200"
+            >
+              <div className="flex items-center gap-2 flex-wrap">
+                <Tag className="w-4 h-4 text-[#555555]" />
+                <span className="text-sm font-semibold text-[#555555] mr-2">Tags:</span>
+                {post.tags.map((tag, index) => (
+                  <Badge 
+                    key={index} 
+                    variant="outline" 
+                    className="text-xs font-medium px-3 py-1 rounded-full"
+                  >
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </div>
+      </article>
+
+      {/* Comments Section */}
+      <section className="py-16 bg-[#f8f8f8]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white rounded-2xl p-8 shadow-sm">
+            <div className="flex items-center gap-2 mb-8">
+              <MessageCircle className="w-6 h-6 text-[#c9a227]" />
+              <h3 className="text-2xl font-bold text-[#2A2A2A]">
+                Comments ({comments.length})
+              </h3>
+            </div>
+
+            {/* Comment Form */}
+            {user ? (
+              <form onSubmit={handleSubmitComment} className="mb-8 pb-8 border-b border-gray-200">
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#c9a227] to-[#b89123] flex items-center justify-center text-white font-bold flex-shrink-0">
+                    {(user.full_name || user.email)?.charAt(0).toUpperCase()}
+                  </div>
+                  <div className="flex-1">
+                    <Textarea
+                      value={commentText}
+                      onChange={(e) => setCommentText(e.target.value)}
+                      placeholder="Share your thoughts..."
+                      rows={3}
+                      className="mb-3 resize-none"
+                      required
+                    />
+                    <Button 
+                      type="submit" 
+                      disabled={!commentText.trim() || createCommentMutation.isPending}
+                      className="bg-[#c9a227] hover:bg-[#b89123] text-white"
+                    >
+                      <Send className="w-4 h-4 mr-2" />
+                      {createCommentMutation.isPending ? 'Posting...' : 'Post Comment'}
+                    </Button>
+                  </div>
+                </div>
+              </form>
+            ) : (
+              <div className="mb-8 pb-8 border-b border-gray-200 text-center">
+                <p className="text-[#555555] mb-4">Please sign in to leave a comment</p>
+              </div>
+            )}
+
+            {/* Comments List */}
+            {comments.length > 0 ? (
+              <div className="space-y-6">
+                {comments.map((comment, index) => (
+                  <motion.div
+                    key={comment.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                    className="flex items-start gap-4"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-white font-bold flex-shrink-0">
+                      {comment.user_name?.charAt(0).toUpperCase() || 'A'}
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="font-semibold text-[#2A2A2A]">
+                          {comment.user_name || 'Anonymous'}
+                        </span>
+                        <span className="text-sm text-[#888888]">
+                          {new Date(comment.created_date).toLocaleDateString('en-US', {
+                            month: 'short',
+                            day: 'numeric',
+                            year: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                          })}
+                        </span>
+                      </div>
+                      <p className="text-[#555555] leading-relaxed">{comment.comment_text}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-8">
+                <MessageCircle className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+                <p className="text-[#888888]">No comments yet. Be the first to share your thoughts!</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* Back to Blog CTA */}
+      <section className="py-12 bg-[#f8f8f8] border-t border-gray-200">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h3 className="text-2xl font-bold text-[#2A2A2A] mb-6">
+            Explore More Stories
+          </h3>
+          <Link to={createPageUrl("Blog")}>
+            <Button className="bg-[#c9a227] hover:bg-[#b89123] text-white rounded-full px-8 py-3 text-base font-semibold">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Blog
+            </Button>
+          </Link>
+        </div>
+      </section>
+
+      <style jsx>{`
+        .article-content {
+          font-family: Georgia, 'Times New Roman', serif;
+        }
+        .article-content p {
+          line-height: 1.8;
+        }
+      `}</style>
+    </div>
+  );
+}

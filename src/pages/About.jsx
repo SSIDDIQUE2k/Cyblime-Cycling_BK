@@ -1,0 +1,325 @@
+import React from "react";
+import { motion } from "framer-motion";
+import { 
+  Target, 
+  Users, 
+  Award, 
+  Heart,
+  CheckCircle2,
+  ArrowRight,
+  Quote
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import { createPageUrl } from "../utils";
+
+const ValueCard = ({ icon: Icon, title, description, index }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+      className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-all duration-300"
+    >
+      <div className="w-14 h-14 rounded-2xl bg-[#c4e92e] flex items-center justify-center mb-6">
+        <Icon className="w-7 h-7 text-[#1a1a1a]" />
+      </div>
+      <h3 className="text-2xl font-bold text-[#1a1a1a] mb-4">{title}</h3>
+      <p className="text-gray-600 leading-relaxed">{description}</p>
+    </motion.div>
+  );
+};
+
+const TestimonialCard = ({ quote, author, role, index }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+      className="bg-white rounded-2xl p-8 shadow-sm"
+    >
+      <Quote className="w-10 h-10 text-[#c4e92e] mb-4" />
+      <p className="text-gray-700 text-lg mb-6 leading-relaxed">{quote}</p>
+      <div>
+        <div className="font-semibold text-[#1a1a1a]">{author}</div>
+        <div className="text-sm text-gray-500">{role}</div>
+      </div>
+    </motion.div>
+  );
+};
+
+export default function About() {
+  const values = [
+    {
+      icon: Users,
+      title: "Community First",
+      description: "We believe in the power of connection. Every ride, every event, every interaction is an opportunity to build lasting friendships and support each other's growth."
+    },
+    {
+      icon: Target,
+      title: "Excellence in Every Ride",
+      description: "From route planning to safety protocols, we maintain the highest standards. Our expert ride leaders ensure every experience is memorable, safe, and rewarding."
+    },
+    {
+      icon: Heart,
+      title: "Inclusive & Welcoming",
+      description: "Whether you're a seasoned cyclist or just starting out, you have a place here. We celebrate all skill levels and create opportunities for everyone to thrive."
+    },
+    {
+      icon: Award,
+      title: "Growth Mindset",
+      description: "Cycling is a journey, not a destination. We provide the training, workshops, and mentorship to help you reach new heights and discover what you're capable of."
+    }
+  ];
+
+  const benefits = [
+    "Access to 150+ events per year",
+    "Expert-led training and workshops",
+    "Exclusive adventure trips to stunning destinations",
+    "Supportive community of passionate cyclists",
+    "Professional ride leaders and safety support",
+    "Member discounts on gear and equipment",
+    "Social events and networking opportunities",
+    "Personalized coaching and guidance"
+  ];
+
+  const testimonials = [
+    {
+      quote: "Cyblime transformed my cycling journey. I went from struggling on 10km rides to completing my first century ride, all thanks to the incredible support and training I received.",
+      author: "Sarah Mitchell",
+      role: "Member since 2022"
+    },
+    {
+      quote: "The community here is unlike anything I've experienced. Every ride feels like riding with family. The trip to Blue Ridge Mountains was a life-changing experience.",
+      author: "Marcus Rodriguez",
+      role: "Member since 2021"
+    },
+    {
+      quote: "As a beginner, I was nervous to join. But the welcoming atmosphere and patient ride leaders made me feel at home from day one. Best decision I've made!",
+      author: "Emily Chen",
+      role: "Member since 2023"
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-[#fafafa]">
+      {/* Hero Section */}
+      <section className="relative bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] py-24 md:py-32 overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-[#c4e92e]/10 blur-3xl" />
+        </div>
+        
+        <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="max-w-3xl"
+          >
+            <h1 className="text-5xl md:text-6xl font-bold text-white tracking-tight mb-6">
+              More Than a Club.
+              <br />
+              <span className="text-[#c4e92e]">A Movement.</span>
+            </h1>
+            <p className="text-xl text-gray-300 leading-relaxed">
+              At Cyblime, we're building a culture where endurance meets excellence, where every pedal stroke brings you closer to your goals, and where community is at the heart of everything we do.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Story Section */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <span className="inline-block text-xs font-semibold tracking-widest text-[#c4e92e] uppercase mb-4">Our Story</span>
+              <h2 className="text-4xl md:text-5xl font-bold text-[#1a1a1a] mb-6">
+                Founded by Cyclists,
+                <br />
+                For Cyclists
+              </h2>
+              <div className="space-y-4 text-gray-600 leading-relaxed">
+                <p>
+                  Cyblime began in 2019 with a simple vision: create a cycling community that welcomes everyone, challenges the status quo, and makes every ride an adventure worth remembering.
+                </p>
+                <p>
+                  What started as weekend group rides with a handful of friends has grown into a thriving community of over 2,500 active members. We've organized hundreds of events, explored countless miles of trails, and created friendships that extend far beyond the bike.
+                </p>
+                <p>
+                  Today, we're proud to be one of the most inclusive and dynamic cycling clubs in the region, known for our expert-led events, stunning adventure trips, and unwavering commitment to helping every rider reach their full potential.
+                </p>
+              </div>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="grid grid-cols-2 gap-4"
+            >
+              <div className="space-y-4">
+                <img 
+                  src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80" 
+                  alt="Cycling"
+                  className="w-full h-48 object-cover rounded-2xl"
+                />
+                <img 
+                  src="https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=400&q=80" 
+                  alt="Group ride"
+                  className="w-full h-64 object-cover rounded-2xl"
+                />
+              </div>
+              <div className="space-y-4 mt-8">
+                <img 
+                  src="https://images.unsplash.com/photo-1517649763962-0c623066013b?w=400&q=80" 
+                  alt="Adventure"
+                  className="w-full h-64 object-cover rounded-2xl"
+                />
+                <img 
+                  src="https://images.unsplash.com/photo-1571188654248-7a89213915f7?w=400&q=80" 
+                  alt="Cyclist"
+                  className="w-full h-48 object-cover rounded-2xl"
+                />
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Values Section */}
+      <section className="py-24 bg-[#fafafa]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center max-w-2xl mx-auto mb-16"
+          >
+            <span className="inline-block text-xs font-semibold tracking-widest text-[#c4e92e] uppercase mb-4">Our Values</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-[#1a1a1a] mb-6">
+              What We Stand For
+            </h2>
+            <p className="text-lg text-gray-600">
+              These core principles guide everything we do and shape the Cyblime experience.
+            </p>
+          </motion.div>
+          
+          <div className="grid md:grid-cols-2 gap-6">
+            {values.map((value, index) => (
+              <ValueCard key={index} {...value} index={index} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits Section */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <span className="inline-block text-xs font-semibold tracking-widest text-[#c4e92e] uppercase mb-4">Member Benefits</span>
+              <h2 className="text-4xl md:text-5xl font-bold text-[#1a1a1a] mb-6">
+                Why Ride With Cyblime?
+              </h2>
+              <p className="text-lg text-gray-600 mb-8">
+                When you join Cyblime, you're not just signing up for events — you're gaining access to a complete cycling ecosystem designed to support your journey.
+              </p>
+              
+              <div className="grid gap-4">
+                {benefits.map((benefit, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.05 }}
+                    className="flex items-center gap-3"
+                  >
+                    <div className="w-6 h-6 rounded-full bg-[#c4e92e] flex items-center justify-center flex-shrink-0">
+                      <CheckCircle2 className="w-4 h-4 text-[#1a1a1a]" />
+                    </div>
+                    <span className="text-gray-700">{benefit}</span>
+                  </motion.div>
+                ))}
+              </div>
+              
+
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="relative"
+            >
+              <img 
+                src="https://images.unsplash.com/photo-1534787238916-9ba6764efd4f?w=800&q=80" 
+                alt="Cyclists celebrating"
+                className="w-full h-[600px] object-cover rounded-3xl shadow-2xl"
+              />
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-24 bg-[#fafafa]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center max-w-2xl mx-auto mb-16"
+          >
+            <span className="inline-block text-xs font-semibold tracking-widest text-[#c4e92e] uppercase mb-4">Testimonials</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-[#1a1a1a] mb-6">
+              What Our Members Say
+            </h2>
+          </motion.div>
+          
+          <div className="grid md:grid-cols-3 gap-6">
+            {testimonials.map((testimonial, index) => (
+              <TestimonialCard key={index} {...testimonial} index={index} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-24 bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a]">
+        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              Ready to Start Your Journey?
+            </h2>
+            <p className="text-xl text-gray-400">
+              Join a community that will support, challenge, and inspire you every mile of the way.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+    </div>
+  );
+}
