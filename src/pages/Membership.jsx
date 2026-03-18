@@ -17,10 +17,95 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { usePageContent } from "../hooks/usePageContent";
 
-const CONTACT_EMAIL = "info@cyblimecycling.com";
+const DEFAULT_MEMBERSHIP_CONTENT = {
+  hero: {
+    heading: "Choose Your Ride",
+    subheading: "Join thousands of cyclists who are pushing their limits, building connections, and experiencing cycling at its finest.",
+    stats: [
+      { value: "2,500+", label: "Active Members" },
+      { value: "4.9/5", label: "Member Rating" },
+      { value: "50K+", label: "Miles Ridden" }
+    ]
+  },
+  tiers: [
+    {
+      name: "Starter",
+      description: "Perfect for casual riders",
+      price: 29,
+      period: "month",
+      popular: false,
+      icon: "users",
+      features: [
+        { text: "Access to weekly group rides", included: true },
+        { text: "Community social events", included: true },
+        { text: "Member-only newsletter", included: true },
+        { text: "10% discount on partner shops", included: true },
+        { text: "Priority event registration", included: false },
+        { text: "Adventure trip access", included: false },
+        { text: "Workshops & training sessions", included: false },
+        { text: "Personalized coaching", included: false }
+      ]
+    },
+    {
+      name: "Pro Rider",
+      description: "For serious enthusiasts",
+      price: 49,
+      period: "month",
+      popular: true,
+      savings: 110,
+      icon: "sparkles",
+      features: [
+        { text: "Access to weekly group rides", included: true },
+        { text: "Community social events", included: true },
+        { text: "Member-only newsletter", included: true },
+        { text: "15% discount on partner shops", included: true },
+        { text: "Priority event registration", included: true },
+        { text: "Adventure trip access", included: true },
+        { text: "Workshops & training sessions", included: true },
+        { text: "Personalized coaching", included: false }
+      ]
+    },
+    {
+      name: "Elite",
+      description: "Complete experience",
+      price: 89,
+      period: "month",
+      popular: false,
+      savings: 228,
+      icon: "crown",
+      features: [
+        { text: "Access to weekly group rides", included: true },
+        { text: "Community social events", included: true },
+        { text: "Member-only newsletter", included: true },
+        { text: "20% discount on partner shops", included: true },
+        { text: "Priority event registration", included: true },
+        { text: "Adventure trip access", included: true },
+        { text: "Workshops & training sessions", included: true },
+        { text: "Personalized coaching", included: true }
+      ]
+    }
+  ],
+  benefits: [
+    { icon: "calendar", title: "150+ Annual Events", description: "From casual coffee rides to challenging multi-day adventures, there's always something happening." },
+    { icon: "mapPin", title: "Scenic Route Library", description: "Access our curated collection of the best cycling routes in the region, complete with difficulty ratings and highlights." },
+    { icon: "trophy", title: "Skill Development", description: "Regular workshops on technique, nutrition, bike maintenance, and safety to help you become a better cyclist." },
+    { icon: "heart", title: "Supportive Community", description: "Connect with fellow cyclists who share your passion, make lasting friendships, and ride with your crew." },
+    { icon: "zap", title: "Expert Guidance", description: "Learn from experienced ride leaders and coaches who are dedicated to helping you reach your goals." },
+    { icon: "shield", title: "Safety First", description: "All rides include support vehicles, first aid, and comprehensive safety protocols for peace of mind." }
+  ],
+  faq: [
+    { question: "Can I cancel my membership anytime?", answer: "Yes! You can cancel your membership at any time. Your access will continue until the end of your billing period." },
+    { question: "What if I'm a complete beginner?", answer: "Perfect! We welcome cyclists of all levels. Our beginner-friendly rides and workshops are designed to help you build confidence and skills at your own pace." },
+    { question: "Do I need expensive gear to join?", answer: "Not at all. A safe, road-worthy bike and a helmet are all you need to get started. We offer guidance on gear upgrades as you progress." },
+    { question: "How many events can I attend per month?", answer: "As many as you'd like! Your membership gives you unlimited access to group rides and most events. Some premium adventure trips may have additional fees." },
+    { question: "Is there a trial period?", answer: "Yes! We offer a 7-day money-back guarantee. If you're not satisfied within your first week, we'll refund your membership fee." }
+  ],
+  contact_email: "info@cyblimecycling.com"
+};
 
-const ContactDialog = ({ isOpen, onClose, planName }) => {
+const ContactDialog = ({ isOpen, onClose, planName, contactEmail = "info@cyblimecycling.com" }) => {
   if (!isOpen) return null;
 
   return (
@@ -51,11 +136,11 @@ const ContactDialog = ({ isOpen, onClose, planName }) => {
               Contact us to get started with the <span className="font-semibold">{planName}</span> plan. We'll help you set everything up!
             </p>
             <a
-              href={`mailto:${CONTACT_EMAIL}?subject=Interested in ${planName} Membership&body=Hi, I'm interested in joining the ${planName} membership plan. Please send me more details.`}
+              href={`mailto:${contactEmail}?subject=Interested in ${planName} Membership&body=Hi, I'm interested in joining the ${planName} membership plan. Please send me more details.`}
               className="inline-flex items-center justify-center w-full bg-[#ff6b35] hover:bg-[#ff8555] text-white rounded-xl py-4 px-6 font-semibold transition-colors mb-3"
             >
               <Mail className="w-5 h-5 mr-2" />
-              Email Us at {CONTACT_EMAIL}
+              Email Us at {contactEmail}
             </a>
             <button
               onClick={onClose}
@@ -158,6 +243,7 @@ const FeatureCard = ({ icon: Icon, title, description, index }) => {
 };
 
 export default function Membership() {
+  const { content } = usePageContent("membership", DEFAULT_MEMBERSHIP_CONTENT);
   const [contactDialogOpen, setContactDialogOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState("");
 
@@ -166,117 +252,24 @@ export default function Membership() {
     setContactDialogOpen(true);
   };
 
-  const plans = [
-    {
-      name: "Starter",
-      description: "Perfect for casual riders",
-      price: 29,
-      period: "month",
-      icon: <Users className="w-7 h-7 text-[#1a1a1a]" />,
-      features: [
-        { text: "Access to weekly group rides", included: true },
-        { text: "Community social events", included: true },
-        { text: "Member-only newsletter", included: true },
-        { text: "10% discount on partner shops", included: true },
-        { text: "Priority event registration", included: false },
-        { text: "Adventure trip access", included: false },
-        { text: "Workshops & training sessions", included: false },
-        { text: "Personalized coaching", included: false }
-      ]
-    },
-    {
-      name: "Pro Rider",
-      description: "For serious enthusiasts",
-      price: 49,
-      period: "month",
-      savings: 110,
-      icon: <Sparkles className="w-7 h-7 text-[#1a1a1a]" />,
-      features: [
-        { text: "Access to weekly group rides", included: true },
-        { text: "Community social events", included: true },
-        { text: "Member-only newsletter", included: true },
-        { text: "15% discount on partner shops", included: true },
-        { text: "Priority event registration", included: true },
-        { text: "Adventure trip access", included: true },
-        { text: "Workshops & training sessions", included: true },
-        { text: "Personalized coaching", included: false }
-      ]
-    },
-    {
-      name: "Elite",
-      description: "Complete experience",
-      price: 89,
-      period: "month",
-      savings: 228,
-      icon: <Crown className="w-7 h-7 text-[#1a1a1a]" />,
-      features: [
-        { text: "Access to weekly group rides", included: true },
-        { text: "Community social events", included: true },
-        { text: "Member-only newsletter", included: true },
-        { text: "20% discount on partner shops", included: true },
-        { text: "Priority event registration", included: true },
-        { text: "Adventure trip access", included: true },
-        { text: "Workshops & training sessions", included: true },
-        { text: "Personalized coaching", included: true }
-      ]
-    }
-  ];
+  const tierIconMap = { users: Users, sparkles: Sparkles, crown: Crown };
+  const benefitIconMap = { calendar: Calendar, mapPin: MapPin, trophy: Trophy, heart: Heart, zap: Zap, shield: Shield };
 
-  const benefits = [
-    {
-      icon: Calendar,
-      title: "150+ Annual Events",
-      description: "From casual coffee rides to challenging multi-day adventures, there's always something happening."
-    },
-    {
-      icon: MapPin,
-      title: "Scenic Route Library",
-      description: "Access our curated collection of the best cycling routes in the region, complete with difficulty ratings and highlights."
-    },
-    {
-      icon: Trophy,
-      title: "Skill Development",
-      description: "Regular workshops on technique, nutrition, bike maintenance, and safety to help you become a better cyclist."
-    },
-    {
-      icon: Heart,
-      title: "Supportive Community",
-      description: "Connect with fellow cyclists who share your passion, make lasting friendships, and ride with your crew."
-    },
-    {
-      icon: Zap,
-      title: "Expert Guidance",
-      description: "Learn from experienced ride leaders and coaches who are dedicated to helping you reach your goals."
-    },
-    {
-      icon: Shield,
-      title: "Safety First",
-      description: "All rides include support vehicles, first aid, and comprehensive safety protocols for peace of mind."
-    }
-  ];
+  const plans = (content.tiers || []).map((tier) => ({
+    ...tier,
+    icon: (() => {
+      const IconComp = tierIconMap[tier.icon] || Users;
+      return <IconComp className="w-7 h-7 text-[#1a1a1a]" />;
+    })()
+  }));
 
-  const faqs = [
-    {
-      question: "Can I cancel my membership anytime?",
-      answer: "Yes! You can cancel your membership at any time. Your access will continue until the end of your billing period."
-    },
-    {
-      question: "What if I'm a complete beginner?",
-      answer: "Perfect! We welcome cyclists of all levels. Our beginner-friendly rides and workshops are designed to help you build confidence and skills at your own pace."
-    },
-    {
-      question: "Do I need expensive gear to join?",
-      answer: "Not at all. A safe, road-worthy bike and a helmet are all you need to get started. We offer guidance on gear upgrades as you progress."
-    },
-    {
-      question: "How many events can I attend per month?",
-      answer: "As many as you'd like! Your membership gives you unlimited access to group rides and most events. Some premium adventure trips may have additional fees."
-    },
-    {
-      question: "Is there a trial period?",
-      answer: "Yes! We offer a 7-day money-back guarantee. If you're not satisfied within your first week, we'll refund your membership fee."
-    }
-  ];
+  const benefits = (content.benefits || []).map((b) => ({
+    ...b,
+    icon: benefitIconMap[b.icon] || Calendar
+  }));
+
+  const faqs = content.faq || [];
+  const contactEmail = content.contact_email || "info@cyblimecycling.com";
 
   return (
     <div className="min-h-screen bg-[#fafafa]">
@@ -284,6 +277,7 @@ export default function Membership() {
         isOpen={contactDialogOpen}
         onClose={() => setContactDialogOpen(false)}
         planName={selectedPlan}
+        contactEmail={contactEmail}
       />
 
       {/* Hero Section */}
@@ -300,27 +294,22 @@ export default function Membership() {
             transition={{ duration: 0.8 }}
           >
             <h1 className="text-5xl md:text-6xl font-bold text-white tracking-tight mb-6">
-              Choose Your Ride
+              {content.hero?.heading || "Choose Your Ride"}
             </h1>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-8">
-              Join thousands of cyclists who are pushing their limits, building connections, and experiencing cycling at its finest.
+              {content.hero?.subheading || "Join thousands of cyclists who are pushing their limits, building connections, and experiencing cycling at its finest."}
             </p>
 
             <div className="flex items-center justify-center gap-8 flex-wrap">
-              <div className="text-center">
-                <div className="text-4xl font-bold text-[#ff6b35] mb-1">2,500+</div>
-                <div className="text-sm text-gray-400 uppercase tracking-wider">Active Members</div>
-              </div>
-              <div className="hidden md:block w-px h-12 bg-white/10" />
-              <div className="text-center">
-                <div className="text-4xl font-bold text-[#ff6b35] mb-1">4.9/5</div>
-                <div className="text-sm text-gray-400 uppercase tracking-wider">Member Rating</div>
-              </div>
-              <div className="hidden md:block w-px h-12 bg-white/10" />
-              <div className="text-center">
-                <div className="text-4xl font-bold text-[#ff6b35] mb-1">50K+</div>
-                <div className="text-sm text-gray-400 uppercase tracking-wider">Miles Ridden</div>
-              </div>
+              {(content.hero?.stats || []).map((stat, i) => (
+                <React.Fragment key={i}>
+                  {i > 0 && <div className="hidden md:block w-px h-12 bg-white/10" />}
+                  <div className="text-center">
+                    <div className="text-4xl font-bold text-[#ff6b35] mb-1">{stat.value}</div>
+                    <div className="text-sm text-gray-400 uppercase tracking-wider">{stat.label}</div>
+                  </div>
+                </React.Fragment>
+              ))}
             </div>
           </motion.div>
         </div>
@@ -350,7 +339,7 @@ export default function Membership() {
               <PricingCard
                 key={index}
                 plan={plan}
-                isPopular={index === 1}
+                isPopular={plan.popular || false}
                 index={index}
                 onGetStarted={handleGetStarted}
               />

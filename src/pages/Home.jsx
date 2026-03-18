@@ -4,6 +4,7 @@ import { createPageUrl } from "../utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { base44 } from "@/api/base44Client";
 import { useQuery } from "@tanstack/react-query";
+import { usePageContent, useTestimonials } from "../hooks/usePageContent";
 import { getPersonalizedRecommendations } from "../components/recommendations/RecommendationEngine";
 import RecommendedSection from "../components/recommendations/RecommendedSection";
 import CommunityFeed from "../components/community/CommunityFeed";
@@ -21,27 +22,45 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
+// Default content for CMS fallback
+const DEFAULT_HOME_CONTENT = {
+  hero_slides: [
+    { heading: "Ride Together, Grow Together", subheading: "Join a community that pushes your limits and celebrates every milestone", image_url: "https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=1920&q=80" },
+    { heading: "Every Mile Tells a Story", subheading: "Create unforgettable memories on scenic routes and epic adventures", image_url: "https://images.unsplash.com/photo-1517649763962-0c623066013b?w=1920&q=80" },
+    { heading: "Join the Journey", subheading: "Discover the joy of cycling with riders who share your passion", image_url: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&q=80" }
+  ],
+  values: [
+    { title: "Adventure Awaits", description: "We explore new routes, discover hidden trails, and push boundaries together. Every ride is an opportunity for discovery.", icon: "compass" },
+    { title: "Community First", description: "At the heart of Cyblime is a supportive community where friendships are forged and every rider is valued.", icon: "heart" },
+    { title: "All Levels Welcome", description: "Whether you're a beginner or a seasoned pro, you'll find your pace and your people at Cyblime.", icon: "users" }
+  ],
+  gallery_images: [
+    { url: "https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=800&q=80", alt: "Group ride", span: "col-span-2 row-span-2" },
+    { url: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80", alt: "Scenic route" },
+    { url: "https://images.unsplash.com/photo-1517649763962-0c623066013b?w=400&q=80", alt: "Training" },
+    { url: "https://images.unsplash.com/photo-1571188654248-7a89213915f7?w=400&q=80", alt: "Community" },
+    { url: "https://images.unsplash.com/photo-1534787238916-9ba6764efd4f?w=400&q=80", alt: "Adventure" }
+  ],
+  cta: {
+    heading: "Ready to Join the Pack?",
+    subheading: "Become part of a community that rides together, grows together, and creates unforgettable memories on every journey.",
+    button_text: "Browse Events",
+    button_link: "Events"
+  },
+  instagram_widget_id: "70900cfe-1ff2-4b28-a832-f9790890ec6d",
+  show_instagram: true,
+  show_recommendations: true
+};
+
 // Hero Slideshow Component
-const HeroSlideshow = () => {
+const HeroSlideshow = ({ slides: cmsSlides }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const slides = [
-    {
-      title: "Ride Together, Grow Together",
-      subtitle: "Join a community that pushes your limits and celebrates every milestone",
-      image: "https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=1920&q=80"
-    },
-    {
-      title: "Every Mile Tells a Story",
-      subtitle: "Create unforgettable memories on scenic routes and epic adventures",
-      image: "https://images.unsplash.com/photo-1517649763962-0c623066013b?w=1920&q=80"
-    },
-    {
-      title: "Join the Journey",
-      subtitle: "Discover the joy of cycling with riders who share your passion",
-      image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&q=80"
-    }
-  ];
+  const slides = (cmsSlides || []).map(s => ({
+    title: s.heading,
+    subtitle: s.subheading,
+    image: s.image_url
+  }));
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -207,6 +226,7 @@ const ValueCard = ({ icon: Icon, title, description, index }) => {
 
 export default function Home() {
   const [user, setUser] = useState(null);
+  const { content } = usePageContent("home", DEFAULT_HOME_CONTENT);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -220,6 +240,7 @@ export default function Home() {
     fetchUser();
 
     // Load Elfsight script for Instagram gallery
+    const widgetId = content.instagram_widget_id || DEFAULT_HOME_CONTENT.instagram_widget_id;
     const script = document.createElement('script');
     script.src = 'https://elfsightcdn.com/platform.js';
     script.async = true;
@@ -256,51 +277,22 @@ export default function Home() {
     }
   });
 
-  const values = [
-    {
-      icon: Compass,
-      title: "Adventure Awaits",
-      description: "We explore new routes, discover hidden trails, and push boundaries together. Every ride is an opportunity for discovery."
-    },
-    {
-      icon: Heart,
-      title: "Community First",
-      description: "At the heart of Cymblime is a supportive community where friendships are forged and every rider is valued."
-    },
-    {
-      icon: Users,
-      title: "All Levels Welcome",
-      description: "Whether you're a beginner or a seasoned pro, you'll find your pace and your people at Cymblime."
-    }
-  ];
+  const iconMap = { compass: Compass, heart: Heart, users: Users };
+  const values = (content.values || []).map(v => ({
+    icon: iconMap[v.icon] || Compass,
+    title: v.title,
+    description: v.description
+  }));
 
-  const galleryImages = [
-    {
-      src: "https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=800&q=80",
-      span: "col-span-2 row-span-2"
-    },
-    {
-      src: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80",
-      span: "col-span-1 row-span-1"
-    },
-    {
-      src: "https://images.unsplash.com/photo-1517649763962-0c623066013b?w=400&q=80",
-      span: "col-span-1 row-span-1"
-    },
-    {
-      src: "https://images.unsplash.com/photo-1571188654248-7a89213915f7?w=400&q=80",
-      span: "col-span-1 row-span-1"
-    },
-    {
-      src: "https://images.unsplash.com/photo-1534787238916-9ba6764efd4f?w=400&q=80",
-      span: "col-span-1 row-span-1"
-    }
-  ];
+  const galleryImages = (content.gallery_images || []).map((img, i) => ({
+    src: img.url,
+    span: i === 0 ? "col-span-2 row-span-2" : "col-span-1 row-span-1"
+  }));
 
   return (
     <div className="min-h-screen">
       {/* Section 1: Hero Slideshow */}
-      <HeroSlideshow />
+      <HeroSlideshow slides={content.hero_slides} />
 
       {/* Personalized Recommendations */}
       {user && recommendations && (
@@ -440,16 +432,16 @@ export default function Home() {
             transition={{ duration: 0.8 }}
           >
             <h2 className="text-5xl md:text-6xl font-bold text-white mb-6">
-              Ready to Join the Pack?
+              {content.cta?.heading || "Ready to Join the Pack?"}
             </h2>
             <p className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
-              Become part of a community that rides together, grows together, and creates unforgettable memories on every journey.
+              {content.cta?.subheading || "Become part of a community that rides together, grows together, and creates unforgettable memories on every journey."}
             </p>
-            
+
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link to={createPageUrl("Events")}>
+              <Link to={createPageUrl(content.cta?.button_link || "Events")}>
                 <Button className="bg-[#c9a227] hover:bg-[#b89123] text-white rounded-full px-10 py-6 text-lg font-semibold">
-                  Browse Events
+                  {content.cta?.button_text || "Browse Events"}
                 </Button>
               </Link>
             </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "./utils";
 import { base44 } from "@/api/base44Client";
+import { useSiteSettings } from "./hooks/usePageContent";
 import { Bike, Menu, X, User, LogOut, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import NotificationBell from "./components/notifications/NotificationBell";
@@ -16,8 +17,14 @@ import { ChevronDown } from "lucide-react";
 
 export default function Layout({ children, currentPageName }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
   const [user, setUser] = useState(null);
+  const { settings } = useSiteSettings({
+    social_instagram: "",
+    social_facebook: "",
+    social_strava: "https://www.strava.com/clubs/762372",
+    footer_text: "Ride together. Ride farther. Ride Cyblime.",
+    contact_email: "info@cyblimecycling.com"
+  });
 
   React.useEffect(() => {
     const fetchUser = async () => {
@@ -289,7 +296,7 @@ export default function Layout({ children, currentPageName }) {
                 />
               </div>
               <p className="text-sm text-gray-400 max-w-sm">
-                Ride together. Ride farther. Ride Cyblime.
+                {settings.footer_text || "Ride together. Ride farther. Ride Cyblime."}
               </p>
             </div>
             
@@ -324,11 +331,26 @@ export default function Layout({ children, currentPageName }) {
             
             <div>
               <h4 className="text-white font-semibold mb-3">Connect</h4>
-              {/* TODO: Social media links should be configured via admin settings */}
               <ul className="space-y-2">
-                <li><a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">Instagram</a></li>
-                <li><a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">Facebook</a></li>
-                <li><a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">Strava</a></li>
+                {settings.social_instagram && (
+                  <li><a href={settings.social_instagram} target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white transition-colors">Instagram</a></li>
+                )}
+                {settings.social_facebook && (
+                  <li><a href={settings.social_facebook} target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white transition-colors">Facebook</a></li>
+                )}
+                {settings.social_strava && (
+                  <li><a href={settings.social_strava} target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white transition-colors">Strava</a></li>
+                )}
+                {settings.contact_email && (
+                  <li><a href={`mailto:${settings.contact_email}`} className="text-sm text-gray-400 hover:text-white transition-colors">Email Us</a></li>
+                )}
+                {!settings.social_instagram && !settings.social_facebook && !settings.social_strava && (
+                  <>
+                    <li><a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">Instagram</a></li>
+                    <li><a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">Facebook</a></li>
+                    <li><a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">Strava</a></li>
+                  </>
+                )}
               </ul>
             </div>
           </div>

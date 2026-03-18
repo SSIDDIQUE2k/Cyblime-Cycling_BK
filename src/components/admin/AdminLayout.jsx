@@ -22,7 +22,10 @@ import {
   Trophy,
   MessageSquare,
   Instagram,
-  Shield
+  Shield,
+  PenTool,
+  Quote,
+  Sliders
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -89,7 +92,9 @@ export default function AdminLayout({ children }) {
     { icon: Users, label: "Users", page: "AdminUserManagement", badge: null },
     { icon: Trophy, label: "Challenges", page: "AdminChallengeManagement", badge: null },
     { icon: Instagram, label: "Instagram", page: "AdminInstagramSettings", badge: null },
-    { icon: Settings, label: "Settings", page: "AdminSettings", badge: null },
+    { icon: PenTool, label: "Page Content", page: "AdminPageContent", badge: null },
+    { icon: Quote, label: "Testimonials", page: "AdminTestimonials", badge: null },
+    { icon: Sliders, label: "Site Settings", page: "AdminSiteSettings", badge: null },
   ];
 
   if (!user) {

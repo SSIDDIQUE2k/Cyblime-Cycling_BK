@@ -30,6 +30,9 @@ import Leaderboard from './pages/Leaderboard';
 import AdminChallengeManagement from './pages/AdminChallengeManagement';
 import TeamChallengesPage from './pages/TeamChallengesPage';
 import Login from './pages/Login';
+import AdminPageContent from './pages/AdminPageContent';
+import AdminSiteSettings from './pages/AdminSiteSettings';
+import AdminTestimonials from './pages/AdminTestimonials';
 import __Layout from './Layout.jsx';
 
 
@@ -66,6 +69,9 @@ export const PAGES = {
     "AdminChallengeManagement": AdminChallengeManagement,
     "TeamChallengesPage": TeamChallengesPage,
     "Login": Login,
+    "AdminPageContent": AdminPageContent,
+    "AdminSiteSettings": AdminSiteSettings,
+    "AdminTestimonials": AdminTestimonials,
 }
 
 export const pagesConfig = {

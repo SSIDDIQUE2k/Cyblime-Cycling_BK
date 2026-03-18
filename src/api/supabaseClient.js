@@ -329,5 +329,10 @@ export const base44 = {
     InstagramSettings: createEntity('instagram_settings'),
     User: auth, // Base44 maps User to auth
     Query: createEntity('queries'), // fallback
+
+    // CMS entities
+    SiteSettings: createEntity('site_settings'),
+    PageContent: createEntity('page_content'),
+    Testimonial: createEntity('testimonials'),
   },
 };

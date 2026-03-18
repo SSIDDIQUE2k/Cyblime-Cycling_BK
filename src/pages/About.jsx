@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "../utils";
+import { usePageContent, useTestimonials } from "../hooks/usePageContent";
 
 const ValueCard = ({ icon: Icon, title, description, index }) => {
   return (
@@ -50,58 +51,76 @@ const TestimonialCard = ({ quote, author, role, index }) => {
   );
 };
 
+const DEFAULT_ABOUT_CONTENT = {
+  hero: {
+    heading: "More Than a Club. A Movement.",
+    tagline: "At Cyblime, we're building a culture where endurance meets excellence, where every pedal stroke brings you closer to your goals, and where community is at the heart of everything we do."
+  },
+  story: {
+    founded_year: "2019",
+    origin_text: "What started as weekend group rides with a handful of friends has grown into a thriving community of over 2,500 active members.",
+    member_count: "2,500",
+    description: "Today, we're proud to be one of the most inclusive and dynamic cycling clubs in the region, known for our expert-led events, stunning adventure trips, and unwavering commitment to helping every rider reach their full potential."
+  },
+  values: [
+    { title: "Community First", description: "We believe in the power of connection. Every ride, every event, every interaction is an opportunity to build lasting friendships and support each other's growth." },
+    { title: "Excellence in Every Ride", description: "From route planning to safety protocols, we maintain the highest standards. Our expert ride leaders ensure every experience is memorable, safe, and rewarding." },
+    { title: "Inclusive & Welcoming", description: "Whether you're a seasoned cyclist or just starting out, you have a place here. We celebrate all skill levels and create opportunities for everyone to thrive." },
+    { title: "Growth Mindset", description: "Cycling is a journey, not a destination. We provide the training, workshops, and mentorship to help you reach new heights and discover what you're capable of." }
+  ],
+  benefits: [
+    { title: "150+ Events/Year", description: "Access to 150+ events per year" },
+    { title: "Expert-Led Training", description: "Expert-led training and workshops" },
+    { title: "Adventure Trips", description: "Exclusive adventure trips to stunning destinations" },
+    { title: "Community Support", description: "Supportive community of passionate cyclists" },
+    { title: "Professional Ride Leaders", description: "Professional ride leaders and safety support" },
+    { title: "Member Discounts", description: "Member discounts on gear and equipment" },
+    { title: "Social Events", description: "Social events and networking opportunities" },
+    { title: "Personalized Coaching", description: "Personalized coaching and guidance" }
+  ]
+};
+
+const DEFAULT_TESTIMONIALS = [
+  {
+    quote: "Cyblime transformed my cycling journey. I went from struggling on 10km rides to completing my first century ride, all thanks to the incredible support and training I received.",
+    author: "Sarah Mitchell",
+    role: "Member since 2022"
+  },
+  {
+    quote: "The community here is unlike anything I've experienced. Every ride feels like riding with family. The trip to Blue Ridge Mountains was a life-changing experience.",
+    author: "Marcus Rodriguez",
+    role: "Member since 2021"
+  },
+  {
+    quote: "As a beginner, I was nervous to join. But the welcoming atmosphere and patient ride leaders made me feel at home from day one. Best decision I've made!",
+    author: "Emily Chen",
+    role: "Member since 2023"
+  }
+];
+
+const VALUE_ICONS = [Users, Target, Heart, Award];
+
 export default function About() {
-  const values = [
-    {
-      icon: Users,
-      title: "Community First",
-      description: "We believe in the power of connection. Every ride, every event, every interaction is an opportunity to build lasting friendships and support each other's growth."
-    },
-    {
-      icon: Target,
-      title: "Excellence in Every Ride",
-      description: "From route planning to safety protocols, we maintain the highest standards. Our expert ride leaders ensure every experience is memorable, safe, and rewarding."
-    },
-    {
-      icon: Heart,
-      title: "Inclusive & Welcoming",
-      description: "Whether you're a seasoned cyclist or just starting out, you have a place here. We celebrate all skill levels and create opportunities for everyone to thrive."
-    },
-    {
-      icon: Award,
-      title: "Growth Mindset",
-      description: "Cycling is a journey, not a destination. We provide the training, workshops, and mentorship to help you reach new heights and discover what you're capable of."
-    }
-  ];
+  const { content } = usePageContent("about", DEFAULT_ABOUT_CONTENT);
+  const { testimonials: cmsTestimonials } = useTestimonials();
 
-  const benefits = [
-    "Access to 150+ events per year",
-    "Expert-led training and workshops",
-    "Exclusive adventure trips to stunning destinations",
-    "Supportive community of passionate cyclists",
-    "Professional ride leaders and safety support",
-    "Member discounts on gear and equipment",
-    "Social events and networking opportunities",
-    "Personalized coaching and guidance"
-  ];
+  const values = (content.values || DEFAULT_ABOUT_CONTENT.values).map((v, i) => ({
+    icon: VALUE_ICONS[i] || VALUE_ICONS[0],
+    title: v.title,
+    description: v.description
+  }));
 
-  const testimonials = [
-    {
-      quote: "Cyblime transformed my cycling journey. I went from struggling on 10km rides to completing my first century ride, all thanks to the incredible support and training I received.",
-      author: "Sarah Mitchell",
-      role: "Member since 2022"
-    },
-    {
-      quote: "The community here is unlike anything I've experienced. Every ride feels like riding with family. The trip to Blue Ridge Mountains was a life-changing experience.",
-      author: "Marcus Rodriguez",
-      role: "Member since 2021"
-    },
-    {
-      quote: "As a beginner, I was nervous to join. But the welcoming atmosphere and patient ride leaders made me feel at home from day one. Best decision I've made!",
-      author: "Emily Chen",
-      role: "Member since 2023"
-    }
-  ];
+  const benefits = (content.benefits || DEFAULT_ABOUT_CONTENT.benefits).map(b =>
+    typeof b === "string" ? b : (b.description || b.title)
+  );
+
+  const testimonials = cmsTestimonials?.length > 0
+    ? cmsTestimonials.map(t => ({
+        quote: t.quote || t.text,
+        author: t.author || t.name,
+        role: t.role || t.subtitle || ""
+      }))
+    : DEFAULT_TESTIMONIALS;
 
   return (
     <div className="min-h-screen bg-[#fafafa]">
@@ -119,12 +138,14 @@ export default function About() {
             className="max-w-3xl"
           >
             <h1 className="text-5xl md:text-6xl font-bold text-white tracking-tight mb-6">
-              More Than a Club.
-              <br />
-              <span className="text-[#ff6b35]">A Movement.</span>
+              {(content.hero?.heading || DEFAULT_ABOUT_CONTENT.hero.heading).split(".").filter(Boolean).map((part, i, arr) => (
+                <React.Fragment key={i}>
+                  {i === 0 ? <>{part.trim()}.<br /></> : <span className="text-[#ff6b35]">{part.trim()}.{i < arr.length - 1 ? " " : ""}</span>}
+                </React.Fragment>
+              ))}
             </h1>
             <p className="text-xl text-gray-300 leading-relaxed">
-              At Cyblime, we're building a culture where endurance meets excellence, where every pedal stroke brings you closer to your goals, and where community is at the heart of everything we do.
+              {content.hero?.tagline || DEFAULT_ABOUT_CONTENT.hero.tagline}
             </p>
           </motion.div>
         </div>
@@ -148,13 +169,13 @@ export default function About() {
               </h2>
               <div className="space-y-4 text-gray-600 leading-relaxed">
                 <p>
-                  Cyblime began in 2019 with a simple vision: create a cycling community that welcomes everyone, challenges the status quo, and makes every ride an adventure worth remembering.
+                  Cyblime began in {content.story?.founded_year || DEFAULT_ABOUT_CONTENT.story.founded_year} with a simple vision: create a cycling community that welcomes everyone, challenges the status quo, and makes every ride an adventure worth remembering.
                 </p>
                 <p>
-                  What started as weekend group rides with a handful of friends has grown into a thriving community of over 2,500 active members. We've organized hundreds of events, explored countless miles of trails, and created friendships that extend far beyond the bike.
+                  {content.story?.origin_text || DEFAULT_ABOUT_CONTENT.story.origin_text} We've organized hundreds of events, explored countless miles of trails, and created friendships that extend far beyond the bike.
                 </p>
                 <p>
-                  Today, we're proud to be one of the most inclusive and dynamic cycling clubs in the region, known for our expert-led events, stunning adventure trips, and unwavering commitment to helping every rider reach their full potential.
+                  {content.story?.description || DEFAULT_ABOUT_CONTENT.story.description}
                 </p>
               </div>
             </motion.div>
