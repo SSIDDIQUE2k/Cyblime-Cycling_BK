@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slider Test</title>
+    <link rel="stylesheet" href="static/css/slider.css">
+    <style>
+        html {
+            box-sizing: border-box;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        *, *:before, *:after {
+            box-sizing: inherit;
+            margin: 0; padding: 0;
+        }
+
+        body {
+            background-color: #000;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <!-- Test our slider -->
+    <div class="cont">
+        <div class="slider"></div>
+        <ul class="nav"></ul>
+        <div data-target="right" class="side-nav side-nav--right"></div>
+        <div data-target="left" class="side-nav side-nav--left"></div>
+    </div>
+
+    <!-- jQuery and our slider script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="static/js/slider.js"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+providers = ["python"]
+
+[variables]
+NIXPACKS_PYTHON_VERSION = "3.9"
+
+[phases.setup]
+nixPkgs = ["python39", "python39Packages.pip", "gcc", "postgresql"]
+
+[start]
+cmd = "bash entrypoint.sh"
