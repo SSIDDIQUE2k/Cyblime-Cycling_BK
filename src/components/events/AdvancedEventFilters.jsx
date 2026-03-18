@@ -39,7 +39,7 @@ export default function AdvancedEventFilters({ filters, onFiltersChange, onReset
             </Label>
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <Label className="text-xs text-gray-400">From</Label>
+                <Label className="text-xs text-[var(--cy-text-muted)]">From</Label>
                 <Input
                   type="date"
                   value={filters.dateFrom || ''}
@@ -47,7 +47,7 @@ export default function AdvancedEventFilters({ filters, onFiltersChange, onReset
                 />
               </div>
               <div>
-                <Label className="text-xs text-gray-400">To</Label>
+                <Label className="text-xs text-[var(--cy-text-muted)]">To</Label>
                 <Input
                   type="date"
                   value={filters.dateTo || ''}
@@ -116,7 +116,7 @@ export default function AdvancedEventFilters({ filters, onFiltersChange, onReset
             <Label>Distance (km)</Label>
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <Label className="text-xs text-gray-400">Min</Label>
+                <Label className="text-xs text-[var(--cy-text-muted)]">Min</Label>
                 <Input
                   type="number"
                   placeholder="0"
@@ -125,7 +125,7 @@ export default function AdvancedEventFilters({ filters, onFiltersChange, onReset
                 />
               </div>
               <div>
-                <Label className="text-xs text-gray-400">Max</Label>
+                <Label className="text-xs text-[var(--cy-text-muted)]">Max</Label>
                 <Input
                   type="number"
                   placeholder="100"

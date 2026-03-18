@@ -83,7 +83,7 @@ export default function Home() {
   const heroSlide = content.hero_slides?.[0] || DEFAULT_HOME_CONTENT.hero_slides[0];
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="min-h-screen bg-[var(--cy-bg)]">
 
       {/* ═══════════════════════════════════════════════
           HERO — Full-screen single image, no slideshow
@@ -97,7 +97,7 @@ export default function Home() {
             className="w-full h-full object-cover"
           />
           {/* Gradient overlay — dark at bottom for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[var(--cy-bg)] via-[var(--cy-bg)]/40 to-transparent" />
           <div className="absolute inset-0 bg-black/20" />
         </div>
 
@@ -124,7 +124,7 @@ export default function Home() {
                   </Button>
                 </Link>
                 <Link to={createPageUrl("Membership")}>
-                  <Button variant="outline" className="rounded-full px-8 py-6 text-base font-semibold border-white/20 text-white hover:bg-[#141414]/10 backdrop-blur-sm">
+                  <Button variant="outline" className="rounded-full px-8 py-6 text-base font-semibold border-white/20 text-white hover:bg-white/10 backdrop-blur-sm">
                     Join the Club
                   </Button>
                 </Link>
@@ -148,16 +148,16 @@ export default function Home() {
       {/* ═══════════════════════════════════════════════
           UPCOMING EVENTS — Clean cards on dark bg
           ═══════════════════════════════════════════════ */}
-      <section className="py-28 bg-[#0a0a0a]">
+      <section className="py-28 bg-[var(--cy-bg)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-end justify-between mb-14">
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
               <p className="text-[#ff6b35] font-semibold text-sm uppercase tracking-widest mb-3">What's Next</p>
-              <h2 className="text-4xl md:text-5xl font-bold text-white">Upcoming Rides</h2>
+              <h2 className="text-4xl md:text-5xl font-bold text-[var(--cy-text)]">Upcoming Rides</h2>
             </motion.div>
             <Link
               to={createPageUrl("Events")}
-              className="hidden md:flex items-center gap-2 text-gray-400 hover:text-[#ff6b35] transition-colors font-medium"
+              className="hidden md:flex items-center gap-2 text-[var(--cy-text-muted)] hover:text-[#ff6b35] transition-colors font-medium"
             >
               All events
               <ArrowRight className="w-4 h-4" />
@@ -176,7 +176,7 @@ export default function Home() {
                   variants={fadeUp}
                 >
                   <Link to={createPageUrl("Events")} className="group block">
-                    <div className="relative rounded-2xl overflow-hidden bg-[#141414] border border-white/5 hover:border-[#ff6b35]/30 transition-all duration-300">
+                    <div className="relative rounded-2xl overflow-hidden bg-[var(--cy-bg-card)] border border-[var(--cy-border)] hover:border-[#ff6b35]/30 transition-all duration-300">
                       {event.banner_image_url && (
                         <div className="h-52 overflow-hidden">
                           <img
@@ -187,7 +187,7 @@ export default function Home() {
                         </div>
                       )}
                       <div className="p-6">
-                        <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
+                        <div className="flex items-center gap-4 text-sm text-[var(--cy-text-muted)] mb-3">
                           <span className="flex items-center gap-1.5">
                             <Calendar className="w-3.5 h-3.5" />
                             {new Date(event.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
@@ -199,16 +199,16 @@ export default function Home() {
                             </span>
                           )}
                         </div>
-                        <h3 className="text-lg font-bold text-white group-hover:text-[#ff6b35] transition-colors">
+                        <h3 className="text-lg font-bold text-[var(--cy-text)] group-hover:text-[#ff6b35] transition-colors">
                           {event.title}
                         </h3>
                         {(event.level || event.distance) && (
                           <div className="flex gap-2 mt-3">
                             {event.level && (
-                              <span className="text-xs px-2.5 py-1 rounded-full bg-white/5 text-gray-400">{event.level}</span>
+                              <span className="text-xs px-2.5 py-1 rounded-full bg-[var(--cy-hover)] text-[var(--cy-text-muted)]">{event.level}</span>
                             )}
                             {event.distance && (
-                              <span className="text-xs px-2.5 py-1 rounded-full bg-white/5 text-gray-400">{event.distance}</span>
+                              <span className="text-xs px-2.5 py-1 rounded-full bg-[var(--cy-hover)] text-[var(--cy-text-muted)]">{event.distance}</span>
                             )}
                           </div>
                         )}
@@ -219,9 +219,9 @@ export default function Home() {
               ))}
             </div>
           ) : (
-            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="text-center py-16 rounded-2xl border border-white/5 bg-[#141414]">
-              <Clock className="w-10 h-10 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-400 mb-6">No upcoming events right now</p>
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="text-center py-16 rounded-2xl border border-[var(--cy-border)] bg-[var(--cy-bg-card)]">
+              <Clock className="w-10 h-10 text-[var(--cy-text-muted)] mx-auto mb-4" />
+              <p className="text-[var(--cy-text-muted)] mb-6">No upcoming events right now</p>
               <Link to={createPageUrl("Events")}>
                 <Button className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white rounded-full px-6">
                   Browse All Events
@@ -232,7 +232,7 @@ export default function Home() {
 
           <Link
             to={createPageUrl("Events")}
-            className="md:hidden flex items-center justify-center gap-2 text-gray-400 hover:text-[#ff6b35] transition-colors font-medium mt-8"
+            className="md:hidden flex items-center justify-center gap-2 text-[var(--cy-text-muted)] hover:text-[#ff6b35] transition-colors font-medium mt-8"
           >
             View all events
             <ArrowRight className="w-4 h-4" />
@@ -243,7 +243,7 @@ export default function Home() {
       {/* ═══════════════════════════════════════════════
           VALUES — Three pillars, minimal and clean
           ═══════════════════════════════════════════════ */}
-      <section className="py-28 bg-[#111111] border-y border-white/5">
+      <section className="py-28 bg-[var(--cy-bg-section)] border-y border-[var(--cy-border)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial="hidden"
@@ -253,7 +253,7 @@ export default function Home() {
             className="text-center max-w-2xl mx-auto mb-20"
           >
             <p className="text-[#ff6b35] font-semibold text-sm uppercase tracking-widest mb-3">Our Philosophy</p>
-            <h2 className="text-4xl md:text-5xl font-bold text-white">
+            <h2 className="text-4xl md:text-5xl font-bold text-[var(--cy-text)]">
               What We Stand For
             </h2>
           </motion.div>
@@ -274,8 +274,8 @@ export default function Home() {
                   <div className="w-16 h-16 rounded-2xl bg-[#ff6b35]/10 border border-[#ff6b35]/20 flex items-center justify-center mx-auto mb-6 group-hover:bg-[#ff6b35]/20 transition-colors">
                     <Icon className="w-7 h-7 text-[#ff6b35]" />
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-3">{value.title}</h3>
-                  <p className="text-gray-400 leading-relaxed">{value.description}</p>
+                  <h3 className="text-xl font-bold text-[var(--cy-text)] mb-3">{value.title}</h3>
+                  <p className="text-[var(--cy-text-muted)] leading-relaxed">{value.description}</p>
                 </motion.div>
               );
             })}
@@ -287,7 +287,7 @@ export default function Home() {
           INSTAGRAM — Only if enabled
           ═══════════════════════════════════════════════ */}
       {content.show_instagram && (
-        <section className="py-28 bg-[#0a0a0a]">
+        <section className="py-28 bg-[var(--cy-bg)]">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <motion.div
               initial="hidden"
@@ -297,7 +297,7 @@ export default function Home() {
               className="text-center mb-14"
             >
               <p className="text-[#ff6b35] font-semibold text-sm uppercase tracking-widest mb-3">Follow the Journey</p>
-              <h2 className="text-4xl md:text-5xl font-bold text-white">
+              <h2 className="text-4xl md:text-5xl font-bold text-[var(--cy-text)]">
                 @cyblimecycling
               </h2>
             </motion.div>
@@ -322,7 +322,7 @@ export default function Home() {
       {/* ═══════════════════════════════════════════════
           CTA — Join the club
           ═══════════════════════════════════════════════ */}
-      <section className="py-32 bg-[#0a0a0a] relative overflow-hidden">
+      <section className="py-32 bg-[var(--cy-bg)] relative overflow-hidden">
         {/* Subtle radial glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#ff6b35]/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -333,10 +333,10 @@ export default function Home() {
             viewport={{ once: true }}
             variants={fadeUp}
           >
-            <h2 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+            <h2 className="text-5xl md:text-7xl font-bold text-[var(--cy-text)] mb-6 leading-tight">
               {content.cta?.heading || "Ready to Ride?"}
             </h2>
-            <p className="text-lg text-gray-400 mb-12 max-w-xl mx-auto leading-relaxed">
+            <p className="text-lg text-[var(--cy-text-muted)] mb-12 max-w-xl mx-auto leading-relaxed">
               {content.cta?.subheading || "Your next adventure starts with a single pedal stroke."}
             </p>
 
@@ -348,7 +348,7 @@ export default function Home() {
                 </Button>
               </Link>
               <Link to={createPageUrl("About")}>
-                <Button variant="ghost" className="text-gray-400 hover:text-white rounded-full px-8 py-6 text-lg">
+                <Button variant="ghost" className="text-[var(--cy-text-muted)] hover:text-[var(--cy-text)] rounded-full px-8 py-6 text-lg">
                   Learn More
                 </Button>
               </Link>

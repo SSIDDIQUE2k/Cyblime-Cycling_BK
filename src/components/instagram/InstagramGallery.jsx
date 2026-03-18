@@ -27,26 +27,26 @@ const InstagramLightbox = ({ media, onClose, allMedia, currentIndex, onNavigate 
     >
       <button
         onClick={onClose}
-        className="absolute top-4 right-4 w-10 h-10 rounded-full bg-[#141414]/10 hover:bg-[#141414]/20 flex items-center justify-center transition-colors z-10"
+        className="absolute top-4 right-4 w-10 h-10 rounded-full bg-[var(--cy-bg-card)]/10 hover:bg-[var(--cy-bg-card)]/20 flex items-center justify-center transition-colors z-10"
       >
-        <X className="w-6 h-6 text-white" />
+        <X className="w-6 h-6 text-[var(--cy-text)]" />
       </button>
 
       {currentIndex > 0 && (
         <button
           onClick={(e) => { e.stopPropagation(); onNavigate(currentIndex - 1); }}
-          className="absolute left-4 w-12 h-12 rounded-full bg-[#141414]/10 hover:bg-[#141414]/20 flex items-center justify-center transition-colors"
+          className="absolute left-4 w-12 h-12 rounded-full bg-[var(--cy-bg-card)]/10 hover:bg-[var(--cy-bg-card)]/20 flex items-center justify-center transition-colors"
         >
-          <span className="text-white text-2xl">‹</span>
+          <span className="text-[var(--cy-text)] text-2xl">‹</span>
         </button>
       )}
 
       {currentIndex < allMedia.length - 1 && (
         <button
           onClick={(e) => { e.stopPropagation(); onNavigate(currentIndex + 1); }}
-          className="absolute right-4 w-12 h-12 rounded-full bg-[#141414]/10 hover:bg-[#141414]/20 flex items-center justify-center transition-colors"
+          className="absolute right-4 w-12 h-12 rounded-full bg-[var(--cy-bg-card)]/10 hover:bg-[var(--cy-bg-card)]/20 flex items-center justify-center transition-colors"
         >
-          <span className="text-white text-2xl">›</span>
+          <span className="text-[var(--cy-text)] text-2xl">›</span>
         </button>
       )}
 
@@ -72,8 +72,8 @@ const InstagramLightbox = ({ media, onClose, allMedia, currentIndex, onNavigate 
           )}
           
           {media.caption && (
-            <div className="mt-4 p-4 bg-white/5 backdrop-blur-sm rounded-lg">
-              <p className="text-white text-sm leading-relaxed">{media.caption}</p>
+            <div className="mt-4 p-4 bg-[var(--cy-hover)] backdrop-blur-sm rounded-lg">
+              <p className="text-[var(--cy-text)] text-sm leading-relaxed">{media.caption}</p>
             </div>
           )}
           
@@ -81,7 +81,7 @@ const InstagramLightbox = ({ media, onClose, allMedia, currentIndex, onNavigate 
             href={media.permalink}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-3 inline-flex items-center gap-2 text-white/80 hover:text-white text-sm transition-colors"
+            className="mt-3 inline-flex items-center gap-2 text-[var(--cy-text)]/80 hover:text-[var(--cy-text)] text-sm transition-colors"
           >
             <Instagram className="w-4 h-4" />
             View on Instagram
@@ -107,7 +107,7 @@ const InstagramPost = ({ media, onClick, index, columns }) => {
       <div className="relative aspect-square bg-gray-100">
         {!imageLoaded && (
           <div className="absolute inset-0 flex items-center justify-center">
-            <Loader2 className="w-8 h-8 text-gray-400 animate-spin" />
+            <Loader2 className="w-8 h-8 text-[var(--cy-text-muted)] animate-spin" />
           </div>
         )}
         
@@ -123,7 +123,7 @@ const InstagramPost = ({ media, onClick, index, columns }) => {
         
         {media.media_type === "VIDEO" && (
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-16 h-16 rounded-full bg-[#141414]/90 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform">
+            <div className="w-16 h-16 rounded-full bg-[var(--cy-bg-card)]/90 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform">
               <Play className="w-8 h-8 text-[#ff6b35] ml-1" />
             </div>
           </div>
@@ -132,7 +132,7 @@ const InstagramPost = ({ media, onClick, index, columns }) => {
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <div className="absolute bottom-4 left-4 right-4">
             {media.caption && (
-              <p className="text-white text-sm line-clamp-2 font-medium">
+              <p className="text-[var(--cy-text)] text-sm line-clamp-2 font-medium">
                 {media.caption}
               </p>
             )}
@@ -248,7 +248,7 @@ export default function InstagramGallery() {
   };
 
   return (
-    <section className={`py-16 ${settings.theme === 'dark' ? 'bg-[#1a1a1a]' : 'bg-[#0a0a0a]'}`}>
+    <section className={`py-16 ${settings.theme === 'dark' ? 'bg-[var(--cy-bg-elevated)]' : 'bg-[var(--cy-bg)]'}`}>
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -259,13 +259,13 @@ export default function InstagramGallery() {
         >
           <div className="flex items-center justify-center gap-3 mb-4">
             <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#833AB4] via-[#FD1D1D] to-[#F77737] flex items-center justify-center">
-              <Instagram className="w-6 h-6 text-white" />
+              <Instagram className="w-6 h-6 text-[var(--cy-text)]" />
             </div>
-            <h2 className={`text-4xl font-bold ${settings.theme === 'dark' ? 'text-white' : 'text-white'}`}>
+            <h2 className={`text-4xl font-bold ${settings.theme === 'dark' ? 'text-[var(--cy-text)]' : 'text-[var(--cy-text)]'}`}>
               Follow Our Journey
             </h2>
           </div>
-          <p className={`text-lg ${settings.theme === 'dark' ? 'text-gray-400' : 'text-gray-400'} max-w-2xl mx-auto`}>
+          <p className={`text-lg ${settings.theme === 'dark' ? 'text-[var(--cy-text-muted)]' : 'text-[var(--cy-text-muted)]'} max-w-2xl mx-auto`}>
             Stay connected with our latest rides, adventures, and cycling community moments
           </p>
         </motion.div>
@@ -273,8 +273,8 @@ export default function InstagramGallery() {
         {/* Loading State */}
         {loading && (
           <div className="flex flex-col items-center justify-center py-20">
-            <Loader2 className={`w-12 h-12 animate-spin mb-4 ${settings.theme === 'dark' ? 'text-white' : 'text-[#ff6b35]'}`} />
-            <p className={settings.theme === 'dark' ? 'text-gray-400' : 'text-gray-400'}>
+            <Loader2 className={`w-12 h-12 animate-spin mb-4 ${settings.theme === 'dark' ? 'text-[var(--cy-text)]' : 'text-[#ff6b35]'}`} />
+            <p className={settings.theme === 'dark' ? 'text-[var(--cy-text-muted)]' : 'text-[var(--cy-text-muted)]'}>
               Loading Instagram posts...
             </p>
           </div>
@@ -286,7 +286,7 @@ export default function InstagramGallery() {
             <div className="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center mb-4">
               <AlertCircle className="w-8 h-8 text-red-600" />
             </div>
-            <p className={`text-lg mb-4 ${settings.theme === 'dark' ? 'text-gray-400' : 'text-gray-400'}`}>
+            <p className={`text-lg mb-4 ${settings.theme === 'dark' ? 'text-[var(--cy-text-muted)]' : 'text-[var(--cy-text-muted)]'}`}>
               {error}
             </p>
             <Button
@@ -324,7 +324,7 @@ export default function InstagramGallery() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Button className="bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] text-white hover:opacity-90 rounded-full px-8 py-6 text-lg font-semibold">
+                <Button className="bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] text-[var(--cy-text)] hover:opacity-90 rounded-full px-8 py-6 text-lg font-semibold">
                   <Instagram className="w-5 h-5 mr-2" />
                   Follow Us on Instagram
                   <ExternalLink className="w-4 h-4 ml-2" />

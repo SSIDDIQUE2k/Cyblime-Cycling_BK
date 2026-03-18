@@ -37,7 +37,7 @@ const categoryColors = {
   general: "bg-gray-100 text-gray-800",
   routes: "bg-[#6BCBFF]/20 text-[#6BCBFF]",
   gear: "bg-purple-100 text-purple-800",
-  training: "bg-[#A4FF4F]/20 text-white",
+  training: "bg-[#A4FF4F]/20 text-[var(--cy-text)]",
   maintenance: "bg-orange-100 text-orange-800",
   events: "bg-[#ff6b35]/20 text-[#ff6b35]"
 };
@@ -144,7 +144,7 @@ export default function Community() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="min-h-screen bg-[var(--cy-bg)]">
       {/* Hero */}
       <section className="relative bg-gradient-to-br from-[#2A2A2A] to-[#1a1a1a] py-20 md:py-32 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
@@ -157,10 +157,10 @@ export default function Community() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center max-w-3xl mx-auto"
           >
-            <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
+            <h1 className="text-5xl md:text-6xl font-bold text-[var(--cy-text)] mb-6">
               Community Forum
             </h1>
-            <p className="text-xl text-gray-400 mb-8">
+            <p className="text-xl text-[var(--cy-text-muted)] mb-8">
               Connect with fellow cyclists, share tips, and grow together.
             </p>
             <Button
@@ -175,11 +175,11 @@ export default function Community() {
       </section>
 
       {/* Filters */}
-      <section className="sticky top-20 z-40 bg-[#141414] border-b border-white/10 shadow-none">
+      <section className="sticky top-20 z-40 bg-[var(--cy-bg-card)] border-b border-[var(--cy-border-strong)] shadow-none">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--cy-text-muted)]" />
               <Input
                 placeholder="Search discussions..."
                 value={searchQuery}
@@ -216,7 +216,7 @@ export default function Community() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05 }}
                 onClick={() => setSelectedPost(post)}
-                className="bg-[#141414] rounded-2xl p-6 border border-white/5 hover:shadow-md transition-all cursor-pointer"
+                className="bg-[var(--cy-bg-card)] rounded-2xl p-6 border border-[var(--cy-border)] hover:shadow-md transition-all cursor-pointer"
               >
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 rounded-xl bg-[#ff6b35] flex items-center justify-center text-white font-bold flex-shrink-0">
@@ -227,7 +227,7 @@ export default function Community() {
                     <div className="flex items-start justify-between gap-4 mb-2">
                       <div className="flex items-center gap-2 flex-wrap">
                         {post.is_pinned && <Pin className="w-4 h-4 text-[#ff6b35]" />}
-                        <h3 className="text-xl font-semibold text-white">{post.title}</h3>
+                        <h3 className="text-xl font-semibold text-[var(--cy-text)]">{post.title}</h3>
                       </div>
                       <div className="flex items-center gap-2">
                         <Badge className={`${categoryColors[post.category]} border-0 flex-shrink-0`}>
@@ -238,16 +238,16 @@ export default function Community() {
                             e.stopPropagation();
                             handleReport('forum_post', post.id);
                           }}
-                          className="text-gray-400 hover:text-red-600"
+                          className="text-[var(--cy-text-muted)] hover:text-red-600"
                         >
                           <Flag className="w-4 h-4" />
                         </button>
                       </div>
                     </div>
                     
-                    <p className="text-gray-400 mb-3 line-clamp-2">{post.content}</p>
+                    <p className="text-[var(--cy-text-muted)] mb-3 line-clamp-2">{post.content}</p>
                     
-                    <div className="flex items-center gap-6 text-sm text-gray-400">
+                    <div className="flex items-center gap-6 text-sm text-[var(--cy-text-muted)]">
                       <span>by {post.created_by.split('@')[0]}</span>
                       <div className="flex items-center gap-1">
                         <MessageCircle className="w-4 h-4" />
@@ -271,7 +271,7 @@ export default function Community() {
       <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle className="text-white">Start New Discussion</DialogTitle>
+            <DialogTitle className="text-[var(--cy-text)]">Start New Discussion</DialogTitle>
           </DialogHeader>
           <form onSubmit={handleCreatePost} className="space-y-4">
             <div>
@@ -328,7 +328,7 @@ export default function Community() {
             <>
               <DialogHeader>
                 <div className="flex items-start justify-between gap-4">
-                  <DialogTitle className="text-2xl font-bold text-white">
+                  <DialogTitle className="text-2xl font-bold text-[var(--cy-text)]">
                     {selectedPost.title}
                   </DialogTitle>
                   <Badge className={`${categoryColors[selectedPost.category]} border-0`}>
@@ -339,35 +339,35 @@ export default function Community() {
 
               <div className="space-y-6">
                 <div className="p-4 bg-gray-50 rounded-xl">
-                  <div className="flex items-center gap-2 mb-3 text-sm text-gray-400">
-                    <span className="font-semibold text-white">{selectedPost.created_by.split('@')[0]}</span>
+                  <div className="flex items-center gap-2 mb-3 text-sm text-[var(--cy-text-muted)]">
+                    <span className="font-semibold text-[var(--cy-text)]">{selectedPost.created_by.split('@')[0]}</span>
                     <span>•</span>
                     <span>{new Date(selectedPost.created_date).toLocaleDateString()}</span>
                   </div>
-                  <p className="text-gray-400">{selectedPost.content}</p>
+                  <p className="text-[var(--cy-text-muted)]">{selectedPost.content}</p>
                 </div>
 
                 <div>
-                  <h3 className="font-semibold text-white mb-4">
+                  <h3 className="font-semibold text-[var(--cy-text)] mb-4">
                     Replies ({replies.length})
                   </h3>
                   <div className="space-y-3 mb-4">
                     {replies.map((reply) => (
-                      <div key={reply.id} className="p-4 border border-white/10 rounded-xl">
+                      <div key={reply.id} className="p-4 border border-[var(--cy-border-strong)] rounded-xl">
                         <div className="flex items-center justify-between mb-2">
                           <div className="flex items-center gap-2 text-sm">
-                            <span className="font-semibold text-white">{reply.created_by.split('@')[0]}</span>
-                            <span className="text-gray-400">•</span>
-                            <span className="text-gray-400">{new Date(reply.created_date).toLocaleDateString()}</span>
+                            <span className="font-semibold text-[var(--cy-text)]">{reply.created_by.split('@')[0]}</span>
+                            <span className="text-[var(--cy-text-muted)]">•</span>
+                            <span className="text-[var(--cy-text-muted)]">{new Date(reply.created_date).toLocaleDateString()}</span>
                           </div>
                           <button
                             onClick={() => handleReport('forum_reply', reply.id)}
-                            className="text-gray-400 hover:text-red-600"
+                            className="text-[var(--cy-text-muted)] hover:text-red-600"
                           >
                             <Flag className="w-3 h-3" />
                           </button>
                         </div>
-                        <p className="text-gray-400">{reply.content}</p>
+                        <p className="text-[var(--cy-text-muted)]">{reply.content}</p>
                       </div>
                     ))}
                   </div>
@@ -393,15 +393,15 @@ export default function Community() {
 
       {/* Report Dialog */}
       <Dialog open={reportDialogOpen} onOpenChange={setReportDialogOpen}>
-        <DialogContent className="max-w-md bg-[#1a1a1a] border-white/10 text-white">
+        <DialogContent className="max-w-md bg-[var(--cy-bg-elevated)] border-[var(--cy-border-strong)] text-[var(--cy-text)]">
           <DialogHeader>
             <DialogTitle>Report Content</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
             <div>
-              <Label className="text-gray-300">Reason</Label>
+              <Label className="text-[var(--cy-text-secondary)]">Reason</Label>
               <Select value={reportReason} onValueChange={setReportReason}>
-                <SelectTrigger className="bg-[#2a2a2a] border-white/10 text-white mt-1">
+                <SelectTrigger className="bg-[var(--cy-bg-elevated)] border-[var(--cy-border-strong)] text-[var(--cy-text)] mt-1">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -413,20 +413,20 @@ export default function Community() {
               </Select>
             </div>
             <div>
-              <Label className="text-gray-300">Additional details (optional)</Label>
+              <Label className="text-[var(--cy-text-secondary)]">Additional details (optional)</Label>
               <Textarea
                 value={reportDescription}
                 onChange={(e) => setReportDescription(e.target.value)}
                 placeholder="Describe the issue..."
-                className="bg-[#2a2a2a] border-white/10 text-white mt-1"
+                className="bg-[var(--cy-bg-elevated)] border-[var(--cy-border-strong)] text-[var(--cy-text)] mt-1"
                 rows={3}
               />
             </div>
             <div className="flex gap-2 justify-end">
-              <Button variant="outline" onClick={() => setReportDialogOpen(false)} className="border-white/10 text-gray-300">
+              <Button variant="outline" onClick={() => setReportDialogOpen(false)} className="border-[var(--cy-border-strong)] text-[var(--cy-text-secondary)]">
                 Cancel
               </Button>
-              <Button onClick={submitReport} disabled={reportMutation.isPending} className="bg-red-600 hover:bg-red-700 text-white">
+              <Button onClick={submitReport} disabled={reportMutation.isPending} className="bg-red-600 hover:bg-red-700 text-[var(--cy-text)]">
                 <Flag className="w-4 h-4 mr-2" />
                 {reportMutation.isPending ? "Submitting..." : "Submit Report"}
               </Button>

@@ -33,7 +33,7 @@ export default function PremiumLoader({ isLoading, message = "Loading Cycling Hu
                 repeat: Infinity,
                 ease: "easeInOut"
               }}
-              className="w-24 h-24 mx-auto mb-6 rounded-full bg-[#141414]/20 backdrop-blur-sm flex items-center justify-center"
+              className="w-24 h-24 mx-auto mb-6 rounded-full bg-[var(--cy-bg-card)]/20 backdrop-blur-sm flex items-center justify-center"
             >
               <div className="w-20 h-20 rounded-full border-4 border-white border-t-transparent animate-spin" />
             </motion.div>
@@ -42,7 +42,7 @@ export default function PremiumLoader({ isLoading, message = "Loading Cycling Hu
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.2 }}
-              className="text-4xl md:text-5xl font-bold text-white mb-3 tracking-tight"
+              className="text-4xl md:text-5xl font-bold text-[var(--cy-text)] mb-3 tracking-tight"
             >
               CYBLIME CYCLING
             </motion.h1>
@@ -51,7 +51,7 @@ export default function PremiumLoader({ isLoading, message = "Loading Cycling Hu
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="text-lg text-white/90"
+              className="text-lg text-[var(--cy-text)]/90"
             >
               {message}
             </motion.p>

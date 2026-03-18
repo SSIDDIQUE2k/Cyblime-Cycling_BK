@@ -105,7 +105,7 @@ export default function BlogPost() {
     paragraphs.forEach((paragraph, index) => {
       // Add paragraph
       elements.push(
-        <p key={`p-${index}`} className="text-white text-lg leading-relaxed mb-6">
+        <p key={`p-${index}`} className="text-[var(--cy-text)] text-lg leading-relaxed mb-6">
           {paragraph}
         </p>
       );
@@ -123,7 +123,7 @@ export default function BlogPost() {
                 />
               </div>
               {img.caption && (
-                <figcaption className="text-sm text-gray-400 italic mt-3 text-center">
+                <figcaption className="text-sm text-[var(--cy-text-muted)] italic mt-3 text-center">
                   {img.caption}
                 </figcaption>
               )}
@@ -138,17 +138,17 @@ export default function BlogPost() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
-        <div className="text-gray-400">Loading article...</div>
+      <div className="min-h-screen bg-[var(--cy-bg)] flex items-center justify-center">
+        <div className="text-[var(--cy-text-muted)]">Loading article...</div>
       </div>
     );
   }
 
   if (!post) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
+      <div className="min-h-screen bg-[var(--cy-bg)] flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-white mb-4">Article not found</h2>
+          <h2 className="text-2xl font-bold text-[var(--cy-text)] mb-4">Article not found</h2>
           <Link to={createPageUrl("Blog")}>
             <Button className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white">
               Back to Blog
@@ -162,10 +162,10 @@ export default function BlogPost() {
   return (
     <div className="min-h-screen bg-[#f8f8f8]">
       {/* Top Navigation Bar */}
-      <div className="bg-[#141414] border-b border-white/10">
+      <div className="bg-[var(--cy-bg-card)] border-b border-[var(--cy-border-strong)]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <Link to={createPageUrl("Blog")}>
-            <Button variant="ghost" className="text-gray-400 hover:bg-gray-100">
+            <Button variant="ghost" className="text-[var(--cy-text-muted)] hover:bg-gray-100">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Blog
             </Button>
@@ -201,7 +201,7 @@ export default function BlogPost() {
       </div>
 
       {/* Article Content */}
-      <article className="bg-[#141414]">
+      <article className="bg-[var(--cy-bg-card)]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
           {/* Category Badge */}
           <motion.div
@@ -220,7 +220,7 @@ export default function BlogPost() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.1 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold text-[var(--cy-text)] leading-tight mb-6"
           >
             {post.title}
           </motion.h1>
@@ -231,7 +231,7 @@ export default function BlogPost() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.2 }}
-              className="text-xl md:text-2xl text-gray-400 leading-relaxed mb-8 font-light"
+              className="text-xl md:text-2xl text-[var(--cy-text-muted)] leading-relaxed mb-8 font-light"
             >
               {post.excerpt}
             </motion.p>
@@ -242,7 +242,7 @@ export default function BlogPost() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4, delay: 0.3 }}
-            className="flex items-center gap-4 text-sm text-[#888888] pb-8 mb-8 border-b border-white/10"
+            className="flex items-center gap-4 text-sm text-[#888888] pb-8 mb-8 border-b border-[var(--cy-border-strong)]"
           >
             <Link 
               to={createPageUrl("AuthorPosts") + `?author=${encodeURIComponent(post.created_by)}`}
@@ -251,7 +251,7 @@ export default function BlogPost() {
               <User className="w-4 h-4" />
               <span className="font-medium">{post.created_by?.split('@')[0] || 'Author'}</span>
             </Link>
-            <span className="text-gray-300">|</span>
+            <span className="text-[var(--cy-text-secondary)]">|</span>
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4" />
               <span>{new Date(post.created_date).toLocaleDateString('en-US', { 
@@ -260,7 +260,7 @@ export default function BlogPost() {
                 year: 'numeric' 
               })}</span>
             </div>
-            <span className="text-gray-300">|</span>
+            <span className="text-[var(--cy-text-secondary)]">|</span>
             <div className="flex items-center gap-2">
               <Eye className="w-4 h-4" />
               <span>{post.view_count || 0} views</span>
@@ -285,11 +285,11 @@ export default function BlogPost() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.4, delay: 0.5 }}
-              className="mt-12 pt-8 border-t border-white/10"
+              className="mt-12 pt-8 border-t border-[var(--cy-border-strong)]"
             >
               <div className="flex items-center gap-2 flex-wrap">
-                <Tag className="w-4 h-4 text-gray-400" />
-                <span className="text-sm font-semibold text-gray-400 mr-2">Tags:</span>
+                <Tag className="w-4 h-4 text-[var(--cy-text-muted)]" />
+                <span className="text-sm font-semibold text-[var(--cy-text-muted)] mr-2">Tags:</span>
                 {post.tags.map((tag, index) => (
                   <Badge 
                     key={index} 
@@ -308,19 +308,19 @@ export default function BlogPost() {
       {/* Comments Section */}
       <section className="py-16 bg-[#f8f8f8]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-[#141414] rounded-2xl p-8 border border-white/5">
+          <div className="bg-[var(--cy-bg-card)] rounded-2xl p-8 border border-[var(--cy-border)]">
             <div className="flex items-center gap-2 mb-8">
               <MessageCircle className="w-6 h-6 text-[#ff6b35]" />
-              <h3 className="text-2xl font-bold text-white">
+              <h3 className="text-2xl font-bold text-[var(--cy-text)]">
                 Comments ({comments.length})
               </h3>
             </div>
 
             {/* Comment Form */}
             {user ? (
-              <form onSubmit={handleSubmitComment} className="mb-8 pb-8 border-b border-white/10">
+              <form onSubmit={handleSubmitComment} className="mb-8 pb-8 border-b border-[var(--cy-border-strong)]">
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#ff6b35] to-[#e55a2b] flex items-center justify-center text-white font-bold flex-shrink-0">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#ff6b35] to-[#e55a2b] flex items-center justify-center text-[var(--cy-text)] font-bold flex-shrink-0">
                     {(user.full_name || user.email)?.charAt(0).toUpperCase()}
                   </div>
                   <div className="flex-1">
@@ -344,8 +344,8 @@ export default function BlogPost() {
                 </div>
               </form>
             ) : (
-              <div className="mb-8 pb-8 border-b border-white/10 text-center">
-                <p className="text-gray-400 mb-4">Please sign in to leave a comment</p>
+              <div className="mb-8 pb-8 border-b border-[var(--cy-border-strong)] text-center">
+                <p className="text-[var(--cy-text-muted)] mb-4">Please sign in to leave a comment</p>
               </div>
             )}
 
@@ -360,12 +360,12 @@ export default function BlogPost() {
                     transition={{ delay: index * 0.05 }}
                     className="flex items-start gap-4"
                   >
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-white font-bold flex-shrink-0">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-[var(--cy-text)] font-bold flex-shrink-0">
                       {comment.user_name?.charAt(0).toUpperCase() || 'A'}
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="font-semibold text-white">
+                        <span className="font-semibold text-[var(--cy-text)]">
                           {comment.user_name || 'Anonymous'}
                         </span>
                         <span className="text-sm text-[#888888]">
@@ -378,14 +378,14 @@ export default function BlogPost() {
                           })}
                         </span>
                       </div>
-                      <p className="text-gray-400 leading-relaxed">{comment.comment_text}</p>
+                      <p className="text-[var(--cy-text-muted)] leading-relaxed">{comment.comment_text}</p>
                     </div>
                   </motion.div>
                 ))}
               </div>
             ) : (
               <div className="text-center py-8">
-                <MessageCircle className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+                <MessageCircle className="w-12 h-12 text-[var(--cy-text-secondary)] mx-auto mb-3" />
                 <p className="text-[#888888]">No comments yet. Be the first to share your thoughts!</p>
               </div>
             )}
@@ -394,9 +394,9 @@ export default function BlogPost() {
       </section>
 
       {/* Back to Blog CTA */}
-      <section className="py-12 bg-[#f8f8f8] border-t border-white/10">
+      <section className="py-12 bg-[#f8f8f8] border-t border-[var(--cy-border-strong)]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h3 className="text-2xl font-bold text-white mb-6">
+          <h3 className="text-2xl font-bold text-[var(--cy-text)] mb-6">
             Explore More Stories
           </h3>
           <Link to={createPageUrl("Blog")}>

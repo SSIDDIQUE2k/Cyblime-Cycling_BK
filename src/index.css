@@ -109,6 +109,23 @@ button:focus-visible {
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Cyblime theme tokens — LIGHT (default) */
+    --cy-bg: #fafafa;
+    --cy-bg-card: #ffffff;
+    --cy-bg-section: #f3f4f6;
+    --cy-bg-elevated: #ffffff;
+    --cy-text: #111827;
+    --cy-text-secondary: #374151;
+    --cy-text-muted: #6b7280;
+    --cy-text-faint: #9ca3af;
+    --cy-border: rgba(0,0,0,0.06);
+    --cy-border-strong: rgba(0,0,0,0.1);
+    --cy-hover: rgba(0,0,0,0.04);
+    --cy-nav-bg: rgba(255,255,255,0.85);
+    --cy-nav-text: #374151;
+    --cy-nav-active: #ff6b35;
+    --cy-card-shadow: 0 1px 3px rgba(0,0,0,0.08);
   }
   .dark {
     --background: 0 0% 3.9%;
@@ -143,6 +160,23 @@ button:focus-visible {
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Cyblime theme tokens — DARK */
+    --cy-bg: #0a0a0a;
+    --cy-bg-card: #141414;
+    --cy-bg-section: #111111;
+    --cy-bg-elevated: #1a1a1a;
+    --cy-text: #ffffff;
+    --cy-text-secondary: #d1d5db;
+    --cy-text-muted: #9ca3af;
+    --cy-text-faint: #6b7280;
+    --cy-border: rgba(255,255,255,0.05);
+    --cy-border-strong: rgba(255,255,255,0.1);
+    --cy-hover: rgba(255,255,255,0.05);
+    --cy-nav-bg: rgba(10,10,10,0.95);
+    --cy-nav-text: #d1d5db;
+    --cy-nav-active: #ff6b35;
+    --cy-card-shadow: none;
   }
 }
 

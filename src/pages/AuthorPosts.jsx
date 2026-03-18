@@ -26,17 +26,17 @@ export default function AuthorPosts() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
-        <div className="text-gray-400">Loading author posts...</div>
+      <div className="min-h-screen bg-[var(--cy-bg)] flex items-center justify-center">
+        <div className="text-[var(--cy-text-muted)]">Loading author posts...</div>
       </div>
     );
   }
 
   if (!authorEmail || posts.length === 0) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
+      <div className="min-h-screen bg-[var(--cy-bg)] flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-white mb-4">No posts found</h2>
+          <h2 className="text-2xl font-bold text-[var(--cy-text)] mb-4">No posts found</h2>
           <Link to={createPageUrl("Blog")}>
             <Button className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white">
               <ArrowLeft className="w-4 h-4 mr-2" />
@@ -52,12 +52,12 @@ export default function AuthorPosts() {
   const totalViews = posts.reduce((sum, post) => sum + (post.view_count || 0), 0);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="min-h-screen bg-[var(--cy-bg)]">
       {/* Top Navigation */}
-      <div className="bg-[#141414] border-b border-white/10">
+      <div className="bg-[var(--cy-bg-card)] border-b border-[var(--cy-border-strong)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4">
           <Link to={createPageUrl("Blog")}>
-            <Button variant="ghost" className="text-gray-400 hover:bg-gray-100">
+            <Button variant="ghost" className="text-[var(--cy-text-muted)] hover:bg-gray-100">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Blog
             </Button>
@@ -73,23 +73,23 @@ export default function AuthorPosts() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center"
           >
-            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#ff6b35] to-[#e55a2b] flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6">
+            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#ff6b35] to-[#e55a2b] flex items-center justify-center text-[var(--cy-text)] text-3xl font-bold mx-auto mb-6">
               {authorName.charAt(0).toUpperCase()}
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            <h1 className="text-4xl md:text-5xl font-bold text-[var(--cy-text)] mb-4">
               {authorName}
             </h1>
-            <p className="text-lg text-gray-400 mb-8">{authorEmail}</p>
+            <p className="text-lg text-[var(--cy-text-muted)] mb-8">{authorEmail}</p>
             
-            <div className="flex items-center justify-center gap-8 text-white">
+            <div className="flex items-center justify-center gap-8 text-[var(--cy-text)]">
               <div>
                 <div className="text-3xl font-bold text-[#A4FF4F]">{posts.length}</div>
-                <div className="text-sm text-gray-400">Articles</div>
+                <div className="text-sm text-[var(--cy-text-muted)]">Articles</div>
               </div>
-              <div className="w-px h-12 bg-[#141414]/20" />
+              <div className="w-px h-12 bg-[var(--cy-bg-card)]/20" />
               <div>
                 <div className="text-3xl font-bold text-[#A4FF4F]">{totalViews.toLocaleString()}</div>
-                <div className="text-sm text-gray-400">Total Views</div>
+                <div className="text-sm text-[var(--cy-text-muted)]">Total Views</div>
               </div>
             </div>
           </motion.div>
@@ -99,7 +99,7 @@ export default function AuthorPosts() {
       {/* Author's Posts */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-white mb-8">
+          <h2 className="text-3xl font-bold text-[var(--cy-text)] mb-8">
             All Articles by {authorName}
           </h2>
           
@@ -110,7 +110,7 @@ export default function AuthorPosts() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-[#141414] rounded-2xl overflow-hidden border border-white/5 hover:shadow-lg hover:shadow-black/30 transition-all"
+                className="bg-[var(--cy-bg-card)] rounded-2xl overflow-hidden border border-[var(--cy-border)] hover:shadow-lg hover:shadow-black/30 transition-all"
               >
                 <div className="relative h-48 overflow-hidden">
                   <img
@@ -123,9 +123,9 @@ export default function AuthorPosts() {
                   <Badge className="bg-[#6BCBFF]/20 text-[#6BCBFF] border-0 mb-3">
                     {post.category}
                   </Badge>
-                  <h3 className="text-xl font-bold text-white mb-3">{post.title}</h3>
-                  <p className="text-gray-400 mb-4 line-clamp-3">{post.excerpt}</p>
-                  <div className="flex items-center justify-between text-sm text-gray-400 mb-4">
+                  <h3 className="text-xl font-bold text-[var(--cy-text)] mb-3">{post.title}</h3>
+                  <p className="text-[var(--cy-text-muted)] mb-4 line-clamp-3">{post.excerpt}</p>
+                  <div className="flex items-center justify-between text-sm text-[var(--cy-text-muted)] mb-4">
                     <div className="flex items-center gap-2">
                       <Calendar className="w-4 h-4" />
                       <span>{new Date(post.created_date).toLocaleDateString()}</span>

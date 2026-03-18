@@ -149,13 +149,13 @@ export function EventMessaging({ event, isOrganizer }) {
           <div className="grid grid-cols-2 gap-4">
             <div className="p-4 bg-gray-50 rounded-lg">
               <p className="text-2xl font-bold text-[#ff6b35]">{participants.length}</p>
-              <p className="text-sm text-gray-400">Registered</p>
+              <p className="text-sm text-[var(--cy-text-muted)]">Registered</p>
             </div>
             <div className="p-4 bg-gray-50 rounded-lg">
               <p className="text-2xl font-bold text-[#ff6b35]">
                 {event.max_participants ? `${Math.round((participants.length / event.max_participants) * 100)}%` : 'N/A'}
               </p>
-              <p className="text-sm text-gray-400">Capacity</p>
+              <p className="text-sm text-[var(--cy-text-muted)]">Capacity</p>
             </div>
           </div>
         </CardContent>

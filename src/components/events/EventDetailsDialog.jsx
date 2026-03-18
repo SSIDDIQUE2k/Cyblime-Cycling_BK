@@ -179,7 +179,7 @@ END:VCALENDAR`;
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-white">{event.title}</DialogTitle>
+          <DialogTitle className="text-2xl font-bold text-[var(--cy-text)]">{event.title}</DialogTitle>
         </DialogHeader>
 
         <div className="space-y-6">
@@ -188,37 +188,37 @@ END:VCALENDAR`;
             <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
               <Calendar className="w-5 h-5 text-[#6BCBFF]" />
               <div>
-                <div className="text-xs text-gray-400">Date</div>
-                <div className="font-semibold text-white">{event.date}</div>
+                <div className="text-xs text-[var(--cy-text-muted)]">Date</div>
+                <div className="font-semibold text-[var(--cy-text)]">{event.date}</div>
               </div>
             </div>
             <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
               <Clock className="w-5 h-5 text-[#6BCBFF]" />
               <div>
-                <div className="text-xs text-gray-400">Time</div>
-                <div className="font-semibold text-white">{event.time}</div>
+                <div className="text-xs text-[var(--cy-text-muted)]">Time</div>
+                <div className="font-semibold text-[var(--cy-text)]">{event.time}</div>
               </div>
             </div>
             <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl col-span-2">
               <MapPin className="w-5 h-5 text-[#6BCBFF]" />
               <div>
-                <div className="text-xs text-gray-400">Location</div>
-                <div className="font-semibold text-white">{event.location}</div>
+                <div className="text-xs text-[var(--cy-text-muted)]">Location</div>
+                <div className="font-semibold text-[var(--cy-text)]">{event.location}</div>
               </div>
             </div>
           </div>
 
           {/* Description */}
           <div>
-            <h3 className="font-semibold text-white mb-2">About</h3>
-            <p className="text-gray-400">{event.description}</p>
+            <h3 className="font-semibold text-[var(--cy-text)] mb-2">About</h3>
+            <p className="text-[var(--cy-text-muted)]">{event.description}</p>
           </div>
 
           {/* RSVP Button */}
           <div>
             <Button
               onClick={() => rsvpMutation.mutate('going')}
-              className={`w-full ${userRsvp?.status === 'going' ? 'bg-[#A4FF4F] text-white font-bold' : 'bg-[#ff6b35] hover:bg-[#e55a2b] text-white'}`}
+              className={`w-full ${userRsvp?.status === 'going' ? 'bg-[#A4FF4F] text-[var(--cy-text)] font-bold' : 'bg-[#ff6b35] hover:bg-[#e55a2b] text-white'}`}
             >
               <Check className="w-4 h-4 mr-2" />
               {userRsvp?.status === 'going' ? `Going (${goingCount})` : 'RSVP Going'}
@@ -261,7 +261,7 @@ END:VCALENDAR`;
 
           {/* Attendee List */}
           <div>
-            <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+            <h3 className="font-semibold text-[var(--cy-text)] mb-3 flex items-center gap-2">
               <Users className="w-5 h-5" />
               Attendees ({goingCount})
             </h3>
@@ -271,12 +271,12 @@ END:VCALENDAR`;
                   <div className="w-8 h-8 rounded-full bg-[#ff6b35] flex items-center justify-center text-white text-sm font-semibold">
                     {rsvp.created_by.charAt(0).toUpperCase()}
                   </div>
-                  <span className="text-sm text-gray-400 truncate">{rsvp.created_by.split('@')[0]}</span>
+                  <span className="text-sm text-[var(--cy-text-muted)] truncate">{rsvp.created_by.split('@')[0]}</span>
                 </div>
               ))}
             </div>
             {goingCount > 9 && (
-              <p className="text-sm text-gray-400 mt-2">+ {goingCount - 9} more</p>
+              <p className="text-sm text-[var(--cy-text-muted)] mt-2">+ {goingCount - 9} more</p>
             )}
           </div>
 

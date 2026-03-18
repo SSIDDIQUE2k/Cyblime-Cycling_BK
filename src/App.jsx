@@ -8,6 +8,8 @@ import { pagesConfig } from './pages.config'
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
+import { ThemeProvider } from '@/lib/ThemeContext';
+import FloatingThemeToggle from '@/components/FloatingThemeToggle';
 
 const AdminUserManagement = lazy(() => import('./pages/AdminUserManagement'));
 
@@ -24,10 +26,10 @@ const PUBLIC_PAGES = new Set([
 
 // Shared loading spinner for lazy page loads
 const PageLoader = () => (
-  <div className="fixed inset-0 flex items-center justify-center bg-[#0a0a0a]">
+  <div className="fixed inset-0 flex items-center justify-center bg-[var(--cy-bg)]">
     <div className="flex flex-col items-center gap-4">
       <div className="w-10 h-10 border-4 border-[#ff6b35]/20 border-t-[#ff6b35] rounded-full animate-spin"></div>
-      <p className="text-gray-500 text-sm">Loading...</p>
+      <p className="text-[var(--cy-text-muted)] text-sm">Loading...</p>
     </div>
   </div>
 );
@@ -98,15 +100,18 @@ const AppRoutes = () => {
 function App() {
 
   return (
-    <AuthProvider>
-      <QueryClientProvider client={queryClientInstance}>
-        <Router>
-          <NavigationTracker />
-          <AppRoutes />
-        </Router>
-        <Toaster />
-      </QueryClientProvider>
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <QueryClientProvider client={queryClientInstance}>
+          <Router>
+            <NavigationTracker />
+            <AppRoutes />
+            <FloatingThemeToggle />
+          </Router>
+          <Toaster />
+        </QueryClientProvider>
+      </AuthProvider>
+    </ThemeProvider>
   )
 }
 

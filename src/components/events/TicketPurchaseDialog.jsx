@@ -96,8 +96,8 @@ export default function TicketPurchaseDialog({ event, open, onOpenChange }) {
 
         <div className="space-y-4">
           <div className="p-4 bg-gray-50 rounded-xl">
-            <h3 className="font-semibold text-white mb-2">{event.title}</h3>
-            <div className="text-sm text-gray-400">
+            <h3 className="font-semibold text-[var(--cy-text)] mb-2">{event.title}</h3>
+            <div className="text-sm text-[var(--cy-text-muted)]">
               {event.date} • {event.location}
             </div>
           </div>
@@ -120,15 +120,15 @@ export default function TicketPurchaseDialog({ event, open, onOpenChange }) {
 
           <div className="p-4 border-2 border-dashed border-gray-300 rounded-xl">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-gray-400">Ticket Price</span>
-              <span className="font-bold text-white">${ticketTypes[ticketType].price}</span>
+              <span className="text-[var(--cy-text-muted)]">Ticket Price</span>
+              <span className="font-bold text-[var(--cy-text)]">${ticketTypes[ticketType].price}</span>
             </div>
             <div className="flex items-center justify-between mb-2">
-              <span className="text-gray-400">Service Fee</span>
-              <span className="font-bold text-white">$2.50</span>
+              <span className="text-[var(--cy-text-muted)]">Service Fee</span>
+              <span className="font-bold text-[var(--cy-text)]">$2.50</span>
             </div>
             <div className="border-t pt-2 flex items-center justify-between">
-              <span className="font-semibold text-white">Total</span>
+              <span className="font-semibold text-[var(--cy-text)]">Total</span>
               <span className="font-bold text-[#ff6b35] text-xl">
                 ${(ticketTypes[ticketType].price + 2.5).toFixed(2)}
               </span>
@@ -150,7 +150,7 @@ export default function TicketPurchaseDialog({ event, open, onOpenChange }) {
             )}
           </Button>
 
-          <p className="text-xs text-gray-400 text-center">
+          <p className="text-xs text-[var(--cy-text-muted)] text-center">
             Powered by Stripe • Secure payment processing
           </p>
         </div>

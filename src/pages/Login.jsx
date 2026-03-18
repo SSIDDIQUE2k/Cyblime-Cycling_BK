@@ -78,7 +78,7 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#0a0a0a] flex overflow-hidden">
+    <div className="min-h-screen w-full bg-[var(--cy-bg)] flex overflow-hidden">
       {/* LEFT SIDE — Branding & Value Props */}
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
         {/* Background image */}
@@ -98,18 +98,18 @@ export default function Login() {
           {/* Logo */}
           <div className="flex items-center gap-3 mb-10">
             <Bike className="w-12 h-12 text-[#ff6b35]" />
-            <span className="text-3xl font-black text-white tracking-wider">
+            <span className="text-3xl font-black text-[var(--cy-text)] tracking-wider">
               CYBLIME
             </span>
           </div>
 
           {/* Tagline */}
-          <h1 className="text-4xl xl:text-5xl font-black text-white leading-tight mb-4">
+          <h1 className="text-4xl xl:text-5xl font-black text-[var(--cy-text)] leading-tight mb-4">
             Ride Together.
             <br />
             <span className="text-[#ff6b35]">Grow Together.</span>
           </h1>
-          <p className="text-lg text-gray-300 mb-12 max-w-md">
+          <p className="text-lg text-[var(--cy-text-secondary)] mb-12 max-w-md">
             Join a community that pushes your limits and celebrates every
             milestone on two wheels.
           </p>
@@ -121,8 +121,8 @@ export default function Login() {
                 <Calendar className="w-6 h-6 text-[#ff6b35]" />
               </div>
               <div>
-                <p className="text-white font-semibold">Weekly Group Rides</p>
-                <p className="text-gray-400 text-sm">
+                <p className="text-[var(--cy-text)] font-semibold">Weekly Group Rides</p>
+                <p className="text-[var(--cy-text-muted)] text-sm">
                   Events for every skill level, from casual to competitive
                 </p>
               </div>
@@ -133,8 +133,8 @@ export default function Login() {
                 <Map className="w-6 h-6 text-[#ff6b35]" />
               </div>
               <div>
-                <p className="text-white font-semibold">Curated Routes</p>
-                <p className="text-gray-400 text-sm">
+                <p className="text-[var(--cy-text)] font-semibold">Curated Routes</p>
+                <p className="text-[var(--cy-text-muted)] text-sm">
                   Discover the best cycling routes in your area
                 </p>
               </div>
@@ -145,10 +145,10 @@ export default function Login() {
                 <Trophy className="w-6 h-6 text-[#ff6b35]" />
               </div>
               <div>
-                <p className="text-white font-semibold">
+                <p className="text-[var(--cy-text)] font-semibold">
                   Challenges & Leaderboards
                 </p>
-                <p className="text-gray-400 text-sm">
+                <p className="text-[var(--cy-text-muted)] text-sm">
                   Compete, earn badges, and track your progress
                 </p>
               </div>
@@ -159,8 +159,8 @@ export default function Login() {
                 <Users className="w-6 h-6 text-[#ff6b35]" />
               </div>
               <div>
-                <p className="text-white font-semibold">Community Forum</p>
-                <p className="text-gray-400 text-sm">
+                <p className="text-[var(--cy-text)] font-semibold">Community Forum</p>
+                <p className="text-[var(--cy-text-muted)] text-sm">
                   Connect with riders, share tips, and find buddies
                 </p>
               </div>
@@ -176,25 +176,25 @@ export default function Login() {
           <div className="lg:hidden text-center mb-8">
             <div className="inline-flex items-center gap-3 mb-2">
               <Bike className="w-10 h-10 text-[#ff6b35]" />
-              <span className="text-2xl font-black text-white tracking-wider">
+              <span className="text-2xl font-black text-[var(--cy-text)] tracking-wider">
                 CYBLIME
               </span>
             </div>
-            <p className="text-gray-400">
+            <p className="text-[var(--cy-text-muted)]">
               Ride Together. Grow Together.
             </p>
           </div>
 
           {/* Form header */}
           <div className="mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[var(--cy-text)] mb-2">
               {isForgotPassword
                 ? "Reset Password"
                 : isSignUp
                 ? "Create Account"
                 : "Welcome Back"}
             </h2>
-            <p className="text-gray-400 text-sm sm:text-base">
+            <p className="text-[var(--cy-text-muted)] text-sm sm:text-base">
               {isForgotPassword
                 ? "Enter your email and we'll send you a reset link"
                 : isSignUp
@@ -227,7 +227,7 @@ export default function Login() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full px-4 py-3 bg-[#1a1a1a] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#ff6b35] transition-colors"
+                  className="w-full px-4 py-3 bg-[var(--cy-bg-elevated)] border border-[var(--cy-border-strong)] rounded-xl text-[var(--cy-text)] placeholder-gray-500 focus:outline-none focus:border-[#ff6b35] transition-colors"
                 />
                 <Button
                   type="submit"
@@ -237,7 +237,7 @@ export default function Login() {
                   {loading ? "Sending..." : "Send Reset Link"}
                 </Button>
               </form>
-              <div className="mt-8 pt-6 border-t border-white/10 text-center">
+              <div className="mt-8 pt-6 border-t border-[var(--cy-border-strong)] text-center">
                 <button
                   onClick={() => {
                     setIsForgotPassword(false);
@@ -256,7 +256,7 @@ export default function Login() {
               <Button
                 onClick={handleGoogleLogin}
                 disabled={loading}
-                className="w-full bg-[#141414] text-black hover:bg-gray-100 font-semibold py-6 text-base rounded-xl mb-6"
+                className="w-full bg-[var(--cy-bg-card)] text-black hover:bg-gray-100 font-semibold py-6 text-base rounded-xl mb-6"
               >
                 <svg className="w-5 h-5 mr-3 flex-shrink-0" viewBox="0 0 24 24">
                   <path
@@ -282,10 +282,10 @@ export default function Login() {
               {/* Divider */}
               <div className="relative mb-6">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-white/10"></div>
+                  <div className="w-full border-t border-[var(--cy-border-strong)]"></div>
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="bg-[#0a0a0a] px-4 text-gray-500">
+                  <span className="bg-[var(--cy-bg)] px-4 text-[var(--cy-text-muted)]">
                     or {isSignUp ? "sign up" : "sign in"} with email
                   </span>
                 </div>
@@ -301,7 +301,7 @@ export default function Login() {
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
                       required
-                      className="w-full px-4 py-3 bg-[#1a1a1a] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#ff6b35] transition-colors text-sm sm:text-base"
+                      className="w-full px-4 py-3 bg-[var(--cy-bg-elevated)] border border-[var(--cy-border-strong)] rounded-xl text-[var(--cy-text)] placeholder-gray-500 focus:outline-none focus:border-[#ff6b35] transition-colors text-sm sm:text-base"
                     />
                     <input
                       type="text"
@@ -309,7 +309,7 @@ export default function Login() {
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
                       required
-                      className="w-full px-4 py-3 bg-[#1a1a1a] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#ff6b35] transition-colors text-sm sm:text-base"
+                      className="w-full px-4 py-3 bg-[var(--cy-bg-elevated)] border border-[var(--cy-border-strong)] rounded-xl text-[var(--cy-text)] placeholder-gray-500 focus:outline-none focus:border-[#ff6b35] transition-colors text-sm sm:text-base"
                     />
                   </div>
                 )}
@@ -319,7 +319,7 @@ export default function Login() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full px-4 py-3 bg-[#1a1a1a] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#ff6b35] transition-colors"
+                  className="w-full px-4 py-3 bg-[var(--cy-bg-elevated)] border border-[var(--cy-border-strong)] rounded-xl text-[var(--cy-text)] placeholder-gray-500 focus:outline-none focus:border-[#ff6b35] transition-colors"
                 />
                 <input
                   type="password"
@@ -328,7 +328,7 @@ export default function Login() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   minLength={6}
-                  className="w-full px-4 py-3 bg-[#1a1a1a] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#ff6b35] transition-colors"
+                  className="w-full px-4 py-3 bg-[var(--cy-bg-elevated)] border border-[var(--cy-border-strong)] rounded-xl text-[var(--cy-text)] placeholder-gray-500 focus:outline-none focus:border-[#ff6b35] transition-colors"
                 />
                 {isSignUp && (
                   <input
@@ -338,12 +338,12 @@ export default function Login() {
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     required
                     minLength={6}
-                    className="w-full px-4 py-3 bg-[#1a1a1a] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#ff6b35] transition-colors"
+                    className="w-full px-4 py-3 bg-[var(--cy-bg-elevated)] border border-[var(--cy-border-strong)] rounded-xl text-[var(--cy-text)] placeholder-gray-500 focus:outline-none focus:border-[#ff6b35] transition-colors"
                   />
                 )}
 
                 {isSignUp && (
-                  <p className="text-xs text-gray-500 leading-relaxed">
+                  <p className="text-xs text-[var(--cy-text-muted)] leading-relaxed">
                     By signing up, you agree to our{" "}
                     <span className="text-[#ff6b35] cursor-pointer hover:underline">
                       Terms
@@ -378,7 +378,7 @@ export default function Login() {
                       setError(null);
                       setSuccessMessage(null);
                     }}
-                    className="text-gray-500 hover:text-[#ff6b35] text-sm transition-colors"
+                    className="text-[var(--cy-text-muted)] hover:text-[#ff6b35] text-sm transition-colors"
                   >
                     Forgot your password?
                   </button>
@@ -386,8 +386,8 @@ export default function Login() {
               )}
 
               {/* Toggle */}
-              <div className="mt-8 pt-6 border-t border-white/10 text-center">
-                <p className="text-gray-400 text-sm mb-3">
+              <div className="mt-8 pt-6 border-t border-[var(--cy-border-strong)] text-center">
+                <p className="text-[var(--cy-text-muted)] text-sm mb-3">
                   {isSignUp
                     ? "Already have an account?"
                     : "Don't have an account?"}

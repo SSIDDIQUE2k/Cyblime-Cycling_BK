@@ -77,10 +77,10 @@ export default function ForYouSection({ user, profile, onEventClick }) {
         <CardContent className="p-6">
           <div className="flex items-center gap-2 mb-4">
             <Sparkles className="w-5 h-5 text-purple-600" />
-            <h3 className="text-xl font-bold text-white">For You</h3>
-            <Badge className="bg-purple-600 text-white border-0">AI Powered</Badge>
+            <h3 className="text-xl font-bold text-[var(--cy-text)]">For You</h3>
+            <Badge className="bg-purple-600 text-[var(--cy-text)] border-0">AI Powered</Badge>
           </div>
-          <p className="text-sm text-gray-400 mb-4">
+          <p className="text-sm text-[var(--cy-text-muted)] mb-4">
             Events matched to your preferences and riding style
           </p>
 
@@ -91,7 +91,7 @@ export default function ForYouSection({ user, profile, onEventClick }) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-[#141414] rounded-xl p-4 border border-purple-100 hover:shadow-md transition-shadow cursor-pointer"
+                className="bg-[var(--cy-bg-card)] rounded-xl p-4 border border-purple-100 hover:shadow-md transition-shadow cursor-pointer"
                 onClick={() => onEventClick(event)}
               >
                 <div className="flex items-start justify-between mb-2">
@@ -101,9 +101,9 @@ export default function ForYouSection({ user, profile, onEventClick }) {
                   </Badge>
                 </div>
                 
-                <h4 className="font-semibold text-white mb-2">{event.title}</h4>
+                <h4 className="font-semibold text-[var(--cy-text)] mb-2">{event.title}</h4>
                 
-                <div className="space-y-1 text-sm text-gray-400">
+                <div className="space-y-1 text-sm text-[var(--cy-text-muted)]">
                   <div className="flex items-center gap-2">
                     <Calendar className="w-3 h-3" />
                     <span>{new Date(event.date).toLocaleDateString()}</span>

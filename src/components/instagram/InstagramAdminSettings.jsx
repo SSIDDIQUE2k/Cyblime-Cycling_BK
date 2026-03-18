@@ -94,11 +94,11 @@ export default function InstagramAdminSettings() {
         <div className="bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] p-6">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-              <Instagram className="w-6 h-6 text-white" />
+              <Instagram className="w-6 h-6 text-[var(--cy-text)]" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-white">Instagram Gallery Settings</h2>
-              <p className="text-white/80 text-sm">Configure your Instagram feed display</p>
+              <h2 className="text-2xl font-bold text-[var(--cy-text)]">Instagram Gallery Settings</h2>
+              <p className="text-[var(--cy-text)]/80 text-sm">Configure your Instagram feed display</p>
             </div>
           </div>
         </div>
@@ -218,7 +218,7 @@ export default function InstagramAdminSettings() {
               <li>Generate a long-lived access token</li>
               <li>Paste the token above</li>
             </ol>
-            <Badge className="mt-3 bg-blue-600 text-white border-0">
+            <Badge className="mt-3 bg-blue-600 text-[var(--cy-text)] border-0">
               Token expires in 60 days - renew regularly
             </Badge>
           </div>
@@ -228,7 +228,7 @@ export default function InstagramAdminSettings() {
             <Button
               type="submit"
               disabled={saveMutation.isPending || !formData.access_token}
-              className="bg-[#c9a227] hover:bg-[#b89123] text-white flex-1"
+              className="bg-[#c9a227] hover:bg-[#b89123] text-[var(--cy-text)] flex-1"
             >
               <Save className="w-4 h-4 mr-2" />
               {saveMutation.isPending ? 'Saving...' : 'Save Settings'}

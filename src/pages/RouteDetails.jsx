@@ -121,7 +121,7 @@ export default function RouteDetails() {
     
     sections.forEach((section, index) => {
       elements.push(
-        <p key={`p-${index}`} className="text-gray-400 text-lg leading-relaxed mb-6">
+        <p key={`p-${index}`} className="text-[var(--cy-text-muted)] text-lg leading-relaxed mb-6">
           {section}
         </p>
       );
@@ -152,25 +152,25 @@ export default function RouteDetails() {
   };
 
   const difficultyColors = {
-    Easy: "bg-[#A4FF4F] text-white",
-    Moderate: "bg-yellow-400 text-white",
-    Challenging: "bg-orange-500 text-white",
-    Expert: "bg-red-600 text-white"
+    Easy: "bg-[#A4FF4F] text-[var(--cy-text)]",
+    Moderate: "bg-yellow-400 text-[var(--cy-text)]",
+    Challenging: "bg-orange-500 text-[var(--cy-text)]",
+    Expert: "bg-red-600 text-[var(--cy-text)]"
   };
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
-        <div className="text-gray-400">Loading route...</div>
+      <div className="min-h-screen bg-[var(--cy-bg)] flex items-center justify-center">
+        <div className="text-[var(--cy-text-muted)]">Loading route...</div>
       </div>
     );
   }
 
   if (!route) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
+      <div className="min-h-screen bg-[var(--cy-bg)] flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-white mb-4">Route not found</h2>
+          <h2 className="text-2xl font-bold text-[var(--cy-text)] mb-4">Route not found</h2>
           <Link to={createPageUrl("Routes")}>
             <Button className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white">
               Back to Routes
@@ -184,10 +184,10 @@ export default function RouteDetails() {
   return (
     <div className="min-h-screen bg-[#f8f8f8]">
       {/* Top Navigation */}
-      <div className="bg-[#141414] border-b border-white/10">
+      <div className="bg-[var(--cy-bg-card)] border-b border-[var(--cy-border-strong)]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <Link to={createPageUrl("Routes")}>
-            <Button variant="ghost" className="text-gray-400 hover:bg-gray-100">
+            <Button variant="ghost" className="text-[var(--cy-text-muted)] hover:bg-gray-100">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Routes
             </Button>
@@ -221,7 +221,7 @@ export default function RouteDetails() {
       </div>
 
       {/* Route Content */}
-      <article className="bg-[#141414]">
+      <article className="bg-[var(--cy-bg-card)]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
           {/* Header */}
           <motion.div
@@ -232,12 +232,12 @@ export default function RouteDetails() {
             <Badge className={`${difficultyColors[route.difficulty]} border-0 font-bold mb-4 text-sm px-4 py-1.5`}>
               {route.difficulty}
             </Badge>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[var(--cy-text)] leading-tight mb-4">
               {route.name}
             </h1>
             <div className="flex items-center gap-2 mb-6">
               <Star className="w-5 h-5 fill-[#ff6b35] text-[#ff6b35]" />
-              <span className="text-lg font-semibold text-white">{route.rating || "5.0"}</span>
+              <span className="text-lg font-semibold text-[var(--cy-text)]">{route.rating || "5.0"}</span>
               <span className="text-[#888888]">•</span>
               <span className="text-[#888888]">{route.total_rides || 0} rides</span>
               <span className="text-[#888888]">•</span>
@@ -254,23 +254,23 @@ export default function RouteDetails() {
           >
             <div className="bg-gradient-to-br from-[#6BCBFF]/10 to-[#6BCBFF]/5 rounded-2xl p-6">
               <MapPin className="w-8 h-8 text-[#6BCBFF] mb-3" />
-              <div className="text-3xl font-bold text-white mb-1">{route.distance}km</div>
-              <div className="text-sm text-gray-400">Distance</div>
+              <div className="text-3xl font-bold text-[var(--cy-text)] mb-1">{route.distance}km</div>
+              <div className="text-sm text-[var(--cy-text-muted)]">Distance</div>
             </div>
             <div className="bg-gradient-to-br from-[#A4FF4F]/10 to-[#A4FF4F]/5 rounded-2xl p-6">
               <TrendingUp className="w-8 h-8 text-[#8FE640] mb-3" />
-              <div className="text-3xl font-bold text-white mb-1">{route.elevation_gain}m</div>
-              <div className="text-sm text-gray-400">Elevation Gain</div>
+              <div className="text-3xl font-bold text-[var(--cy-text)] mb-1">{route.elevation_gain}m</div>
+              <div className="text-sm text-[var(--cy-text-muted)]">Elevation Gain</div>
             </div>
             <div className="bg-gradient-to-br from-[#ff6b35]/10 to-[#ff6b35]/5 rounded-2xl p-6">
               <Calendar className="w-8 h-8 text-[#ff6b35] mb-3" />
-              <div className="text-3xl font-bold text-white mb-1">{route.estimated_time}h</div>
-              <div className="text-sm text-gray-400">Estimated Time</div>
+              <div className="text-3xl font-bold text-[var(--cy-text)] mb-1">{route.estimated_time}h</div>
+              <div className="text-sm text-[var(--cy-text-muted)]">Estimated Time</div>
             </div>
             <div className="bg-gradient-to-br from-purple-400/10 to-purple-400/5 rounded-2xl p-6">
               <Mountain className="w-8 h-8 text-purple-600 mb-3" />
-              <div className="text-lg font-bold text-white mb-1">{route.surface_type}</div>
-              <div className="text-sm text-gray-400">Surface Type</div>
+              <div className="text-lg font-bold text-[var(--cy-text)] mb-1">{route.surface_type}</div>
+              <div className="text-sm text-[var(--cy-text-muted)]">Surface Type</div>
             </div>
           </motion.div>
 
@@ -279,7 +279,7 @@ export default function RouteDetails() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="flex flex-wrap gap-3 mb-12 pb-8 border-b border-white/10"
+            className="flex flex-wrap gap-3 mb-12 pb-8 border-b border-[var(--cy-border-strong)]"
           >
             {route.gpx_file_url && (
               <Button onClick={handleDownloadGPX} className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white rounded-full">
@@ -304,7 +304,7 @@ export default function RouteDetails() {
             transition={{ delay: 0.3 }}
             className="max-w-4xl mb-12"
           >
-            <h2 className="text-3xl font-bold text-white mb-6">About This Route</h2>
+            <h2 className="text-3xl font-bold text-[var(--cy-text)] mb-6">About This Route</h2>
             <div className="prose prose-lg max-w-none">
               {renderDescriptionWithImages()}
             </div>
@@ -315,19 +315,19 @@ export default function RouteDetails() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="grid md:grid-cols-2 gap-6 mb-12 pb-12 border-b border-white/10"
+            className="grid md:grid-cols-2 gap-6 mb-12 pb-12 border-b border-[var(--cy-border-strong)]"
           >
             <div>
-              <h3 className="text-xl font-bold text-white mb-4">Route Details</h3>
+              <h3 className="text-xl font-bold text-[var(--cy-text)] mb-4">Route Details</h3>
               <div className="space-y-3">
                 <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
-                  <span className="text-gray-400">Start Location</span>
-                  <span className="font-semibold text-white">{route.start_location}</span>
+                  <span className="text-[var(--cy-text-muted)]">Start Location</span>
+                  <span className="font-semibold text-[var(--cy-text)]">{route.start_location}</span>
                 </div>
                 {route.end_location && (
                   <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
-                    <span className="text-gray-400">End Location</span>
-                    <span className="font-semibold text-white">{route.end_location}</span>
+                    <span className="text-[var(--cy-text-muted)]">End Location</span>
+                    <span className="font-semibold text-[var(--cy-text)]">{route.end_location}</span>
                   </div>
                 )}
               </div>
@@ -335,12 +335,12 @@ export default function RouteDetails() {
             
             {route.highlights && route.highlights.length > 0 && (
               <div>
-                <h3 className="text-xl font-bold text-white mb-4">Highlights</h3>
+                <h3 className="text-xl font-bold text-[var(--cy-text)] mb-4">Highlights</h3>
                 <ul className="space-y-2">
                   {route.highlights.map((highlight, i) => (
                     <li key={i} className="flex items-start gap-2">
                       <span className="text-[#ff6b35] mt-1">✓</span>
-                      <span className="text-gray-400">{highlight}</span>
+                      <span className="text-[var(--cy-text-muted)]">{highlight}</span>
                     </li>
                   ))}
                 </ul>
@@ -356,7 +356,7 @@ export default function RouteDetails() {
           >
             <div className="flex items-center gap-2 mb-8">
               <MessageCircle className="w-6 h-6 text-[#ff6b35]" />
-              <h3 className="text-2xl font-bold text-white">
+              <h3 className="text-2xl font-bold text-[var(--cy-text)]">
                 Rider Reviews ({comments.length})
               </h3>
             </div>
@@ -375,7 +375,7 @@ export default function RouteDetails() {
                         className="focus:outline-none transition-transform hover:scale-110"
                       >
                         <Star
-                          className={`w-8 h-8 ${star <= rating ? 'fill-[#ff6b35] text-[#ff6b35]' : 'text-gray-300'}`}
+                          className={`w-8 h-8 ${star <= rating ? 'fill-[#ff6b35] text-[#ff6b35]' : 'text-[var(--cy-text-secondary)]'}`}
                         />
                       </button>
                     ))}
@@ -386,7 +386,7 @@ export default function RouteDetails() {
                   onChange={(e) => setComment(e.target.value)}
                   placeholder="Share your experience with this route..."
                   rows={4}
-                  className="mb-4 bg-[#141414]"
+                  className="mb-4 bg-[var(--cy-bg-card)]"
                   required
                 />
                 <Button 
@@ -399,7 +399,7 @@ export default function RouteDetails() {
               </form>
             ) : (
               <div className="mb-8 p-6 bg-gray-50 rounded-2xl text-center">
-                <p className="text-gray-400">Please sign in to leave a review</p>
+                <p className="text-[var(--cy-text-muted)]">Please sign in to leave a review</p>
               </div>
             )}
 
@@ -411,22 +411,22 @@ export default function RouteDetails() {
                     key={comment.id}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="bg-[#141414] rounded-2xl p-6 shadow-none border border-white/5"
+                    className="bg-[var(--cy-bg-card)] rounded-2xl p-6 shadow-none border border-[var(--cy-border)]"
                   >
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#ff6b35] to-[#e55a2b] flex items-center justify-center text-white font-bold flex-shrink-0">
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#ff6b35] to-[#e55a2b] flex items-center justify-center text-[var(--cy-text)] font-bold flex-shrink-0">
                         <User className="w-6 h-6" />
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-2">
                           <div>
-                            <div className="font-semibold text-white">{comment.created_by}</div>
+                            <div className="font-semibold text-[var(--cy-text)]">{comment.created_by}</div>
                             <div className="flex items-center gap-2 mt-1">
                               <div className="flex">
                                 {[...Array(5)].map((_, i) => (
                                   <Star
                                     key={i}
-                                    className={`w-4 h-4 ${i < comment.rating ? 'fill-[#ff6b35] text-[#ff6b35]' : 'text-gray-300'}`}
+                                    className={`w-4 h-4 ${i < comment.rating ? 'fill-[#ff6b35] text-[#ff6b35]' : 'text-[var(--cy-text-secondary)]'}`}
                                   />
                                 ))}
                               </div>
@@ -436,7 +436,7 @@ export default function RouteDetails() {
                             </div>
                           </div>
                         </div>
-                        <p className="text-gray-400 leading-relaxed">{comment.comment}</p>
+                        <p className="text-[var(--cy-text-muted)] leading-relaxed">{comment.comment}</p>
                       </div>
                     </div>
                   </motion.div>
@@ -444,7 +444,7 @@ export default function RouteDetails() {
               </div>
             ) : (
               <div className="text-center py-12">
-                <MessageCircle className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                <MessageCircle className="w-16 h-16 text-[var(--cy-text-secondary)] mx-auto mb-4" />
                 <p className="text-[#888888]">No reviews yet. Be the first to share your experience!</p>
               </div>
             )}

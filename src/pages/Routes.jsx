@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { usePageContent } from "../hooks/usePageContent";
 import { base44 } from "@/api/base44Client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import LeaderboardCard from "../components/gamification/LeaderboardCard";
@@ -47,10 +48,10 @@ import { Label } from "@/components/ui/label";
 
 const RouteCard = ({ route, index }) => {
   const difficultyColors = {
-    Easy: "bg-[#A4FF4F] text-white",
-    Moderate: "bg-yellow-400 text-white",
-    Challenging: "bg-orange-500 text-white",
-    Expert: "bg-red-600 text-white"
+    Easy: "bg-[#A4FF4F] text-[var(--cy-text)]",
+    Moderate: "bg-yellow-400 text-[var(--cy-text)]",
+    Challenging: "bg-orange-500 text-[var(--cy-text)]",
+    Expert: "bg-red-600 text-[var(--cy-text)]"
   };
 
   const surfaceIcons = {
@@ -65,7 +66,7 @@ const RouteCard = ({ route, index }) => {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.05 }}
-      className="bg-[#141414] rounded-2xl overflow-hidden border border-white/5 hover:shadow-lg hover:shadow-black/30 transition-all duration-300 group"
+      className="bg-[var(--cy-bg-card)] rounded-2xl overflow-hidden border border-[var(--cy-border)] hover:shadow-lg hover:shadow-black/30 transition-all duration-300 group"
     >
       <div className="relative h-48 overflow-hidden">
         <img
@@ -77,47 +78,47 @@ const RouteCard = ({ route, index }) => {
           {route.difficulty}
         </Badge>
         <div className="absolute top-4 right-4 flex gap-2">
-          <button className="w-8 h-8 rounded-full bg-[#141414]/90 backdrop-blur-sm flex items-center justify-center hover:bg-[#141414] transition-colors">
-            <Heart className="w-4 h-4 text-gray-400" />
+          <button className="w-8 h-8 rounded-full bg-[var(--cy-bg-card)]/90 backdrop-blur-sm flex items-center justify-center hover:bg-[var(--cy-bg-card)] transition-colors">
+            <Heart className="w-4 h-4 text-[var(--cy-text-muted)]" />
           </button>
-          <button className="w-8 h-8 rounded-full bg-[#141414]/90 backdrop-blur-sm flex items-center justify-center hover:bg-[#141414] transition-colors">
-            <Share2 className="w-4 h-4 text-gray-400" />
+          <button className="w-8 h-8 rounded-full bg-[var(--cy-bg-card)]/90 backdrop-blur-sm flex items-center justify-center hover:bg-[var(--cy-bg-card)] transition-colors">
+            <Share2 className="w-4 h-4 text-[var(--cy-text-muted)]" />
           </button>
         </div>
       </div>
       
       <div className="p-6">
         <div className="flex items-start justify-between mb-3">
-          <h3 className="text-xl font-bold text-white flex-1">{route.name}</h3>
+          <h3 className="text-xl font-bold text-[var(--cy-text)] flex-1">{route.name}</h3>
           <div className="flex items-center gap-1 text-sm">
             <Star className="w-4 h-4 fill-[#ff6b35] text-[#ff6b35]" />
             <span className="font-semibold">{route.rating || "5.0"}</span>
           </div>
         </div>
         
-        <p className="text-sm text-gray-400 mb-4 line-clamp-2">{route.description}</p>
+        <p className="text-sm text-[var(--cy-text-muted)] mb-4 line-clamp-2">{route.description}</p>
         
         <div className="grid grid-cols-2 gap-3 mb-4">
           <div className="flex items-center gap-2 text-sm">
             <MapPin className="w-4 h-4 text-[#6BCBFF]" />
-            <span className="text-gray-400">{route.distance}km</span>
+            <span className="text-[var(--cy-text-muted)]">{route.distance}km</span>
           </div>
           <div className="flex items-center gap-2 text-sm">
             <TrendingUp className="w-4 h-4 text-[#6BCBFF]" />
-            <span className="text-gray-400">{route.elevation_gain}m</span>
+            <span className="text-[var(--cy-text-muted)]">{route.elevation_gain}m</span>
           </div>
           <div className="flex items-center gap-2 text-sm">
             <Mountain className="w-4 h-4 text-[#6BCBFF]" />
-            <span className="text-gray-400">{route.surface_type}</span>
+            <span className="text-[var(--cy-text-muted)]">{route.surface_type}</span>
           </div>
           <div className="flex items-center gap-2 text-sm">
             <Calendar className="w-4 h-4 text-[#6BCBFF]" />
-            <span className="text-gray-400">{route.estimated_time}h</span>
+            <span className="text-[var(--cy-text-muted)]">{route.estimated_time}h</span>
           </div>
         </div>
         
-        <div className="flex items-center justify-between pt-4 border-t border-white/5">
-          <div className="flex items-center gap-2 text-sm text-gray-400">
+        <div className="flex items-center justify-between pt-4 border-t border-[var(--cy-border)]">
+          <div className="flex items-center gap-2 text-sm text-[var(--cy-text-muted)]">
             <span>{route.total_rides || 0} rides</span>
             <span>•</span>
             <span>by {route.created_by}</span>
@@ -195,7 +196,7 @@ const UploadRouteDialog = ({ open, onOpenChange }) => {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-white">Upload New Route</DialogTitle>
+          <DialogTitle className="text-2xl font-bold text-[var(--cy-text)]">Upload New Route</DialogTitle>
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -334,7 +335,15 @@ const UploadRouteDialog = ({ open, onOpenChange }) => {
 
 
 
+const DEFAULT_ROUTES_CONTENT = {
+  hero: {
+    heading: "Discover Routes",
+    subheading: "Explore, share, and ride the best cycling routes curated by the Cyblime community."
+  }
+};
+
 export default function Routes() {
+  const { content: pageContent } = usePageContent("routes", DEFAULT_ROUTES_CONTENT);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterDifficulty, setFilterDifficulty] = useState("all");
   const [filterSurface, setFilterSurface] = useState("all");
@@ -377,7 +386,7 @@ export default function Routes() {
     });
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="min-h-screen bg-[var(--cy-bg)]">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-[#2A2A2A] to-[#1a1a1a] py-20 md:py-32 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
@@ -391,11 +400,11 @@ export default function Routes() {
             transition={{ duration: 0.8 }}
             className="text-center max-w-3xl mx-auto"
           >
-            <h1 className="text-5xl md:text-6xl font-bold text-white tracking-tight mb-6">
-              Discover Routes
+            <h1 className="text-5xl md:text-6xl font-bold text-[var(--cy-text)] tracking-tight mb-6">
+              {pageContent.hero.heading}
             </h1>
-            <p className="text-xl text-gray-400 mb-8">
-              Explore, share, and ride the best cycling routes curated by the Cymblime community.
+            <p className="text-xl text-[var(--cy-text-muted)] mb-8">
+              {pageContent.hero.subheading}
             </p>
             
             <div className="flex flex-wrap items-center justify-center gap-4">
@@ -409,7 +418,7 @@ export default function Routes() {
               </Button>
               <Link to={createPageUrl("StravaClub")}>
                 <Button
-                  className="bg-[#141414] text-white hover:bg-gray-100 rounded-full px-8 py-6 text-lg font-semibold border-2 border-white"
+                  className="bg-[var(--cy-bg-card)] text-[var(--cy-text)] hover:bg-gray-100 rounded-full px-8 py-6 text-lg font-semibold border-2 border-white"
                 >
                   <Activity className="w-5 h-5 mr-2" />
                   Strava Club
@@ -421,11 +430,11 @@ export default function Routes() {
       </section>
 
       {/* Filters Section */}
-      <section className="sticky top-20 z-40 bg-[#141414] border-b border-white/10 shadow-none">
+      <section className="sticky top-20 z-40 bg-[var(--cy-bg-card)] border-b border-[var(--cy-border-strong)] shadow-none">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--cy-text-muted)]" />
               <Input
                 type="text"
                 placeholder="Search routes..."
@@ -477,8 +486,8 @@ export default function Routes() {
           </div>
           
           <div className="flex items-center gap-2 mt-4">
-            <Filter className="w-4 h-4 text-gray-400" />
-            <span className="text-sm text-gray-400">
+            <Filter className="w-4 h-4 text-[var(--cy-text-muted)]" />
+            <span className="text-sm text-[var(--cy-text-muted)]">
               Showing {filteredRoutes.length} of {routes.length} routes
             </span>
           </div>
@@ -486,7 +495,7 @@ export default function Routes() {
       </section>
 
       {/* Leaderboards */}
-      <section className="py-8 bg-[#141414] border-b border-white/5">
+      <section className="py-8 bg-[var(--cy-bg-card)] border-b border-[var(--cy-border)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid md:grid-cols-3 gap-6">
             <LeaderboardCard
@@ -525,15 +534,15 @@ export default function Routes() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           {user && filteredRoutes.length > 0 && (
             <div className="mb-8 p-6 bg-gradient-to-r from-[#6BCBFF]/10 to-transparent rounded-2xl border-l-4 border-[#6BCBFF]">
-              <h3 className="text-lg font-bold text-white mb-2">✨ Perfect Routes for Your Level</h3>
-              <p className="text-sm text-gray-400">
+              <h3 className="text-lg font-bold text-[var(--cy-text)] mb-2">✨ Perfect Routes for Your Level</h3>
+              <p className="text-sm text-[var(--cy-text-muted)]">
                 These routes match your skill level and riding preferences
               </p>
             </div>
           )}
           {isLoading ? (
             <div className="text-center py-20">
-              <div className="text-gray-400">Loading routes...</div>
+              <div className="text-[var(--cy-text-muted)]">Loading routes...</div>
             </div>
           ) : filteredRoutes.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -548,10 +557,10 @@ export default function Routes() {
           ) : (
             <div className="text-center py-20">
               <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
-                <Search className="w-8 h-8 text-gray-400" />
+                <Search className="w-8 h-8 text-[var(--cy-text-muted)]" />
               </div>
-              <h3 className="text-xl font-semibold text-white mb-2">No routes found</h3>
-              <p className="text-gray-400">Try adjusting your filters or upload a new route</p>
+              <h3 className="text-xl font-semibold text-[var(--cy-text)] mb-2">No routes found</h3>
+              <p className="text-[var(--cy-text-muted)]">Try adjusting your filters or upload a new route</p>
             </div>
           )}
         </div>

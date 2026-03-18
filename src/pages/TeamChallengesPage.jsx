@@ -35,14 +35,14 @@ export default function TeamChallengesPage() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
-        <p className="text-gray-400">Please log in to view team challenges</p>
+      <div className="min-h-screen bg-[var(--cy-bg)] flex items-center justify-center">
+        <p className="text-[var(--cy-text-muted)]">Please log in to view team challenges</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="min-h-screen bg-[var(--cy-bg)]">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-[#2A2A2A] to-[#1a1a1a] py-20 md:py-32 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
@@ -56,10 +56,10 @@ export default function TeamChallengesPage() {
             transition={{ duration: 0.8 }}
             className="text-center max-w-3xl mx-auto"
           >
-            <h1 className="text-5xl md:text-6xl font-bold text-white tracking-tight mb-6">
+            <h1 className="text-5xl md:text-6xl font-bold text-[var(--cy-text)] tracking-tight mb-6">
               Team Up & Compete
             </h1>
-            <p className="text-xl text-gray-400">
+            <p className="text-xl text-[var(--cy-text-muted)]">
               Join team challenges, connect with buddies, and unlock exclusive rewards
             </p>
           </motion.div>
@@ -70,12 +70,12 @@ export default function TeamChallengesPage() {
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <Tabs defaultValue="teams" className="space-y-8">
-            <TabsList className="bg-[#141414] p-1 rounded-xl shadow-none">
+            <TabsList className="bg-[var(--cy-bg-card)] p-1 rounded-xl shadow-none">
               <TabsTrigger value="teams" className="rounded-lg data-[state=active]:bg-[#ff6b35] data-[state=active]:text-white">
                 <Users className="w-4 h-4 mr-2" />
                 Team Challenges
               </TabsTrigger>
-              <TabsTrigger value="buddies" className="rounded-lg data-[state=active]:bg-[#6BCBFF] data-[state=active]:text-white">
+              <TabsTrigger value="buddies" className="rounded-lg data-[state=active]:bg-[#6BCBFF] data-[state=active]:text-[var(--cy-text)]">
                 <Heart className="w-4 h-4 mr-2" />
                 Buddies
               </TabsTrigger>

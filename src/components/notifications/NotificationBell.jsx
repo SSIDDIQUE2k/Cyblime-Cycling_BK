@@ -22,9 +22,9 @@ const NotificationItem = ({ notification, onMarkRead, onDelete }) => {
   };
 
   return (
-    <div className={`p-3 border-l-4 ${typeColors[notification.type]} bg-[#141414] hover:bg-gray-50 transition-colors ${!notification.read ? 'bg-orange-50/50' : ''}`}>
+    <div className={`p-3 border-l-4 ${typeColors[notification.type]} bg-[var(--cy-bg-card)] hover:bg-gray-50 transition-colors ${!notification.read ? 'bg-orange-50/50' : ''}`}>
       <div className="flex items-start justify-between gap-2 mb-1">
-        <h4 className="font-semibold text-sm text-white">{notification.title}</h4>
+        <h4 className="font-semibold text-sm text-[var(--cy-text)]">{notification.title}</h4>
         <div className="flex gap-1">
           {!notification.read && (
             <button
@@ -37,15 +37,15 @@ const NotificationItem = ({ notification, onMarkRead, onDelete }) => {
           )}
           <button
             onClick={() => onDelete(notification.id)}
-            className="text-gray-400 hover:text-red-500 p-1"
+            className="text-[var(--cy-text-muted)] hover:text-red-500 p-1"
             title="Delete"
           >
             <X className="w-3 h-3" />
           </button>
         </div>
       </div>
-      <p className="text-xs text-gray-400 mb-2">{notification.message}</p>
-      <span className="text-xs text-gray-400">
+      <p className="text-xs text-[var(--cy-text-muted)] mb-2">{notification.message}</p>
+      <span className="text-xs text-[var(--cy-text-muted)]">
         {new Date(notification.created_date).toLocaleString()}
       </span>
     </div>
@@ -98,7 +98,7 @@ export default function NotificationBell({ user }) {
         <Button variant="ghost" className="relative text-[#ff6b35] hover:text-[#ff6b35]">
           <Bell className="w-5 h-5" />
           {unreadCount > 0 && (
-            <span className="absolute -top-1 -right-1 w-5 h-5 bg-[#ff4500] text-white text-xs font-bold rounded-full flex items-center justify-center">
+            <span className="absolute -top-1 -right-1 w-5 h-5 bg-[#ff4500] text-[var(--cy-text)] text-xs font-bold rounded-full flex items-center justify-center">
               {unreadCount > 9 ? '9+' : unreadCount}
             </span>
           )}
@@ -106,7 +106,7 @@ export default function NotificationBell({ user }) {
       </PopoverTrigger>
       <PopoverContent align="end" className="w-96 p-0">
         <div className="flex items-center justify-between p-4 border-b">
-          <h3 className="font-bold text-white">Notifications</h3>
+          <h3 className="font-bold text-[var(--cy-text)]">Notifications</h3>
           {unreadCount > 0 && (
             <Button
               onClick={markAllAsRead}
@@ -132,8 +132,8 @@ export default function NotificationBell({ user }) {
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center py-12 text-center">
-              <Bell className="w-12 h-12 text-gray-300 mb-3" />
-              <p className="text-gray-400 text-sm">No notifications yet</p>
+              <Bell className="w-12 h-12 text-[var(--cy-text-secondary)] mb-3" />
+              <p className="text-[var(--cy-text-muted)] text-sm">No notifications yet</p>
             </div>
           )}
         </ScrollArea>

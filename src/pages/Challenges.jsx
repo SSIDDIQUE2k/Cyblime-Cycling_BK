@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { usePageContent } from "../hooks/usePageContent";
 import { base44 } from "@/api/base44Client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
@@ -51,40 +52,40 @@ const ChallengeCard = ({ challenge, userProgress, onJoin, isJoined, isJoining })
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-[#141414] rounded-2xl p-6 border border-white/5 hover:shadow-lg hover:shadow-black/30 transition-all duration-300"
+      className="bg-[var(--cy-bg-card)] rounded-2xl p-6 border border-[var(--cy-border)] hover:shadow-lg hover:shadow-black/30 transition-all duration-300"
     >
       <div className="flex items-start justify-between mb-4">
         <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#ff6b35] to-[#ff4500] flex items-center justify-center">
-          <Icon className="w-6 h-6 text-white" />
+          <Icon className="w-6 h-6 text-[var(--cy-text)]" />
         </div>
-        <Badge className={`${isCompleted ? 'bg-[#A4FF4F] text-white' : 'bg-[#ff6b35] text-white'} border-0`}>
+        <Badge className={`${isCompleted ? 'bg-[#A4FF4F] text-[var(--cy-text)]' : 'bg-[#ff6b35] text-white'} border-0`}>
           {challenge.type === 'weekly' ? 'Weekly' : 'Monthly'}
         </Badge>
       </div>
 
-      <h3 className="text-xl font-bold text-white mb-2">{challenge.title}</h3>
-      <p className="text-gray-400 text-sm mb-4">{challenge.description}</p>
+      <h3 className="text-xl font-bold text-[var(--cy-text)] mb-2">{challenge.title}</h3>
+      <p className="text-[var(--cy-text-muted)] text-sm mb-4">{challenge.description}</p>
 
       <div className="space-y-3 mb-4">
         <div className="flex items-center justify-between text-sm">
-          <span className="text-gray-400">Progress</span>
-          <span className="font-bold text-white">{progress} / {challenge.goal_value}</span>
+          <span className="text-[var(--cy-text-muted)]">Progress</span>
+          <span className="font-bold text-[var(--cy-text)]">{progress} / {challenge.goal_value}</span>
         </div>
         <Progress value={progressPercent} className="h-2" />
       </div>
 
-      <div className="flex items-center justify-between pt-4 border-t border-white/5">
-        <div className="flex items-center gap-2 text-sm text-gray-400">
+      <div className="flex items-center justify-between pt-4 border-t border-[var(--cy-border)]">
+        <div className="flex items-center gap-2 text-sm text-[var(--cy-text-muted)]">
           <Trophy className="w-4 h-4 text-[#ff6b35]" />
           <span>{challenge.reward_points} points</span>
         </div>
         {isCompleted ? (
-          <Badge className="bg-[#A4FF4F] text-white border-0">
+          <Badge className="bg-[#A4FF4F] text-[var(--cy-text)] border-0">
             <CheckCircle2 className="w-3 h-3 mr-1" />
             Completed
           </Badge>
         ) : isJoined ? (
-          <Badge className="bg-[#A4FF4F] text-white border-0">
+          <Badge className="bg-[#A4FF4F] text-[var(--cy-text)] border-0">
             <CheckCircle2 className="w-3 h-3 mr-1" />
             Joined
           </Badge>
@@ -100,7 +101,7 @@ const ChallengeCard = ({ challenge, userProgress, onJoin, isJoined, isJoining })
         )}
       </div>
 
-      <div className="flex items-center gap-2 text-xs text-gray-400 mt-3">
+      <div className="flex items-center gap-2 text-xs text-[var(--cy-text-muted)] mt-3">
         <Clock className="w-3 h-3" />
         <span>Ends: {new Date(challenge.end_date).toLocaleDateString()}</span>
       </div>
@@ -117,8 +118,8 @@ const LeaderboardRow = ({ user, rank }) => {
   };
 
   const getRankIcon = (rank) => {
-    if (rank <= 3) return <Medal className="w-5 h-5 text-white" />;
-    return <span className="font-bold text-gray-400">#{rank}</span>;
+    if (rank <= 3) return <Medal className="w-5 h-5 text-[var(--cy-text)]" />;
+    return <span className="font-bold text-[var(--cy-text-muted)]">#{rank}</span>;
   };
 
   return (
@@ -126,24 +127,32 @@ const LeaderboardRow = ({ user, rank }) => {
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: rank * 0.05 }}
-      className="flex items-center gap-4 p-4 bg-[#141414] rounded-xl hover:shadow-md transition-shadow"
+      className="flex items-center gap-4 p-4 bg-[var(--cy-bg-card)] rounded-xl hover:shadow-md transition-shadow"
     >
       <div className={`w-10 h-10 rounded-full ${getRankColor(rank)} flex items-center justify-center flex-shrink-0`}>
         {getRankIcon(rank)}
       </div>
       <div className="flex-1">
-        <h4 className="font-semibold text-white">{user.name}</h4>
-        <p className="text-xs text-gray-400">{user.stat}</p>
+        <h4 className="font-semibold text-[var(--cy-text)]">{user.name}</h4>
+        <p className="text-xs text-[var(--cy-text-muted)]">{user.stat}</p>
       </div>
       <div className="text-right">
         <div className="text-xl font-bold text-[#ff6b35]">{user.value}</div>
-        <div className="text-xs text-gray-400">points</div>
+        <div className="text-xs text-[var(--cy-text-muted)]">points</div>
       </div>
     </motion.div>
   );
 };
 
+const DEFAULT_CHALLENGES_CONTENT = {
+  hero: {
+    heading: "Challenges & Leaderboards",
+    subheading: "Push your limits, compete with fellow riders, and earn rewards for your achievements."
+  }
+};
+
 export default function Challenges() {
+  const { content: pageContent } = usePageContent("challenges", DEFAULT_CHALLENGES_CONTENT);
   const queryClient = useQueryClient();
   const [user, setUser] = useState(null);
   const [joinedChallenges, setJoinedChallenges] = useState(new Set());
@@ -227,7 +236,7 @@ export default function Challenges() {
   const monthlyChallenges = activeChallenges.filter(c => c.type === 'monthly');
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="min-h-screen bg-[var(--cy-bg)]">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-[#2A2A2A] to-[#1a1a1a] py-20 md:py-32 overflow-hidden">
         <div className="absolute inset-0">
@@ -245,26 +254,26 @@ export default function Challenges() {
             <div className="flex items-center justify-center gap-2 mb-6">
               <Flame className="w-12 h-12 text-[#ff6b35]" />
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold text-white tracking-tight mb-6">
-              Challenges & Leaderboards
+            <h1 className="text-5xl md:text-6xl font-bold text-[var(--cy-text)] tracking-tight mb-6">
+              {pageContent.hero.heading}
             </h1>
-            <p className="text-xl text-gray-400 mb-8">
-              Push your limits, compete with fellow riders, and earn rewards for your achievements.
+            <p className="text-xl text-[var(--cy-text-muted)] mb-8">
+              {pageContent.hero.subheading}
             </p>
 
             {userPoints && (
               <div className="grid grid-cols-3 gap-6 max-w-2xl mx-auto">
-                <div className="bg-[#141414]/10 backdrop-blur-sm rounded-xl p-4">
+                <div className="bg-[var(--cy-bg-card)]/10 backdrop-blur-sm rounded-xl p-4">
                   <div className="text-3xl font-bold text-[#ff6b35] mb-1">{userPoints.total_points}</div>
-                  <div className="text-sm text-gray-300">Total Points</div>
+                  <div className="text-sm text-[var(--cy-text-secondary)]">Total Points</div>
                 </div>
-                <div className="bg-[#141414]/10 backdrop-blur-sm rounded-xl p-4">
+                <div className="bg-[var(--cy-bg-card)]/10 backdrop-blur-sm rounded-xl p-4">
                   <div className="text-3xl font-bold text-[#ff6b35] mb-1">{userPoints.level}</div>
-                  <div className="text-sm text-gray-300">Level</div>
+                  <div className="text-sm text-[var(--cy-text-secondary)]">Level</div>
                 </div>
-                <div className="bg-[#141414]/10 backdrop-blur-sm rounded-xl p-4">
+                <div className="bg-[var(--cy-bg-card)]/10 backdrop-blur-sm rounded-xl p-4">
                   <div className="text-3xl font-bold text-[#A4FF4F] mb-1">{badges.length}</div>
-                  <div className="text-sm text-gray-300">Badges</div>
+                  <div className="text-sm text-[var(--cy-text-secondary)]">Badges</div>
                 </div>
               </div>
             )}
@@ -273,10 +282,10 @@ export default function Challenges() {
       </section>
 
       {/* Challenges Section */}
-      <section className="py-16 bg-[#0a0a0a]">
+      <section className="py-16 bg-[var(--cy-bg)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <Tabs defaultValue="weekly" className="space-y-8">
-            <TabsList className="bg-[#141414] p-1 rounded-xl shadow-none">
+            <TabsList className="bg-[var(--cy-bg-card)] p-1 rounded-xl shadow-none">
               <TabsTrigger value="weekly" className="rounded-lg data-[state=active]:bg-[#ff6b35] data-[state=active]:text-white">
                 <Calendar className="w-4 h-4 mr-2" />
                 Weekly Challenges
@@ -302,7 +311,7 @@ export default function Challenges() {
               </div>
               {weeklyChallenges.length === 0 && (
                 <div className="text-center py-12">
-                  <p className="text-gray-400">No active weekly challenges at the moment.</p>
+                  <p className="text-[var(--cy-text-muted)]">No active weekly challenges at the moment.</p>
                 </div>
               )}
             </TabsContent>
@@ -322,7 +331,7 @@ export default function Challenges() {
               </div>
               {monthlyChallenges.length === 0 && (
                 <div className="text-center py-12">
-                  <p className="text-gray-400">No active monthly challenges at the moment.</p>
+                  <p className="text-[var(--cy-text-muted)]">No active monthly challenges at the moment.</p>
                 </div>
               )}
             </TabsContent>
@@ -331,19 +340,19 @@ export default function Challenges() {
       </section>
 
       {/* Leaderboards Section */}
-      <section className="py-16 bg-[#141414]">
+      <section className="py-16 bg-[var(--cy-bg-card)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-white mb-12 text-center">Leaderboards</h2>
+          <h2 className="text-4xl font-bold text-[var(--cy-text)] mb-12 text-center">Leaderboards</h2>
 
           <Tabs defaultValue="weekly" className="space-y-8">
             <TabsList className="bg-gray-100 p-1 rounded-xl w-full md:w-auto">
-              <TabsTrigger value="weekly" className="rounded-lg data-[state=active]:bg-[#141414]">
+              <TabsTrigger value="weekly" className="rounded-lg data-[state=active]:bg-[var(--cy-bg-card)]">
                 This Week
               </TabsTrigger>
-              <TabsTrigger value="monthly" className="rounded-lg data-[state=active]:bg-[#141414]">
+              <TabsTrigger value="monthly" className="rounded-lg data-[state=active]:bg-[var(--cy-bg-card)]">
                 This Month
               </TabsTrigger>
-              <TabsTrigger value="alltime" className="rounded-lg data-[state=active]:bg-[#141414]">
+              <TabsTrigger value="alltime" className="rounded-lg data-[state=active]:bg-[var(--cy-bg-card)]">
                 All Time
               </TabsTrigger>
             </TabsList>
@@ -352,7 +361,7 @@ export default function Challenges() {
               <div className="grid md:grid-cols-2 gap-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-white flex items-center gap-2">
+                    <CardTitle className="text-[var(--cy-text)] flex items-center gap-2">
                       <Trophy className="w-5 h-5 text-[#ff6b35]" />
                       Top Riders
                     </CardTitle>
@@ -370,7 +379,7 @@ export default function Challenges() {
               <div className="grid md:grid-cols-2 gap-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-white flex items-center gap-2">
+                    <CardTitle className="text-[var(--cy-text)] flex items-center gap-2">
                       <Trophy className="w-5 h-5 text-[#ff6b35]" />
                       Top Riders
                     </CardTitle>
@@ -388,7 +397,7 @@ export default function Challenges() {
               <div className="grid md:grid-cols-2 gap-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-white flex items-center gap-2">
+                    <CardTitle className="text-[var(--cy-text)] flex items-center gap-2">
                       <Trophy className="w-5 h-5 text-[#ff6b35]" />
                       Top Riders
                     </CardTitle>

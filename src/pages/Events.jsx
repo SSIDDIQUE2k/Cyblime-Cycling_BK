@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { usePageContent } from "../hooks/usePageContent";
 import { base44 } from "@/api/base44Client";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
@@ -56,34 +57,34 @@ const EventCard = ({ event, index, onViewDetails }) => {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.05 }}
-      className="group bg-[#141414] rounded-2xl p-6 border border-white/5 hover:shadow-lg hover:shadow-black/30 transition-all duration-300">
+      className="group bg-[var(--cy-bg-card)] rounded-2xl p-6 border border-[var(--cy-border)] hover:shadow-lg hover:shadow-black/30 transition-all duration-300">
 
       <div className="flex items-start justify-between mb-4">
         <div className="w-12 h-12 rounded-xl bg-[#A4FF4F]/10 flex items-center justify-center group-hover:bg-[#A4FF4F] transition-colors">
-          <Icon className="w-5 h-5 text-white" />
+          <Icon className="w-5 h-5 text-[var(--cy-text)]" />
         </div>
-        <Badge className={`${(event.current_participants || 0) < (event.max_participants || 999) ? 'bg-[#A4FF4F] text-white' : 'bg-red-100 text-red-800'} border-0`}>
+        <Badge className={`${(event.current_participants || 0) < (event.max_participants || 999) ? 'bg-[#A4FF4F] text-[var(--cy-text)]' : 'bg-red-100 text-red-800'} border-0`}>
           {(event.current_participants || 0) < (event.max_participants || 999) ? 'Open' : 'Full'}
         </Badge>
       </div>
       
-      <h3 className="text-xl font-semibold text-white mb-2">{event.title}</h3>
-      <p className="text-gray-400 text-sm mb-4">{event.description}</p>
+      <h3 className="text-xl font-semibold text-[var(--cy-text)] mb-2">{event.title}</h3>
+      <p className="text-[var(--cy-text-muted)] text-sm mb-4">{event.description}</p>
       
       <div className="space-y-2 mb-4">
-        <div className="flex items-center gap-2 text-sm text-gray-400">
+        <div className="flex items-center gap-2 text-sm text-[var(--cy-text-muted)]">
           <Calendar className="w-4 h-4" />
           <span>{new Date(event.date).toLocaleDateString()}</span>
         </div>
-        <div className="flex items-center gap-2 text-sm text-gray-400">
+        <div className="flex items-center gap-2 text-sm text-[var(--cy-text-muted)]">
           <Clock className="w-4 h-4" />
           <span>{event.time}</span>
         </div>
-        <div className="flex items-center gap-2 text-sm text-gray-400">
+        <div className="flex items-center gap-2 text-sm text-[var(--cy-text-muted)]">
           <MapPin className="w-4 h-4" />
           <span>{event.location}</span>
         </div>
-        <div className="flex items-center gap-2 text-sm text-gray-400">
+        <div className="flex items-center gap-2 text-sm text-[var(--cy-text-muted)]">
           <Users className="w-4 h-4" />
           <span>{event.current_participants || 0} / {event.max_participants || '∞'} participants</span>
         </div>
@@ -115,10 +116,10 @@ const AdvancedFilters = ({ filters, onFilterChange, onReset }) => {
     <div className="space-y-6">
       {/* Date Range */}
       <div>
-        <Label className="text-sm font-semibold text-white mb-3 block">Date Range</Label>
+        <Label className="text-sm font-semibold text-[var(--cy-text)] mb-3 block">Date Range</Label>
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <Label className="text-xs text-gray-400">From</Label>
+            <Label className="text-xs text-[var(--cy-text-muted)]">From</Label>
             <Input
               type="date"
               value={filters.dateFrom}
@@ -126,7 +127,7 @@ const AdvancedFilters = ({ filters, onFilterChange, onReset }) => {
 
           </div>
           <div>
-            <Label className="text-xs text-gray-400">To</Label>
+            <Label className="text-xs text-[var(--cy-text-muted)]">To</Label>
             <Input
               type="date"
               value={filters.dateTo}
@@ -138,10 +139,10 @@ const AdvancedFilters = ({ filters, onFilterChange, onReset }) => {
 
       {/* Distance Range */}
       <div>
-        <Label className="text-sm font-semibold text-white mb-3 block">Distance (km)</Label>
+        <Label className="text-sm font-semibold text-[var(--cy-text)] mb-3 block">Distance (km)</Label>
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <Label className="text-xs text-gray-400">Min</Label>
+            <Label className="text-xs text-[var(--cy-text-muted)]">Min</Label>
             <Input
               type="number"
               value={filters.distanceMin}
@@ -150,7 +151,7 @@ const AdvancedFilters = ({ filters, onFilterChange, onReset }) => {
 
           </div>
           <div>
-            <Label className="text-xs text-gray-400">Max</Label>
+            <Label className="text-xs text-[var(--cy-text-muted)]">Max</Label>
             <Input
               type="number"
               value={filters.distanceMax}
@@ -163,7 +164,7 @@ const AdvancedFilters = ({ filters, onFilterChange, onReset }) => {
 
       {/* Workshop Skills */}
       <div>
-        <Label className="text-sm font-semibold text-white mb-3 block">Workshop Skills</Label>
+        <Label className="text-sm font-semibold text-[var(--cy-text)] mb-3 block">Workshop Skills</Label>
         <div className="space-y-2">
           {['Bike Handling', 'Climbing', 'Nutrition', 'Maintenance', 'Safety', 'Endurance'].map((skill) =>
           <label key={skill} className="flex items-center gap-2 cursor-pointer">
@@ -178,7 +179,7 @@ const AdvancedFilters = ({ filters, onFilterChange, onReset }) => {
               }}
               className="w-4 h-4 rounded border-gray-300 text-[#ff6b35] focus:ring-[#ff6b35]" />
 
-              <span className="text-sm text-gray-400">{skill}</span>
+              <span className="text-sm text-[var(--cy-text-muted)]">{skill}</span>
             </label>
           )}
         </div>
@@ -186,7 +187,7 @@ const AdvancedFilters = ({ filters, onFilterChange, onReset }) => {
 
       {/* Location */}
       <div>
-        <Label className="text-sm font-semibold text-white mb-3 block">Location</Label>
+        <Label className="text-sm font-semibold text-[var(--cy-text)] mb-3 block">Location</Label>
         <Input
           type="text"
           placeholder="Enter location..."
@@ -208,7 +209,19 @@ const AdvancedFilters = ({ filters, onFilterChange, onReset }) => {
 
 };
 
+const DEFAULT_EVENTS_CONTENT = {
+  hero: {
+    heading: "Upcoming Events",
+    subheading: "From high-energy group rides to immersive workshops, find the perfect event to elevate your cycling journey."
+  },
+  cta: {
+    heading: "Can't Find What You're Looking For?",
+    subheading: "We're always adding new events. Let us know what you'd love to see!"
+  }
+};
+
 export default function Events() {
+  const { content: pageContent } = usePageContent("events", DEFAULT_EVENTS_CONTENT);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterType, setFilterType] = useState("all");
   const [filterLevel, setFilterLevel] = useState("all");
@@ -321,7 +334,7 @@ export default function Events() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="min-h-screen bg-[var(--cy-bg)]">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-[#2A2A2A] to-[#1a1a1a] py-20 md:py-32 overflow-hidden">
         <div className="absolute inset-0">
@@ -336,11 +349,11 @@ export default function Events() {
             transition={{ duration: 0.8 }}
             className="text-center max-w-3xl mx-auto">
 
-            <h1 className="text-5xl md:text-6xl font-bold text-white tracking-tight mb-6">
-              Upcoming Events
+            <h1 className="text-5xl md:text-6xl font-bold text-[var(--cy-text)] tracking-tight mb-6">
+              {pageContent.hero.heading}
             </h1>
-            <p className="text-xl text-gray-400 mb-8">
-              From high-energy group rides to immersive workshops, find the perfect event to elevate your cycling journey.
+            <p className="text-xl text-[var(--cy-text-muted)] mb-8">
+              {pageContent.hero.subheading}
             </p>
             
             {user && (
@@ -355,15 +368,15 @@ export default function Events() {
             <div className="grid grid-cols-3 gap-8 max-w-2xl mx-auto">
               <div>
                 <div className="text-3xl font-bold text-[#A4FF4F] mb-1">{events.length}</div>
-                <div className="text-sm text-gray-400 uppercase tracking-wider">Events</div>
+                <div className="text-sm text-[var(--cy-text-muted)] uppercase tracking-wider">Events</div>
               </div>
               <div>
                 <div className="text-3xl font-bold text-[#A4FF4F] mb-1">4</div>
-                <div className="text-sm text-gray-400 uppercase tracking-wider">Types</div>
+                <div className="text-sm text-[var(--cy-text-muted)] uppercase tracking-wider">Types</div>
               </div>
               <div>
                 <div className="text-3xl font-bold text-[#A4FF4F] mb-1">Weekly</div>
-                <div className="text-sm text-gray-400 uppercase tracking-wider">New Events</div>
+                <div className="text-sm text-[var(--cy-text-muted)] uppercase tracking-wider">New Events</div>
               </div>
             </div>
           </motion.div>
@@ -374,11 +387,11 @@ export default function Events() {
       <ForYouSection user={user} profile={profile} onEventClick={setSelectedEvent} />
 
       {/* Filters Section */}
-      <section className="sticky top-20 z-40 bg-[#141414] border-b border-white/10 shadow-none">
+      <section className="sticky top-20 z-40 bg-[var(--cy-bg-card)] border-b border-[var(--cy-border-strong)] shadow-none">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--cy-text-muted)]" />
               <Input
                 type="text"
                 placeholder="Try: 'beginner weekend rides near mountains' or just search by keyword..."
@@ -465,7 +478,7 @@ export default function Events() {
                 </SheetTrigger>
                 <SheetContent>
                   <SheetHeader>
-                    <SheetTitle className="text-white">Advanced Filters</SheetTitle>
+                    <SheetTitle className="text-[var(--cy-text)]">Advanced Filters</SheetTitle>
                   </SheetHeader>
                   <div className="mt-6">
                     <AdvancedFilters
@@ -480,8 +493,8 @@ export default function Events() {
           </div>
           
           <div className="flex items-center gap-2 mt-4">
-            <Filter className="w-4 h-4 text-gray-400" />
-            <span className="text-sm text-gray-400">
+            <Filter className="w-4 h-4 text-[var(--cy-text-muted)]" />
+            <span className="text-sm text-[var(--cy-text-muted)]">
               Showing {filteredEvents.length} of {events.length} events
             </span>
           </div>
@@ -493,14 +506,14 @@ export default function Events() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           {isLoading ? (
             <div className="text-center py-20">
-              <p className="text-gray-400">Loading events...</p>
+              <p className="text-[var(--cy-text-muted)]">Loading events...</p>
             </div>
           ) : user && filteredEvents.length > 0 ?
           <>
             {user && filteredEvents.length > 0 &&
           <div className="mb-8 p-6 bg-gradient-to-r from-[#ff6b35]/10 to-transparent rounded-2xl border-l-4 border-[#ff6b35]">
-              <h3 className="text-lg font-bold text-white mb-2">🎯 Recommended for You</h3>
-              <p className="text-sm text-gray-400">
+              <h3 className="text-lg font-bold text-[var(--cy-text)] mb-2">🎯 Recommended for You</h3>
+              <p className="text-sm text-[var(--cy-text-muted)]">
                 Based on your interests, we think you'll enjoy these upcoming events
               </p>
             </div>
@@ -515,10 +528,10 @@ export default function Events() {
 
           <div className="text-center py-20">
               <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
-                <Search className="w-8 h-8 text-gray-400" />
+                <Search className="w-8 h-8 text-[var(--cy-text-muted)]" />
               </div>
-              <h3 className="text-xl font-semibold text-white mb-2">No events found</h3>
-              <p className="text-gray-400 mb-4">Try adjusting your filters or search query</p>
+              <h3 className="text-xl font-semibold text-[var(--cy-text)] mb-2">No events found</h3>
+              <p className="text-[var(--cy-text-muted)] mb-4">Try adjusting your filters or search query</p>
               <Button onClick={resetFilters} variant="outline">
                 Reset All Filters
               </Button>
@@ -531,11 +544,11 @@ export default function Events() {
       {/* CTA Section */}
       <section className="bg-amber-600 py-20 from-[#A4FF4F] to-[#8FE640]">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Can't Find What You're Looking For?
+          <h2 className="text-4xl md:text-5xl font-bold text-[var(--cy-text)] mb-6">
+            {pageContent.cta?.heading || "Can't Find What You're Looking For?"}
           </h2>
-          <p className="text-lg text-white/80">
-            We're constantly adding new events. Check back regularly for new rides and exclusive events.
+          <p className="text-lg text-[var(--cy-text)]/80">
+            {pageContent.cta?.subheading || "We're constantly adding new events. Check back regularly for new rides and exclusive events."}
           </p>
         </div>
       </section>

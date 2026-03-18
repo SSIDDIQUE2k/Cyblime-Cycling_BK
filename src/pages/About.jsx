@@ -21,13 +21,13 @@ const ValueCard = ({ icon: Icon, title, description, index }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
-      className="bg-[#141414] rounded-2xl p-8 border border-white/5 hover:shadow-lg hover:shadow-black/30 shadow-black/20 transition-all duration-300"
+      className="bg-[var(--cy-bg-card)] rounded-2xl p-8 border border-[var(--cy-border)] hover:shadow-lg hover:shadow-black/30 shadow-black/20 transition-all duration-300"
     >
       <div className="w-14 h-14 rounded-2xl bg-[#ff6b35] flex items-center justify-center mb-6">
         <Icon className="w-7 h-7 text-white" />
       </div>
-      <h3 className="text-2xl font-bold text-white mb-4">{title}</h3>
-      <p className="text-gray-400 leading-relaxed">{description}</p>
+      <h3 className="text-2xl font-bold text-[var(--cy-text)] mb-4">{title}</h3>
+      <p className="text-[var(--cy-text-muted)] leading-relaxed">{description}</p>
     </motion.div>
   );
 };
@@ -39,13 +39,13 @@ const TestimonialCard = ({ quote, author, role, index }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
-      className="bg-[#141414] rounded-2xl p-8 border border-white/5"
+      className="bg-[var(--cy-bg-card)] rounded-2xl p-8 border border-[var(--cy-border)]"
     >
       <Quote className="w-10 h-10 text-[#ff6b35] mb-4" />
-      <p className="text-gray-300 text-lg mb-6 leading-relaxed">{quote}</p>
+      <p className="text-[var(--cy-text-secondary)] text-lg mb-6 leading-relaxed">{quote}</p>
       <div>
-        <div className="font-semibold text-white">{author}</div>
-        <div className="text-sm text-gray-500">{role}</div>
+        <div className="font-semibold text-[var(--cy-text)]">{author}</div>
+        <div className="text-sm text-[var(--cy-text-muted)]">{role}</div>
       </div>
     </motion.div>
   );
@@ -123,7 +123,7 @@ export default function About() {
     : DEFAULT_TESTIMONIALS;
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="min-h-screen bg-[var(--cy-bg)]">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] py-24 md:py-32 overflow-hidden">
         <div className="absolute inset-0">
@@ -137,14 +137,14 @@ export default function About() {
             transition={{ duration: 0.8 }}
             className="max-w-3xl"
           >
-            <h1 className="text-5xl md:text-6xl font-bold text-white tracking-tight mb-6">
+            <h1 className="text-5xl md:text-6xl font-bold text-[var(--cy-text)] tracking-tight mb-6">
               {(content.hero?.heading || DEFAULT_ABOUT_CONTENT.hero.heading).split(".").filter(Boolean).map((part, i, arr) => (
                 <React.Fragment key={i}>
                   {i === 0 ? <>{part.trim()}.<br /></> : <span className="text-[#ff6b35]">{part.trim()}.{i < arr.length - 1 ? " " : ""}</span>}
                 </React.Fragment>
               ))}
             </h1>
-            <p className="text-xl text-gray-300 leading-relaxed">
+            <p className="text-xl text-[var(--cy-text-secondary)] leading-relaxed">
               {content.hero?.tagline || DEFAULT_ABOUT_CONTENT.hero.tagline}
             </p>
           </motion.div>
@@ -152,7 +152,7 @@ export default function About() {
       </section>
 
       {/* Story Section */}
-      <section className="py-24 bg-[#141414]">
+      <section className="py-24 bg-[var(--cy-bg-card)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -162,12 +162,12 @@ export default function About() {
               transition={{ duration: 0.8 }}
             >
               <span className="inline-block text-xs font-semibold tracking-widest text-[#ff6b35] uppercase mb-4">Our Story</span>
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              <h2 className="text-4xl md:text-5xl font-bold text-[var(--cy-text)] mb-6">
                 Founded by Cyclists,
                 <br />
                 For Cyclists
               </h2>
-              <div className="space-y-4 text-gray-400 leading-relaxed">
+              <div className="space-y-4 text-[var(--cy-text-muted)] leading-relaxed">
                 <p>
                   Cyblime began in {content.story?.founded_year || DEFAULT_ABOUT_CONTENT.story.founded_year} with a simple vision: create a cycling community that welcomes everyone, challenges the status quo, and makes every ride an adventure worth remembering.
                 </p>
@@ -217,7 +217,7 @@ export default function About() {
       </section>
 
       {/* Values Section */}
-      <section className="py-24 bg-[#0a0a0a]">
+      <section className="py-24 bg-[var(--cy-bg)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -227,10 +227,10 @@ export default function About() {
             className="text-center max-w-2xl mx-auto mb-16"
           >
             <span className="inline-block text-xs font-semibold tracking-widest text-[#ff6b35] uppercase mb-4">Our Values</span>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-[var(--cy-text)] mb-6">
               What We Stand For
             </h2>
-            <p className="text-lg text-gray-400">
+            <p className="text-lg text-[var(--cy-text-muted)]">
               These core principles guide everything we do and shape the Cyblime experience.
             </p>
           </motion.div>
@@ -244,7 +244,7 @@ export default function About() {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-24 bg-[#141414]">
+      <section className="py-24 bg-[var(--cy-bg-card)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -254,10 +254,10 @@ export default function About() {
               transition={{ duration: 0.8 }}
             >
               <span className="inline-block text-xs font-semibold tracking-widest text-[#ff6b35] uppercase mb-4">Member Benefits</span>
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              <h2 className="text-4xl md:text-5xl font-bold text-[var(--cy-text)] mb-6">
                 Why Ride With Cyblime?
               </h2>
-              <p className="text-lg text-gray-400 mb-8">
+              <p className="text-lg text-[var(--cy-text-muted)] mb-8">
                 When you join Cyblime, you're not just signing up for events — you're gaining access to a complete cycling ecosystem designed to support your journey.
               </p>
               
@@ -274,7 +274,7 @@ export default function About() {
                     <div className="w-6 h-6 rounded-full bg-[#ff6b35] flex items-center justify-center flex-shrink-0">
                       <CheckCircle2 className="w-4 h-4 text-white" />
                     </div>
-                    <span className="text-gray-300">{benefit}</span>
+                    <span className="text-[var(--cy-text-secondary)]">{benefit}</span>
                   </motion.div>
                 ))}
               </div>
@@ -300,7 +300,7 @@ export default function About() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-24 bg-[#0a0a0a]">
+      <section className="py-24 bg-[var(--cy-bg)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -310,7 +310,7 @@ export default function About() {
             className="text-center max-w-2xl mx-auto mb-16"
           >
             <span className="inline-block text-xs font-semibold tracking-widest text-[#ff6b35] uppercase mb-4">Testimonials</span>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-[var(--cy-text)] mb-6">
               What Our Members Say
             </h2>
           </motion.div>
@@ -332,10 +332,10 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-[var(--cy-text)] mb-6">
               Ready to Start Your Journey?
             </h2>
-            <p className="text-xl text-gray-400">
+            <p className="text-xl text-[var(--cy-text-muted)]">
               Join a community that will support, challenge, and inspire you every mile of the way.
             </p>
           </motion.div>

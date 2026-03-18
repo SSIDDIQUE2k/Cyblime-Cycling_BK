@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { usePageContent } from "../hooks/usePageContent";
 import { base44 } from "@/api/base44Client";
 import { useQuery } from "@tanstack/react-query";
 import { Calendar, User, Eye, ArrowRight, Tag, Search, TrendingUp, X } from "lucide-react";
@@ -9,7 +10,15 @@ import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "../utils";
 
+const DEFAULT_BLOG_CONTENT = {
+  hero: {
+    heading: "Cyblime Blog",
+    subheading: "Stories, tips, and insights from the cycling community."
+  }
+};
+
 export default function Blog() {
+  const { content: pageContent } = usePageContent("blog", DEFAULT_BLOG_CONTENT);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState("recent"); // "recent" or "popular"
@@ -75,7 +84,7 @@ export default function Blog() {
   }, [selectedCategories, searchQuery, sortBy]);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="min-h-screen bg-[var(--cy-bg)]">
       {/* Hero */}
       <section className="relative bg-gradient-to-br from-[#2A2A2A] to-[#1a1a1a] py-20 md:py-32 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
@@ -88,28 +97,28 @@ export default function Blog() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center max-w-3xl mx-auto"
           >
-            <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
-              Cymblime Blog
+            <h1 className="text-5xl md:text-6xl font-bold text-[var(--cy-text)] mb-6">
+              {pageContent.hero.heading}
             </h1>
-            <p className="text-xl text-gray-400">
-              Stories, tips, and insights from the cycling community.
+            <p className="text-xl text-[var(--cy-text-muted)]">
+              {pageContent.hero.subheading}
             </p>
           </motion.div>
         </div>
       </section>
 
       {/* Search and Filters */}
-      <section className="py-8 bg-[#141414] border-b border-white/10">
+      <section className="py-8 bg-[var(--cy-bg-card)] border-b border-[var(--cy-border-strong)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 space-y-4">
           {/* Search Bar */}
           <div className="relative max-w-2xl">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--cy-text-muted)]" />
             <Input
               type="text"
               placeholder="Search posts by title, excerpt, or tags..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-12 h-12 rounded-full border-white/10"
+              className="pl-12 h-12 rounded-full border-[var(--cy-border-strong)]"
             />
           </div>
 
@@ -122,7 +131,7 @@ export default function Blog() {
                 className={`px-4 py-2 rounded-full font-medium text-sm transition-all ${
                   sortBy === "recent"
                     ? 'bg-[#ff6b35] text-white'
-                    : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
+                    : 'bg-gray-100 text-[var(--cy-text-muted)] hover:bg-gray-200'
                 }`}
               >
                 Recent
@@ -132,7 +141,7 @@ export default function Blog() {
                 className={`px-4 py-2 rounded-full font-medium text-sm transition-all flex items-center gap-1 ${
                   sortBy === "popular"
                     ? 'bg-[#ff6b35] text-white'
-                    : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
+                    : 'bg-gray-100 text-[var(--cy-text-muted)] hover:bg-gray-200'
                 }`}
               >
                 <TrendingUp className="w-4 h-4" />
@@ -142,7 +151,7 @@ export default function Blog() {
 
             {/* Category Filter Chips */}
             <div className="flex-1 flex flex-wrap items-center gap-2">
-              <span className="text-sm text-gray-400 font-medium">Categories:</span>
+              <span className="text-sm text-[var(--cy-text-muted)] font-medium">Categories:</span>
               {categories.map((cat) => (
                 <button
                   key={cat}
@@ -150,7 +159,7 @@ export default function Blog() {
                   className={`px-4 py-2 rounded-full font-medium text-sm whitespace-nowrap transition-all ${
                     selectedCategories.includes(cat)
                       ? 'bg-[#ff6b35] text-white'
-                      : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
+                      : 'bg-gray-100 text-[var(--cy-text-muted)] hover:bg-gray-200'
                   }`}
                 >
                   {cat.charAt(0).toUpperCase() + cat.slice(1)}
@@ -164,7 +173,7 @@ export default function Blog() {
                 onClick={clearFilters}
                 variant="ghost"
                 size="sm"
-                className="text-gray-400 hover:text-white"
+                className="text-[var(--cy-text-muted)] hover:text-[var(--cy-text)]"
               >
                 <X className="w-4 h-4 mr-1" />
                 Clear All
@@ -174,7 +183,7 @@ export default function Blog() {
 
           {/* Active Filters Summary */}
           {(selectedCategories.length > 0 || searchQuery) && (
-            <div className="text-sm text-gray-400">
+            <div className="text-sm text-[var(--cy-text-muted)]">
               Showing {filteredPosts.length} post{filteredPosts.length !== 1 ? 's' : ''}
               {selectedCategories.length > 0 && ` in ${selectedCategories.join(', ')}`}
               {searchQuery && ` matching "${searchQuery}"`}
@@ -185,10 +194,10 @@ export default function Blog() {
 
       {/* Featured Posts Carousel */}
       {featuredPosts.length > 0 && (
-        <section className="py-16 bg-[#141414]">
+        <section className="py-16 bg-[var(--cy-bg-card)]">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <div className="flex items-center justify-between mb-8">
-              <h2 className="text-3xl font-bold text-white">Featured Articles</h2>
+              <h2 className="text-3xl font-bold text-[var(--cy-text)]">Featured Articles</h2>
               <Badge className="bg-[#ff6b35] text-white border-0">
                 <TrendingUp className="w-3 h-3 mr-1" />
                 Trending
@@ -218,9 +227,9 @@ export default function Blog() {
                     <Badge className="bg-[#6BCBFF]/20 text-[#6BCBFF] border-0 mb-3">
                       {post.category}
                     </Badge>
-                    <h3 className="text-xl font-bold text-white mb-3 line-clamp-2">{post.title}</h3>
-                    <p className="text-gray-400 mb-4 line-clamp-2">{post.excerpt}</p>
-                    <div className="flex items-center justify-between text-sm text-gray-400 mb-4">
+                    <h3 className="text-xl font-bold text-[var(--cy-text)] mb-3 line-clamp-2">{post.title}</h3>
+                    <p className="text-[var(--cy-text-muted)] mb-4 line-clamp-2">{post.excerpt}</p>
+                    <div className="flex items-center justify-between text-sm text-[var(--cy-text-muted)] mb-4">
                       <div className="flex items-center gap-2">
                         <Eye className="w-4 h-4" />
                         <span className="font-semibold">{post.view_count || 0} views</span>
@@ -250,7 +259,7 @@ export default function Blog() {
       {/* Blog Grid */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-white mb-8">All Articles</h2>
+          <h2 className="text-3xl font-bold text-[var(--cy-text)] mb-8">All Articles</h2>
           
           {paginatedPosts.length > 0 ? (
             <>
@@ -262,7 +271,7 @@ export default function Blog() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-[#141414] rounded-2xl overflow-hidden border border-white/5 hover:shadow-lg hover:shadow-black/30 transition-all"
+                className="bg-[var(--cy-bg-card)] rounded-2xl overflow-hidden border border-[var(--cy-border)] hover:shadow-lg hover:shadow-black/30 transition-all"
               >
                 <div className="relative h-48 overflow-hidden">
                   <img
@@ -275,9 +284,9 @@ export default function Blog() {
                   <Badge className="bg-[#6BCBFF]/20 text-[#6BCBFF] border-0 mb-3">
                     {post.category}
                   </Badge>
-                  <h3 className="text-xl font-bold text-white mb-3">{post.title}</h3>
-                  <p className="text-gray-400 mb-4 line-clamp-3">{post.excerpt}</p>
-                  <div className="flex items-center justify-between text-sm text-gray-400 mb-4">
+                  <h3 className="text-xl font-bold text-[var(--cy-text)] mb-3">{post.title}</h3>
+                  <p className="text-[var(--cy-text-muted)] mb-4 line-clamp-3">{post.excerpt}</p>
+                  <div className="flex items-center justify-between text-sm text-[var(--cy-text-muted)] mb-4">
                     <div className="flex items-center gap-2">
                       <Calendar className="w-4 h-4" />
                       <span>{new Date(post.created_date).toLocaleDateString()}</span>
@@ -289,7 +298,7 @@ export default function Blog() {
                   </div>
                   <Link 
                     to={createPageUrl("AuthorPosts") + `?author=${encodeURIComponent(post.created_by)}`}
-                    className="flex items-center gap-2 text-xs text-gray-400 hover:text-[#ff6b35] transition-colors mb-4"
+                    className="flex items-center gap-2 text-xs text-[var(--cy-text-muted)] hover:text-[#ff6b35] transition-colors mb-4"
                   >
                     <User className="w-3 h-3" />
                     <span>By {post.created_by.split('@')[0]}</span>
@@ -325,7 +334,7 @@ export default function Blog() {
                         className={`w-10 h-10 rounded-full font-medium transition-all ${
                           currentPage === i + 1
                             ? 'bg-[#ff6b35] text-white'
-                            : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
+                            : 'bg-gray-100 text-[var(--cy-text-muted)] hover:bg-gray-200'
                         }`}
                       >
                         {i + 1}
@@ -346,7 +355,7 @@ export default function Blog() {
             </>
           ) : (
             <div className="text-center py-12">
-              <p className="text-gray-400 text-lg">No posts found matching your criteria.</p>
+              <p className="text-[var(--cy-text-muted)] text-lg">No posts found matching your criteria.</p>
               <Button onClick={clearFilters} className="mt-4 bg-[#ff6b35] hover:bg-[#e55a2b] text-white">
                 Clear Filters
               </Button>

@@ -17,7 +17,14 @@ import {
   Type,
   Check,
   AlertCircle,
-  RefreshCw
+  RefreshCw,
+  Calendar,
+  BookOpen,
+  Camera,
+  Trophy,
+  Compass,
+  MapPin,
+  Activity
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -166,6 +173,83 @@ const DEFAULT_MEMBERSHIP_CONTENT = {
     { question: "Is there a trial period?", answer: "Yes! We offer a 7-day money-back guarantee on all membership plans." }
   ],
   contact_email: "info@cyblimecycling.com"
+};
+
+const DEFAULT_EVENTS_CONTENT = {
+  hero: {
+    heading: "Upcoming Events",
+    subheading: "From high-energy group rides to immersive workshops, find the perfect event to elevate your cycling journey."
+  },
+  cta: {
+    heading: "Can't Find What You're Looking For?",
+    subheading: "We're always adding new events. Let us know what you'd love to see!",
+    button_text: "Suggest an Event",
+    contact_email: "events@cyblimecycling.com"
+  }
+};
+
+const DEFAULT_BLOG_CONTENT = {
+  hero: {
+    heading: "Cyblime Blog",
+    subheading: "Stories, tips, and insights from the cycling community."
+  }
+};
+
+const DEFAULT_GALLERY_CONTENT = {
+  hero: {
+    heading: "Gallery",
+    subheading: "Explore moments from our rides, events, and community adventures"
+  },
+  cta: {
+    heading: "Share Your Moments",
+    subheading: "Tag us in your cycling photos and be featured in our gallery.",
+    instagram_handle: "@cyblimecycling"
+  }
+};
+
+const DEFAULT_CHALLENGES_CONTENT = {
+  hero: {
+    heading: "Challenges & Leaderboards",
+    subheading: "Push your limits, compete with fellow riders, and earn rewards for your achievements."
+  }
+};
+
+const DEFAULT_CYCLINGHUB_CONTENT = {
+  hero: {
+    heading: "Cycling Hub",
+    subheading: "Your central destination for all things cycling at Cyblime."
+  },
+  cta: {
+    heading: "Ready to Join the Ride?",
+    subheading: "Discover new routes, connect with riders, and track your progress.",
+    button_text: "View Membership",
+    button_link: "Membership"
+  }
+};
+
+const DEFAULT_ROUTES_CONTENT = {
+  hero: {
+    heading: "Discover Routes",
+    subheading: "Explore, share, and ride the best cycling routes curated by the Cyblime community."
+  }
+};
+
+const DEFAULT_STRAVA_CONTENT = {
+  hero: {
+    heading: "Cyblime on Strava",
+    subheading: "Track your rides, join group activities, compete in challenges, and connect with the Cyblime community — all through Strava."
+  },
+  stats: [
+    { label: "Active Members", value: "2,500+" },
+    { label: "Weekly Rides", value: "15+" },
+    { label: "Routes Mapped", value: "500+" },
+    { label: "Total Distance", value: "1M+ km" }
+  ],
+  club_url: "https://www.strava.com/clubs/762372",
+  cta: {
+    heading: "Ready to Ride?",
+    subheading: "Join 2,500+ cyclists on Strava and become part of London's most active cycling community."
+  }
 };
 
 // Reusable section editor for array items
@@ -902,6 +986,159 @@ function PageEditor({ pageKey, content, onSave, saving }) {
     );
   }
 
+  // === GENERIC SIMPLE PAGE EDITORS ===
+  // Events, Blog, Gallery, Challenges, CyclingHub, Routes, Strava
+
+  const simplePages = ["events", "blog", "gallery", "challenges", "cyclinghub", "routes", "strava"];
+  if (simplePages.includes(pageKey)) {
+    const pageDefaults = {
+      events: DEFAULT_EVENTS_CONTENT,
+      blog: DEFAULT_BLOG_CONTENT,
+      gallery: DEFAULT_GALLERY_CONTENT,
+      challenges: DEFAULT_CHALLENGES_CONTENT,
+      cyclinghub: DEFAULT_CYCLINGHUB_CONTENT,
+      routes: DEFAULT_ROUTES_CONTENT,
+      strava: DEFAULT_STRAVA_CONTENT
+    };
+    const defaults = pageDefaults[pageKey];
+    const pageLabel = {
+      events: "Events", blog: "Blog", gallery: "Gallery",
+      challenges: "Challenges", cyclinghub: "Cycling Hub",
+      routes: "Routes", strava: "Strava Club"
+    }[pageKey];
+
+    return (
+      <div className="space-y-4">
+        {/* Hero Section */}
+        <Card className="dark:bg-gray-800/50 dark:border-white/5">
+          <SectionHeader title="Hero Section" sectionKey="hero" icon={Image} />
+          {expandedSections.hero && (
+            <CardContent className="pt-0 space-y-4">
+              <div>
+                <Label className="dark:text-gray-300">Page Heading</Label>
+                <Input
+                  value={localContent.hero?.heading ?? defaults.hero?.heading ?? ""}
+                  onChange={(e) => updateField("hero.heading", e.target.value)}
+                  placeholder="Page heading"
+                  className="dark:bg-gray-900 dark:border-white/10"
+                />
+              </div>
+              <div>
+                <Label className="dark:text-gray-300">Subtitle</Label>
+                <Textarea
+                  value={localContent.hero?.subheading ?? defaults.hero?.subheading ?? ""}
+                  onChange={(e) => updateField("hero.subheading", e.target.value)}
+                  placeholder="Page subtitle / description"
+                  className="dark:bg-gray-900 dark:border-white/10"
+                  rows={3}
+                />
+              </div>
+            </CardContent>
+          )}
+        </Card>
+
+        {/* CTA Section (if page has one) */}
+        {(defaults.cta) && (
+          <Card className="dark:bg-gray-800/50 dark:border-white/5">
+            <SectionHeader title="Call to Action" sectionKey="cta" icon={Type} />
+            {expandedSections.cta && (
+              <CardContent className="pt-0 space-y-4">
+                <div>
+                  <Label className="dark:text-gray-300">CTA Heading</Label>
+                  <Input
+                    value={localContent.cta?.heading ?? defaults.cta?.heading ?? ""}
+                    onChange={(e) => updateField("cta.heading", e.target.value)}
+                    placeholder="Call to action heading"
+                    className="dark:bg-gray-900 dark:border-white/10"
+                  />
+                </div>
+                <div>
+                  <Label className="dark:text-gray-300">CTA Subtitle</Label>
+                  <Textarea
+                    value={localContent.cta?.subheading ?? defaults.cta?.subheading ?? ""}
+                    onChange={(e) => updateField("cta.subheading", e.target.value)}
+                    placeholder="Call to action description"
+                    className="dark:bg-gray-900 dark:border-white/10"
+                    rows={2}
+                  />
+                </div>
+                {defaults.cta?.button_text !== undefined && (
+                  <div>
+                    <Label className="dark:text-gray-300">Button Text</Label>
+                    <Input
+                      value={localContent.cta?.button_text ?? defaults.cta?.button_text ?? ""}
+                      onChange={(e) => updateField("cta.button_text", e.target.value)}
+                      placeholder="Button label"
+                      className="dark:bg-gray-900 dark:border-white/10"
+                    />
+                  </div>
+                )}
+              </CardContent>
+            )}
+          </Card>
+        )}
+
+        {/* Strava-specific: Stats + Club URL */}
+        {pageKey === "strava" && (
+          <>
+            <Card className="dark:bg-gray-800/50 dark:border-white/5">
+              <SectionHeader title="Club Stats" sectionKey="stats" icon={FileText} />
+              {expandedSections.stats && (
+                <CardContent className="pt-0">
+                  <ArrayEditor
+                    items={localContent.stats || defaults.stats || []}
+                    onChange={(stats) => setLocalContent({ ...localContent, stats })}
+                    addLabel="Add Stat"
+                    defaultItem={{ label: "", value: "" }}
+                    renderItem={(item, index, update) => (
+                      <>
+                        <Input
+                          value={item.label}
+                          onChange={(e) => update(index, "label", e.target.value)}
+                          placeholder="Stat label (e.g. Active Members)"
+                          className="dark:bg-gray-900 dark:border-white/10"
+                        />
+                        <Input
+                          value={item.value}
+                          onChange={(e) => update(index, "value", e.target.value)}
+                          placeholder="Stat value (e.g. 2,500+)"
+                          className="dark:bg-gray-900 dark:border-white/10"
+                        />
+                      </>
+                    )}
+                  />
+                </CardContent>
+              )}
+            </Card>
+            <Card className="dark:bg-gray-800/50 dark:border-white/5">
+              <CardHeader>
+                <CardTitle className="dark:text-white text-base">Strava Club URL</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Input
+                  value={localContent.club_url || defaults.club_url || ""}
+                  onChange={(e) => setLocalContent({ ...localContent, club_url: e.target.value })}
+                  placeholder="https://www.strava.com/clubs/..."
+                  className="dark:bg-gray-900 dark:border-white/10"
+                />
+              </CardContent>
+            </Card>
+          </>
+        )}
+
+        <Button
+          onClick={() => onSave(localContent)}
+          disabled={saving}
+          className="w-full bg-gradient-to-r from-[#c9a227] to-[#b89123] hover:from-[#b89123] hover:to-[#a78020] text-white"
+          size="lg"
+        >
+          {saving ? <RefreshCw className="w-4 h-4 mr-2 animate-spin" /> : <Save className="w-4 h-4 mr-2" />}
+          Save {pageLabel} Page
+        </Button>
+      </div>
+    );
+  }
+
   return null;
 }
 
@@ -924,7 +1161,14 @@ export default function AdminPageContent() {
     const defaults = {
       home: DEFAULT_HOME_CONTENT,
       about: DEFAULT_ABOUT_CONTENT,
-      membership: DEFAULT_MEMBERSHIP_CONTENT
+      membership: DEFAULT_MEMBERSHIP_CONTENT,
+      events: DEFAULT_EVENTS_CONTENT,
+      blog: DEFAULT_BLOG_CONTENT,
+      gallery: DEFAULT_GALLERY_CONTENT,
+      challenges: DEFAULT_CHALLENGES_CONTENT,
+      cyclinghub: DEFAULT_CYCLINGHUB_CONTENT,
+      routes: DEFAULT_ROUTES_CONTENT,
+      strava: DEFAULT_STRAVA_CONTENT
     };
     return defaults[pageKey] || {};
   };
@@ -981,47 +1225,36 @@ export default function AdminPageContent() {
           </div>
         ) : (
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="w-full grid grid-cols-3 mb-6">
-              <TabsTrigger value="home" className="flex items-center gap-2">
-                <Home className="w-4 h-4" />
-                Home
-              </TabsTrigger>
-              <TabsTrigger value="about" className="flex items-center gap-2">
-                <Info className="w-4 h-4" />
-                About
-              </TabsTrigger>
-              <TabsTrigger value="membership" className="flex items-center gap-2">
-                <CreditCard className="w-4 h-4" />
-                Membership
-              </TabsTrigger>
+            <TabsList className="w-full flex flex-wrap gap-1 mb-6 h-auto p-1">
+              {[
+                { key: "home", label: "Home", icon: Home },
+                { key: "about", label: "About", icon: Info },
+                { key: "membership", label: "Membership", icon: CreditCard },
+                { key: "events", label: "Events", icon: Calendar },
+                { key: "blog", label: "Blog", icon: BookOpen },
+                { key: "gallery", label: "Gallery", icon: Camera },
+                { key: "challenges", label: "Challenges", icon: Trophy },
+                { key: "cyclinghub", label: "Cycling Hub", icon: Compass },
+                { key: "routes", label: "Routes", icon: MapPin },
+                { key: "strava", label: "Strava", icon: Activity }
+              ].map(({ key, label, icon: Icon }) => (
+                <TabsTrigger key={key} value={key} className="flex items-center gap-1.5 px-3 py-1.5 text-xs">
+                  <Icon className="w-3.5 h-3.5" />
+                  {label}
+                </TabsTrigger>
+              ))}
             </TabsList>
 
-            <TabsContent value="home">
-              <PageEditor
-                pageKey="home"
-                content={getPageContent("home")}
-                onSave={(content) => handleSave("home", content)}
-                saving={saving}
-              />
-            </TabsContent>
-
-            <TabsContent value="about">
-              <PageEditor
-                pageKey="about"
-                content={getPageContent("about")}
-                onSave={(content) => handleSave("about", content)}
-                saving={saving}
-              />
-            </TabsContent>
-
-            <TabsContent value="membership">
-              <PageEditor
-                pageKey="membership"
-                content={getPageContent("membership")}
-                onSave={(content) => handleSave("membership", content)}
-                saving={saving}
-              />
-            </TabsContent>
+            {["home", "about", "membership", "events", "blog", "gallery", "challenges", "cyclinghub", "routes", "strava"].map((pageKey) => (
+              <TabsContent key={pageKey} value={pageKey}>
+                <PageEditor
+                  pageKey={pageKey}
+                  content={getPageContent(pageKey)}
+                  onSave={(content) => handleSave(pageKey, content)}
+                  saving={saving}
+                />
+              </TabsContent>
+            ))}
           </Tabs>
         )}
       </div>
