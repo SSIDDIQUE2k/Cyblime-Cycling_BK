@@ -1,227 +1,50 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "../utils";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { base44 } from "@/api/base44Client";
 import { useQuery } from "@tanstack/react-query";
-import { usePageContent, useTestimonials } from "../hooks/usePageContent";
-import { getPersonalizedRecommendations } from "../components/recommendations/RecommendationEngine";
-import RecommendedSection from "../components/recommendations/RecommendedSection";
-import CommunityFeed from "../components/community/CommunityFeed";
-import { 
-  ChevronLeft,
-  ChevronRight,
+import { usePageContent } from "../hooks/usePageContent";
+import {
   Calendar,
   MapPin,
   ArrowRight,
   Compass,
   Heart,
   Users,
-  Instagram
+  Clock,
+  ChevronRight
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 
 // Default content for CMS fallback
 const DEFAULT_HOME_CONTENT = {
   hero_slides: [
-    { heading: "Ride Together, Grow Together", subheading: "Join a community that pushes your limits and celebrates every milestone", image_url: "https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=1920&q=80" },
-    { heading: "Every Mile Tells a Story", subheading: "Create unforgettable memories on scenic routes and epic adventures", image_url: "https://images.unsplash.com/photo-1517649763962-0c623066013b?w=1920&q=80" },
-    { heading: "Join the Journey", subheading: "Discover the joy of cycling with riders who share your passion", image_url: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&q=80" }
+    { heading: "Ride Together.\nGrow Together.", subheading: "Join London's fastest-growing cycling community.", image_url: "https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=1920&q=80" }
   ],
   values: [
-    { title: "Adventure Awaits", description: "We explore new routes, discover hidden trails, and push boundaries together. Every ride is an opportunity for discovery.", icon: "compass" },
-    { title: "Community First", description: "At the heart of Cyblime is a supportive community where friendships are forged and every rider is valued.", icon: "heart" },
-    { title: "All Levels Welcome", description: "Whether you're a beginner or a seasoned pro, you'll find your pace and your people at Cyblime.", icon: "users" }
-  ],
-  gallery_images: [
-    { url: "https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=800&q=80", alt: "Group ride", span: "col-span-2 row-span-2" },
-    { url: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80", alt: "Scenic route" },
-    { url: "https://images.unsplash.com/photo-1517649763962-0c623066013b?w=400&q=80", alt: "Training" },
-    { url: "https://images.unsplash.com/photo-1571188654248-7a89213915f7?w=400&q=80", alt: "Community" },
-    { url: "https://images.unsplash.com/photo-1534787238916-9ba6764efd4f?w=400&q=80", alt: "Adventure" }
+    { title: "Adventure Awaits", description: "New routes, hidden trails, and open roads — every ride is an opportunity for discovery.", icon: "compass" },
+    { title: "Community First", description: "Friendships forged on the road. Every rider is valued, every story matters.", icon: "heart" },
+    { title: "All Levels Welcome", description: "Whether you're clipping in for the first time or chasing KOMs, you belong here.", icon: "users" }
   ],
   cta: {
-    heading: "Ready to Join the Pack?",
-    subheading: "Become part of a community that rides together, grows together, and creates unforgettable memories on every journey.",
-    button_text: "Browse Events",
-    button_link: "Events"
+    heading: "Ready to Ride?",
+    subheading: "Your next adventure starts with a single pedal stroke.",
+    button_text: "View Membership",
+    button_link: "Membership"
   },
   instagram_widget_id: "70900cfe-1ff2-4b28-a832-f9790890ec6d",
   show_instagram: true,
   show_recommendations: true
 };
 
-// Hero Slideshow Component
-const HeroSlideshow = ({ slides: cmsSlides }) => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-
-  const slides = (cmsSlides || []).map(s => ({
-    title: s.heading,
-    subtitle: s.subheading,
-    image: s.image_url
-  }));
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
-  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-
-  return (
-    <section className="relative h-screen w-full overflow-hidden">
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={currentSlide}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1 }}
-          className="absolute inset-0"
-        >
-          <div className="absolute inset-0 bg-black/40 z-10" />
-          <img
-            src={slides[currentSlide].image}
-            alt={slides[currentSlide].title}
-            className="w-full h-full object-cover"
-          />
-        </motion.div>
-      </AnimatePresence>
-
-      {/* Content */}
-      <div className="relative z-20 h-full flex items-center justify-center">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentSlide}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -30 }}
-              transition={{ duration: 0.8 }}
-            >
-              <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-                {slides[currentSlide].title}
-              </h1>
-              <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto">
-                {slides[currentSlide].subtitle}
-              </p>
-              <Link to={createPageUrl("Events")}>
-                <Button className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white rounded-full px-8 py-6 text-lg font-semibold">
-                  Explore Events
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Button>
-              </Link>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-      </div>
-
-      {/* Navigation Arrows */}
-      <button
-        onClick={prevSlide}
-        className="absolute left-8 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/20 transition-all opacity-0 hover:opacity-100 group-hover:opacity-100"
-      >
-        <ChevronLeft className="w-6 h-6" />
-      </button>
-      <button
-        onClick={nextSlide}
-        className="absolute right-8 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/20 transition-all opacity-0 hover:opacity-100 group-hover:opacity-100"
-      >
-        <ChevronRight className="w-6 h-6" />
-      </button>
-
-      {/* Dot Indicators */}
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-30 flex gap-3">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all ${
-              index === currentSlide ? "bg-[#ff6b35] w-8" : "bg-white/50"
-            }`}
-          />
-        ))}
-      </div>
-    </section>
-  );
-};
-
-// Event Card Component
-const EventCard = ({ event, index }) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
-    >
-      {event.banner_image_url && (
-        <div className="relative h-48 overflow-hidden">
-          <img
-            src={event.banner_image_url}
-            alt={event.title}
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-          />
-        </div>
-      )}
-      
-      <div className="p-6">
-        <div className="flex items-center gap-2 text-sm text-[#555555] mb-3">
-          <Calendar className="w-4 h-4" />
-          <span>{new Date(event.date).toLocaleDateString()}</span>
-        </div>
-        
-        <h3 className="text-xl font-bold text-[#2A2A2A] mb-3">{event.title}</h3>
-        
-        <div className="flex items-center gap-2 text-sm text-[#555555] mb-4">
-          <MapPin className="w-4 h-4" />
-          <span>{event.location}</span>
-        </div>
-        
-        <div className="flex items-center justify-between">
-          <div className="flex gap-2">
-            <Badge variant="outline" className="text-[#555555] border-[#555555]/30">
-              {event.level}
-            </Badge>
-            {event.distance && (
-              <Badge variant="outline" className="text-[#555555] border-[#555555]/30">
-                {event.distance}
-              </Badge>
-            )}
-          </div>
-          
-          <Link to={createPageUrl("Events")} className="text-[#ff6b35] font-medium text-sm flex items-center gap-1 hover:gap-2 transition-all">
-            View Details
-            <ChevronRight className="w-4 h-4" />
-          </Link>
-        </div>
-      </div>
-    </motion.div>
-  );
-};
-
-// Value Card Component
-const ValueCard = ({ icon: Icon, title, description, index }) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6, delay: index * 0.15 }}
-      className="text-center"
-    >
-      <div className="w-20 h-20 rounded-full bg-[#ff6b35] flex items-center justify-center mx-auto mb-6">
-        <Icon className="w-10 h-10 text-white" />
-      </div>
-      <h3 className="text-2xl font-bold text-[#2A2A2A] mb-4">{title}</h3>
-      <p className="text-[#555555] leading-relaxed">{description}</p>
-    </motion.div>
-  );
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: (i = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, delay: i * 0.15, ease: [0.25, 0.46, 0.45, 0.94] }
+  })
 };
 
 export default function Home() {
@@ -233,215 +56,300 @@ export default function Home() {
       try {
         const currentUser = await base44.auth.me();
         setUser(currentUser);
-      } catch (error) {
-        console.log("Not authenticated");
-      }
+      } catch (error) { /* not authenticated */ }
     };
     fetchUser();
+  }, []);
 
-    // Load Elfsight script for Instagram gallery
-    const widgetId = content.instagram_widget_id || DEFAULT_HOME_CONTENT.instagram_widget_id;
+  // Load Elfsight for Instagram
+  useEffect(() => {
+    if (!content.show_instagram) return;
     const script = document.createElement('script');
     script.src = 'https://elfsightcdn.com/platform.js';
     script.async = true;
     document.body.appendChild(script);
-
-    return () => {
-      if (document.body.contains(script)) {
-        document.body.removeChild(script);
-      }
-    };
-  }, []);
-
-  const { data: profile } = useQuery({
-    queryKey: ['userProfile', user?.email],
-    queryFn: async () => {
-      if (!user) return null;
-      const profiles = await base44.entities.UserProfile.filter({ created_by: user.email });
-      return profiles[0] || null;
-    },
-    enabled: !!user
-  });
-
-  const { data: recommendations } = useQuery({
-    queryKey: ['recommendations', user?.email],
-    queryFn: () => getPersonalizedRecommendations(user, profile, {}),
-    enabled: !!user && !!profile
-  });
+    return () => { if (document.body.contains(script)) document.body.removeChild(script); };
+  }, [content.show_instagram]);
 
   const { data: upcomingEvents = [] } = useQuery({
     queryKey: ['upcomingEvents'],
     queryFn: async () => {
-      const allEvents = await base44.entities.Event.list('-date', 3);
-      return allEvents.filter(e => e.status === 'published' && new Date(e.date) >= new Date());
+      const allEvents = await base44.entities.Event.list('-date', 6);
+      return allEvents.filter(e => e.status === 'published' && new Date(e.date) >= new Date()).slice(0, 3);
     }
   });
 
   const iconMap = { compass: Compass, heart: Heart, users: Users };
-  const values = (content.values || []).map(v => ({
-    icon: iconMap[v.icon] || Compass,
-    title: v.title,
-    description: v.description
-  }));
-
-  const galleryImages = (content.gallery_images || []).map((img, i) => ({
-    src: img.url,
-    span: i === 0 ? "col-span-2 row-span-2" : "col-span-1 row-span-1"
-  }));
+  const heroSlide = content.hero_slides?.[0] || DEFAULT_HOME_CONTENT.hero_slides[0];
 
   return (
-    <div className="min-h-screen">
-      {/* Section 1: Hero Slideshow */}
-      <HeroSlideshow slides={content.hero_slides} />
+    <div className="min-h-screen bg-[#0a0a0a]">
 
-      {/* Personalized Recommendations */}
-      {user && recommendations && (
-        <RecommendedSection recommendations={recommendations} profile={profile} />
-      )}
+      {/* ═══════════════════════════════════════════════
+          HERO — Full-screen single image, no slideshow
+          ═══════════════════════════════════════════════ */}
+      <section className="relative h-screen w-full overflow-hidden -mt-20">
+        {/* Background image */}
+        <div className="absolute inset-0">
+          <img
+            src={heroSlide.image_url}
+            alt="Cyblime Cycling"
+            className="w-full h-full object-cover"
+          />
+          {/* Gradient overlay — dark at bottom for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/40 to-transparent" />
+          <div className="absolute inset-0 bg-black/20" />
+        </div>
 
-      {/* Section 2: Featured Events */}
-      <section className="py-24 bg-white">
+        {/* Hero content — bottom-aligned, left-justified */}
+        <div className="relative z-10 h-full flex items-end pb-24 md:pb-32">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full">
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={fadeUp}
+              className="max-w-3xl"
+            >
+              <h1 className="text-5xl sm:text-6xl md:text-8xl font-bold text-white leading-[1.05] tracking-tight whitespace-pre-line">
+                {heroSlide.heading}
+              </h1>
+              <p className="text-lg md:text-xl text-gray-300 mt-6 max-w-xl leading-relaxed">
+                {heroSlide.subheading}
+              </p>
+              <div className="flex flex-wrap gap-4 mt-10">
+                <Link to={createPageUrl("Events")}>
+                  <Button className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white rounded-full px-8 py-6 text-base font-semibold shadow-xl shadow-[#ff6b35]/20 hover:shadow-[#ff6b35]/30 transition-all">
+                    Explore Events
+                    <ArrowRight className="w-5 h-5 ml-2" />
+                  </Button>
+                </Link>
+                <Link to={createPageUrl("Membership")}>
+                  <Button variant="outline" className="rounded-full px-8 py-6 text-base font-semibold border-white/20 text-white hover:bg-white/10 backdrop-blur-sm">
+                    Join the Club
+                  </Button>
+                </Link>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="w-6 h-10 rounded-full border-2 border-white/30 flex items-start justify-center pt-2"
+          >
+            <div className="w-1 h-2 bg-white/60 rounded-full" />
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════
+          UPCOMING EVENTS — Clean cards on dark bg
+          ═══════════════════════════════════════════════ */}
+      <section className="py-28 bg-[#0a0a0a]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between mb-12">
-            <motion.h2
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="text-4xl md:text-5xl font-bold text-[#2A2A2A]"
+          <div className="flex items-end justify-between mb-14">
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
+              <p className="text-[#ff6b35] font-semibold text-sm uppercase tracking-widest mb-3">What's Next</p>
+              <h2 className="text-4xl md:text-5xl font-bold text-white">Upcoming Rides</h2>
+            </motion.div>
+            <Link
+              to={createPageUrl("Events")}
+              className="hidden md:flex items-center gap-2 text-gray-400 hover:text-[#ff6b35] transition-colors font-medium"
             >
-              Upcoming Rides
-            </motion.h2>
-            <Link 
-              to={createPageUrl("Events")} 
-              className="text-[#ff6b35] font-medium flex items-center gap-2 hover:gap-3 transition-all"
-            >
-              View all events
-              <ArrowRight className="w-5 h-5" />
+              All events
+              <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
-          
+
           {upcomingEvents.length > 0 ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {upcomingEvents.map((event, index) => (
-                <EventCard key={event.id} event={event} index={index} />
+            <div className="grid md:grid-cols-3 gap-6">
+              {upcomingEvents.map((event, i) => (
+                <motion.div
+                  key={event.id}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  custom={i}
+                  variants={fadeUp}
+                >
+                  <Link to={createPageUrl("Events")} className="group block">
+                    <div className="relative rounded-2xl overflow-hidden bg-[#141414] border border-white/5 hover:border-[#ff6b35]/30 transition-all duration-300">
+                      {event.banner_image_url && (
+                        <div className="h-52 overflow-hidden">
+                          <img
+                            src={event.banner_image_url}
+                            alt={event.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          />
+                        </div>
+                      )}
+                      <div className="p-6">
+                        <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
+                          <span className="flex items-center gap-1.5">
+                            <Calendar className="w-3.5 h-3.5" />
+                            {new Date(event.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
+                          </span>
+                          {event.location && (
+                            <span className="flex items-center gap-1.5">
+                              <MapPin className="w-3.5 h-3.5" />
+                              {event.location}
+                            </span>
+                          )}
+                        </div>
+                        <h3 className="text-lg font-bold text-white group-hover:text-[#ff6b35] transition-colors">
+                          {event.title}
+                        </h3>
+                        {(event.level || event.distance) && (
+                          <div className="flex gap-2 mt-3">
+                            {event.level && (
+                              <span className="text-xs px-2.5 py-1 rounded-full bg-white/5 text-gray-400">{event.level}</span>
+                            )}
+                            {event.distance && (
+                              <span className="text-xs px-2.5 py-1 rounded-full bg-white/5 text-gray-400">{event.distance}</span>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </Link>
+                </motion.div>
               ))}
             </div>
           ) : (
-            <div className="text-center py-12">
-              <p className="text-gray-600 mb-4">No upcoming events at the moment</p>
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="text-center py-16 rounded-2xl border border-white/5 bg-[#141414]">
+              <Clock className="w-10 h-10 text-gray-600 mx-auto mb-4" />
+              <p className="text-gray-400 mb-6">No upcoming events right now</p>
               <Link to={createPageUrl("Events")}>
-                <Button className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white">
+                <Button className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white rounded-full px-6">
                   Browse All Events
                 </Button>
               </Link>
-            </div>
+            </motion.div>
           )}
+
+          <Link
+            to={createPageUrl("Events")}
+            className="md:hidden flex items-center justify-center gap-2 text-gray-400 hover:text-[#ff6b35] transition-colors font-medium mt-8"
+          >
+            View all events
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
       </section>
 
-      {/* Section 3: Club Values */}
-      <section className="py-24 bg-[#f5f5f3]">
+      {/* ═══════════════════════════════════════════════
+          VALUES — Three pillars, minimal and clean
+          ═══════════════════════════════════════════════ */}
+      <section className="py-28 bg-[#111111] border-y border-white/5">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
-            className="text-center max-w-3xl mx-auto mb-16"
+            variants={fadeUp}
+            className="text-center max-w-2xl mx-auto mb-20"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-[#2A2A2A] mb-6">
+            <p className="text-[#ff6b35] font-semibold text-sm uppercase tracking-widest mb-3">Our Philosophy</p>
+            <h2 className="text-4xl md:text-5xl font-bold text-white">
               What We Stand For
             </h2>
-            <p className="text-lg text-[#555555]">
-              Cymblime is built on the belief that cycling brings people together, 
-              challenges us to grow, and opens doors to incredible experiences.
-            </p>
           </motion.div>
-          
-          <div className="grid md:grid-cols-3 gap-12 lg:gap-16">
-            {values.map((value, index) => (
-              <ValueCard key={index} {...value} index={index} />
-            ))}
+
+          <div className="grid md:grid-cols-3 gap-8 lg:gap-16">
+            {(content.values || []).map((value, i) => {
+              const Icon = iconMap[value.icon] || Compass;
+              return (
+                <motion.div
+                  key={i}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  custom={i}
+                  variants={fadeUp}
+                  className="text-center group"
+                >
+                  <div className="w-16 h-16 rounded-2xl bg-[#ff6b35]/10 border border-[#ff6b35]/20 flex items-center justify-center mx-auto mb-6 group-hover:bg-[#ff6b35]/20 transition-colors">
+                    <Icon className="w-7 h-7 text-[#ff6b35]" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-3">{value.title}</h3>
+                  <p className="text-gray-400 leading-relaxed">{value.description}</p>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Section 4: Community Feed */}
-      <CommunityFeed />
+      {/* ═══════════════════════════════════════════════
+          INSTAGRAM — Only if enabled
+          ═══════════════════════════════════════════════ */}
+      {content.show_instagram && (
+        <section className="py-28 bg-[#0a0a0a]">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+              className="text-center mb-14"
+            >
+              <p className="text-[#ff6b35] font-semibold text-sm uppercase tracking-widest mb-3">Follow the Journey</p>
+              <h2 className="text-4xl md:text-5xl font-bold text-white">
+                @cyblimecycling
+              </h2>
+            </motion.div>
 
-      {/* Section 5: Instagram Gallery */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <Badge className="mb-4 bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] text-white border-0">
-              <Instagram className="w-3 h-3 mr-1" />
-              Instagram
-            </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold text-[#2A2A2A] mb-4">
-              Moments from the Road
-            </h2>
-            <p className="text-xl text-[#555555] max-w-2xl mx-auto">
-              Experience the journey through the lens of our community
-            </p>
-          </motion.div>
-
-          <style>{`
-            .elfsight-app-70900cfe-1ff2-4b28-a832-f9790890ec6d {
-              overflow: hidden !important;
-            }
-            .elfsight-app-70900cfe-1ff2-4b28-a832-f9790890ec6d * {
-              scrollbar-width: none !important;
-              -ms-overflow-style: none !important;
-            }
-            .elfsight-app-70900cfe-1ff2-4b28-a832-f9790890ec6d *::-webkit-scrollbar {
-              display: none !important;
-            }
-          `}</style>
-          <div className="elfsight-app-70900cfe-1ff2-4b28-a832-f9790890ec6d" data-elfsight-app-lazy></div>
-
-          <div className="text-center mt-8">
-            <Link to={createPageUrl("Gallery")}>
-              <Button className="bg-[#2A2A2A] hover:bg-[#1a1a1a] text-white rounded-full px-8 py-6 text-lg">
-                View Full Gallery
-                <ChevronRight className="w-5 h-5 ml-2" />
-              </Button>
-            </Link>
+            <style>{`
+              .elfsight-app-${content.instagram_widget_id || DEFAULT_HOME_CONTENT.instagram_widget_id} {
+                overflow: hidden !important;
+              }
+              .elfsight-app-${content.instagram_widget_id || DEFAULT_HOME_CONTENT.instagram_widget_id} * {
+                scrollbar-width: none !important;
+                -ms-overflow-style: none !important;
+              }
+              .elfsight-app-${content.instagram_widget_id || DEFAULT_HOME_CONTENT.instagram_widget_id} *::-webkit-scrollbar {
+                display: none !important;
+              }
+            `}</style>
+            <div className={`elfsight-app-${content.instagram_widget_id || DEFAULT_HOME_CONTENT.instagram_widget_id}`} data-elfsight-app-lazy></div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* Section 6: Final CTA */}
-      <section className="relative py-32 bg-[#1a1a1a] overflow-hidden">
-        {/* Dot Grid Texture */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0" style={{
-            backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)',
-            backgroundSize: '30px 30px'
-          }} />
-        </div>
-        
-        <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
+      {/* ═══════════════════════════════════════════════
+          CTA — Join the club
+          ═══════════════════════════════════════════════ */}
+      <section className="py-32 bg-[#0a0a0a] relative overflow-hidden">
+        {/* Subtle radial glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#ff6b35]/5 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="relative max-w-3xl mx-auto px-6 lg:px-8 text-center">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            variants={fadeUp}
           >
-            <h2 className="text-5xl md:text-6xl font-bold text-white mb-6">
-              {content.cta?.heading || "Ready to Join the Pack?"}
+            <h2 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+              {content.cta?.heading || "Ready to Ride?"}
             </h2>
-            <p className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
-              {content.cta?.subheading || "Become part of a community that rides together, grows together, and creates unforgettable memories on every journey."}
+            <p className="text-lg text-gray-400 mb-12 max-w-xl mx-auto leading-relaxed">
+              {content.cta?.subheading || "Your next adventure starts with a single pedal stroke."}
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link to={createPageUrl(content.cta?.button_link || "Events")}>
-                <Button className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white rounded-full px-10 py-6 text-lg font-semibold">
-                  {content.cta?.button_text || "Browse Events"}
+              <Link to={createPageUrl(content.cta?.button_link || "Membership")}>
+                <Button className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white rounded-full px-10 py-6 text-lg font-semibold shadow-xl shadow-[#ff6b35]/20">
+                  {content.cta?.button_text || "View Membership"}
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Button>
+              </Link>
+              <Link to={createPageUrl("About")}>
+                <Button variant="ghost" className="text-gray-400 hover:text-white rounded-full px-8 py-6 text-lg">
+                  Learn More
                 </Button>
               </Link>
             </div>
