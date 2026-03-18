@@ -195,6 +195,14 @@ const auth = {
     return data;
   },
 
+  async resetPassword(email) {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/`,
+    });
+    if (error) throw error;
+    return true;
+  },
+
   async signUp(email, password) {
     const { data, error } = await supabase.auth.signUp({
       email,
