@@ -163,7 +163,7 @@ export default function BuddySystem({ user }) {
                   <Button
                     size="icon"
                     onClick={() => sendMotivationMutation.mutate(buddy.id)}
-                    className="bg-[#c9a227] hover:bg-[#b89123]"
+                    className="bg-[#ff6b35] hover:bg-[#e55a2b]"
                   >
                     <Send className="w-4 h-4" />
                   </Button>

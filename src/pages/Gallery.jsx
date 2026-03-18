@@ -65,7 +65,7 @@ export default function Gallery() {
             </h2>
             <p className="text-lg text-[#555555] max-w-2xl mx-auto">
               Tag us in your cycling photos and be featured in our gallery. 
-              Use <span className="font-semibold text-[#c9a227]">#CyblimeCycling</span> to join the community showcase.
+              Use <span className="font-semibold text-[#ff6b35]">#CyblimeCycling</span> to join the community showcase.
             </p>
           </motion.div>
         </div>

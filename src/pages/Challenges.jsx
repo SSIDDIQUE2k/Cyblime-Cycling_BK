@@ -57,7 +57,7 @@ const ChallengeCard = ({ challenge, userProgress, onJoin, isJoined, isJoining })
         <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#ff6b35] to-[#ff4500] flex items-center justify-center">
           <Icon className="w-6 h-6 text-white" />
         </div>
-        <Badge className={`${isCompleted ? 'bg-[#A4FF4F] text-[#2A2A2A]' : 'bg-[#ffa500] text-white'} border-0`}>
+        <Badge className={`${isCompleted ? 'bg-[#A4FF4F] text-[#2A2A2A]' : 'bg-[#ff6b35] text-white'} border-0`}>
           {challenge.type === 'weekly' ? 'Weekly' : 'Monthly'}
         </Badge>
       </div>
@@ -75,7 +75,7 @@ const ChallengeCard = ({ challenge, userProgress, onJoin, isJoined, isJoining })
 
       <div className="flex items-center justify-between pt-4 border-t border-gray-100">
         <div className="flex items-center gap-2 text-sm text-[#555555]">
-          <Trophy className="w-4 h-4 text-[#ffa500]" />
+          <Trophy className="w-4 h-4 text-[#ff6b35]" />
           <span>{challenge.reward_points} points</span>
         </div>
         {isCompleted ? (
@@ -232,7 +232,7 @@ export default function Challenges() {
       <section className="relative bg-gradient-to-br from-[#2A2A2A] to-[#1a1a1a] py-20 md:py-32 overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-0 right-1/4 w-96 h-96 rounded-full bg-[#ff6b35]/20 blur-3xl" />
-          <div className="absolute bottom-0 left-1/4 w-96 h-96 rounded-full bg-[#ffa500]/20 blur-3xl" />
+          <div className="absolute bottom-0 left-1/4 w-96 h-96 rounded-full bg-[#ff6b35]/20 blur-3xl" />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
@@ -259,7 +259,7 @@ export default function Challenges() {
                   <div className="text-sm text-gray-300">Total Points</div>
                 </div>
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
-                  <div className="text-3xl font-bold text-[#ffa500] mb-1">{userPoints.level}</div>
+                  <div className="text-3xl font-bold text-[#ff6b35] mb-1">{userPoints.level}</div>
                   <div className="text-sm text-gray-300">Level</div>
                 </div>
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">

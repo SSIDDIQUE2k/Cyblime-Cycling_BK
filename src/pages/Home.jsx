@@ -110,7 +110,7 @@ const HeroSlideshow = ({ slides: cmsSlides }) => {
                 {slides[currentSlide].subtitle}
               </p>
               <Link to={createPageUrl("Events")}>
-                <Button className="bg-[#c9a227] hover:bg-[#b89123] text-white rounded-full px-8 py-6 text-lg font-semibold">
+                <Button className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white rounded-full px-8 py-6 text-lg font-semibold">
                   Explore Events
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>
@@ -141,7 +141,7 @@ const HeroSlideshow = ({ slides: cmsSlides }) => {
             key={index}
             onClick={() => setCurrentSlide(index)}
             className={`w-3 h-3 rounded-full transition-all ${
-              index === currentSlide ? "bg-[#c9a227] w-8" : "bg-white/50"
+              index === currentSlide ? "bg-[#ff6b35] w-8" : "bg-white/50"
             }`}
           />
         ))}
@@ -195,7 +195,7 @@ const EventCard = ({ event, index }) => {
             )}
           </div>
           
-          <Link to={createPageUrl("Events")} className="text-[#c9a227] font-medium text-sm flex items-center gap-1 hover:gap-2 transition-all">
+          <Link to={createPageUrl("Events")} className="text-[#ff6b35] font-medium text-sm flex items-center gap-1 hover:gap-2 transition-all">
             View Details
             <ChevronRight className="w-4 h-4" />
           </Link>
@@ -215,7 +215,7 @@ const ValueCard = ({ icon: Icon, title, description, index }) => {
       transition={{ duration: 0.6, delay: index * 0.15 }}
       className="text-center"
     >
-      <div className="w-20 h-20 rounded-full bg-[#c9a227] flex items-center justify-center mx-auto mb-6">
+      <div className="w-20 h-20 rounded-full bg-[#ff6b35] flex items-center justify-center mx-auto mb-6">
         <Icon className="w-10 h-10 text-white" />
       </div>
       <h3 className="text-2xl font-bold text-[#2A2A2A] mb-4">{title}</h3>
@@ -313,7 +313,7 @@ export default function Home() {
             </motion.h2>
             <Link 
               to={createPageUrl("Events")} 
-              className="text-[#c9a227] font-medium flex items-center gap-2 hover:gap-3 transition-all"
+              className="text-[#ff6b35] font-medium flex items-center gap-2 hover:gap-3 transition-all"
             >
               View all events
               <ArrowRight className="w-5 h-5" />
@@ -330,7 +330,7 @@ export default function Home() {
             <div className="text-center py-12">
               <p className="text-gray-600 mb-4">No upcoming events at the moment</p>
               <Link to={createPageUrl("Events")}>
-                <Button className="bg-[#c9a227] hover:bg-[#b89123] text-white">
+                <Button className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white">
                   Browse All Events
                 </Button>
               </Link>
@@ -440,7 +440,7 @@ export default function Home() {
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link to={createPageUrl(content.cta?.button_link || "Events")}>
-                <Button className="bg-[#c9a227] hover:bg-[#b89123] text-white rounded-full px-10 py-6 text-lg font-semibold">
+                <Button className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white rounded-full px-10 py-6 text-lg font-semibold">
                   {content.cta?.button_text || "Browse Events"}
                 </Button>
               </Link>

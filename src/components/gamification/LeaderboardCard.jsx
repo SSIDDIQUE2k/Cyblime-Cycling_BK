@@ -15,7 +15,7 @@ export default function LeaderboardCard({ leaders, title, type }) {
   return (
     <div className="bg-white rounded-2xl p-6 shadow-sm">
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-10 h-10 rounded-xl bg-[#c9a227] flex items-center justify-center">
+        <div className="w-10 h-10 rounded-xl bg-[#ff6b35] flex items-center justify-center">
           <Icon className="w-5 h-5 text-white" />
         </div>
         <h3 className="text-xl font-bold text-[#2A2A2A]">{title}</h3>
@@ -29,12 +29,12 @@ export default function LeaderboardCard({ leaders, title, type }) {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: index * 0.05 }}
             className={`flex items-center justify-between p-3 rounded-xl ${
-              index < 3 ? 'bg-gradient-to-r from-[#c9a227]/10 to-transparent' : 'bg-gray-50'
+              index < 3 ? 'bg-gradient-to-r from-[#ff6b35]/10 to-transparent' : 'bg-gray-50'
             }`}
           >
             <div className="flex items-center gap-3">
               <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${
-                index === 0 ? 'bg-[#c9a227] text-white' :
+                index === 0 ? 'bg-[#ff6b35] text-white' :
                 index === 1 ? 'bg-gray-300 text-[#2A2A2A]' :
                 index === 2 ? 'bg-orange-300 text-[#2A2A2A]' :
                 'bg-gray-100 text-[#555555]'

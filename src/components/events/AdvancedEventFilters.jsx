@@ -18,7 +18,7 @@ export default function AdvancedEventFilters({ filters, onFiltersChange, onReset
           <Sliders className="w-4 h-4" />
           Advanced Filters
           {Object.values(filters).some(v => v && v !== 'all') && (
-            <Badge className="bg-[#c9a227] text-white ml-2">Active</Badge>
+            <Badge className="bg-[#ff6b35] text-white ml-2">Active</Badge>
           )}
         </Button>
       </PopoverTrigger>
@@ -137,7 +137,7 @@ export default function AdvancedEventFilters({ filters, onFiltersChange, onReset
           </div>
 
           <Button 
-            className="w-full bg-[#c9a227] hover:bg-[#b89123]"
+            className="w-full bg-[#ff6b35] hover:bg-[#e55a2b]"
             onClick={() => setOpen(false)}
           >
             Apply Filters

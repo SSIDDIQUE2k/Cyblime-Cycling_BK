@@ -172,7 +172,7 @@ export default function RouteDetails() {
         <div className="text-center">
           <h2 className="text-2xl font-bold text-[#2A2A2A] mb-4">Route not found</h2>
           <Link to={createPageUrl("Routes")}>
-            <Button className="bg-[#c9a227] hover:bg-[#b89123] text-white">
+            <Button className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white">
               Back to Routes
             </Button>
           </Link>
@@ -236,7 +236,7 @@ export default function RouteDetails() {
               {route.name}
             </h1>
             <div className="flex items-center gap-2 mb-6">
-              <Star className="w-5 h-5 fill-[#c9a227] text-[#c9a227]" />
+              <Star className="w-5 h-5 fill-[#ff6b35] text-[#ff6b35]" />
               <span className="text-lg font-semibold text-[#2A2A2A]">{route.rating || "5.0"}</span>
               <span className="text-[#888888]">•</span>
               <span className="text-[#888888]">{route.total_rides || 0} rides</span>
@@ -262,8 +262,8 @@ export default function RouteDetails() {
               <div className="text-3xl font-bold text-[#2A2A2A] mb-1">{route.elevation_gain}m</div>
               <div className="text-sm text-[#555555]">Elevation Gain</div>
             </div>
-            <div className="bg-gradient-to-br from-[#c9a227]/10 to-[#c9a227]/5 rounded-2xl p-6">
-              <Calendar className="w-8 h-8 text-[#c9a227] mb-3" />
+            <div className="bg-gradient-to-br from-[#ff6b35]/10 to-[#ff6b35]/5 rounded-2xl p-6">
+              <Calendar className="w-8 h-8 text-[#ff6b35] mb-3" />
               <div className="text-3xl font-bold text-[#2A2A2A] mb-1">{route.estimated_time}h</div>
               <div className="text-sm text-[#555555]">Estimated Time</div>
             </div>
@@ -282,7 +282,7 @@ export default function RouteDetails() {
             className="flex flex-wrap gap-3 mb-12 pb-8 border-b border-gray-200"
           >
             {route.gpx_file_url && (
-              <Button onClick={handleDownloadGPX} className="bg-[#c9a227] hover:bg-[#b89123] text-white rounded-full">
+              <Button onClick={handleDownloadGPX} className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white rounded-full">
                 <Download className="w-4 h-4 mr-2" />
                 Download GPX
               </Button>
@@ -339,7 +339,7 @@ export default function RouteDetails() {
                 <ul className="space-y-2">
                   {route.highlights.map((highlight, i) => (
                     <li key={i} className="flex items-start gap-2">
-                      <span className="text-[#c9a227] mt-1">✓</span>
+                      <span className="text-[#ff6b35] mt-1">✓</span>
                       <span className="text-[#555555]">{highlight}</span>
                     </li>
                   ))}
@@ -355,7 +355,7 @@ export default function RouteDetails() {
             transition={{ delay: 0.5 }}
           >
             <div className="flex items-center gap-2 mb-8">
-              <MessageCircle className="w-6 h-6 text-[#c9a227]" />
+              <MessageCircle className="w-6 h-6 text-[#ff6b35]" />
               <h3 className="text-2xl font-bold text-[#2A2A2A]">
                 Rider Reviews ({comments.length})
               </h3>
@@ -375,7 +375,7 @@ export default function RouteDetails() {
                         className="focus:outline-none transition-transform hover:scale-110"
                       >
                         <Star
-                          className={`w-8 h-8 ${star <= rating ? 'fill-[#c9a227] text-[#c9a227]' : 'text-gray-300'}`}
+                          className={`w-8 h-8 ${star <= rating ? 'fill-[#ff6b35] text-[#ff6b35]' : 'text-gray-300'}`}
                         />
                       </button>
                     ))}
@@ -392,7 +392,7 @@ export default function RouteDetails() {
                 <Button 
                   type="submit" 
                   disabled={addCommentMutation.isPending}
-                  className="bg-[#c9a227] hover:bg-[#b89123] text-white"
+                  className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white"
                 >
                   {addCommentMutation.isPending ? 'Posting...' : 'Post Review'}
                 </Button>
@@ -414,7 +414,7 @@ export default function RouteDetails() {
                     className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100"
                   >
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#c9a227] to-[#b89123] flex items-center justify-center text-white font-bold flex-shrink-0">
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#ff6b35] to-[#e55a2b] flex items-center justify-center text-white font-bold flex-shrink-0">
                         <User className="w-6 h-6" />
                       </div>
                       <div className="flex-1">
@@ -426,7 +426,7 @@ export default function RouteDetails() {
                                 {[...Array(5)].map((_, i) => (
                                   <Star
                                     key={i}
-                                    className={`w-4 h-4 ${i < comment.rating ? 'fill-[#c9a227] text-[#c9a227]' : 'text-gray-300'}`}
+                                    className={`w-4 h-4 ${i < comment.rating ? 'fill-[#ff6b35] text-[#ff6b35]' : 'text-gray-300'}`}
                                   />
                                 ))}
                               </div>

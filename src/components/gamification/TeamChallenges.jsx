@@ -53,7 +53,7 @@ export default function TeamChallenges({ user }) {
         </div>
         <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-[#c9a227] hover:bg-[#b89123]">
+            <Button className="bg-[#ff6b35] hover:bg-[#e55a2b]">
               <Plus className="w-4 h-4 mr-2" />
               Create Team
             </Button>
@@ -79,7 +79,7 @@ export default function TeamChallenges({ user }) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
               >
-                <Card className="border-2 border-[#c9a227]">
+                <Card className="border-2 border-[#ff6b35]">
                   <CardHeader>
                     <div className="flex items-start justify-between">
                       <div>
@@ -111,7 +111,7 @@ export default function TeamChallenges({ user }) {
                         <span>{team.team_members?.length || 0}/{team.max_members} members</span>
                       </div>
                       <div className="flex items-center gap-2 text-sm">
-                        <Trophy className="w-4 h-4 text-[#c9a227]" />
+                        <Trophy className="w-4 h-4 text-[#ff6b35]" />
                         <span className="font-semibold">{team.reward_points} pts</span>
                       </div>
                     </div>
@@ -156,13 +156,13 @@ export default function TeamChallenges({ user }) {
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-600">Reward:</span>
-                        <span className="font-semibold text-[#c9a227]">{team.reward_points} pts</span>
+                        <span className="font-semibold text-[#ff6b35]">{team.reward_points} pts</span>
                       </div>
                     </div>
 
                     <Button
                       onClick={() => joinTeamMutation.mutate(team.id)}
-                      className="w-full bg-[#c9a227] hover:bg-[#b89123]"
+                      className="w-full bg-[#ff6b35] hover:bg-[#e55a2b]"
                       size="sm"
                     >
                       <Check className="w-4 h-4 mr-2" />

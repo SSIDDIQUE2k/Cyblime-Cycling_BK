@@ -18,7 +18,7 @@ export default function RecommendedSection({ recommendations, profile }) {
           className="text-center mb-12"
         >
           <div className="flex items-center justify-center gap-2 mb-4">
-            <Sparkles className="w-6 h-6 text-[#c9a227]" />
+            <Sparkles className="w-6 h-6 text-[#ff6b35]" />
             <h2 className="text-3xl md:text-4xl font-bold text-[#2A2A2A]">
               Recommended for You
             </h2>
@@ -37,7 +37,7 @@ export default function RecommendedSection({ recommendations, profile }) {
                 Routes You'll Love
               </h3>
               <Link to={createPageUrl("Routes")}>
-                <Button variant="ghost" className="text-[#c9a227]">
+                <Button variant="ghost" className="text-[#ff6b35]">
                   View All <ArrowRight className="w-4 h-4 ml-1" />
                 </Button>
               </Link>
@@ -80,11 +80,11 @@ export default function RecommendedSection({ recommendations, profile }) {
           <div className="mb-12">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-2xl font-bold text-[#2A2A2A] flex items-center gap-2">
-                <Calendar className="w-6 h-6 text-[#c9a227]" />
+                <Calendar className="w-6 h-6 text-[#ff6b35]" />
                 Events for You
               </h3>
               <Link to={createPageUrl("Events")}>
-                <Button variant="ghost" className="text-[#c9a227]">
+                <Button variant="ghost" className="text-[#ff6b35]">
                   View All <ArrowRight className="w-4 h-4 ml-1" />
                 </Button>
               </Link>
@@ -98,7 +98,7 @@ export default function RecommendedSection({ recommendations, profile }) {
                   transition={{ delay: index * 0.1 }}
                   className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all"
                 >
-                  <Badge className="bg-[#c9a227]/20 text-[#c9a227] border-0 mb-3">
+                  <Badge className="bg-[#ff6b35]/20 text-[#ff6b35] border-0 mb-3">
                     {event.type}
                   </Badge>
                   <h4 className="font-bold text-[#2A2A2A] text-lg mb-2">{event.title}</h4>
@@ -123,7 +123,7 @@ export default function RecommendedSection({ recommendations, profile }) {
                 Trending Discussions
               </h3>
               <Link to={createPageUrl("Community")}>
-                <Button variant="ghost" className="text-[#c9a227]">
+                <Button variant="ghost" className="text-[#ff6b35]">
                   Join Conversation <ArrowRight className="w-4 h-4 ml-1" />
                 </Button>
               </Link>

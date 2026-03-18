@@ -38,7 +38,7 @@ export default function AuthorPosts() {
         <div className="text-center">
           <h2 className="text-2xl font-bold text-[#2A2A2A] mb-4">No posts found</h2>
           <Link to={createPageUrl("Blog")}>
-            <Button className="bg-[#c9a227] hover:bg-[#b89123] text-white">
+            <Button className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Blog
             </Button>
@@ -73,7 +73,7 @@ export default function AuthorPosts() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center"
           >
-            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#c9a227] to-[#b89123] flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6">
+            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#ff6b35] to-[#e55a2b] flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6">
               {authorName.charAt(0).toUpperCase()}
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
@@ -136,7 +136,7 @@ export default function AuthorPosts() {
                     </div>
                   </div>
                   <Link to={createPageUrl("BlogPost") + `?id=${post.id}`}>
-                    <Button variant="ghost" className="w-full text-[#c9a227] hover:text-[#b89123]">
+                    <Button variant="ghost" className="w-full text-[#ff6b35] hover:text-[#e55a2b]">
                       Read Article
                       <ArrowRight className="w-4 h-4 ml-2" />
                     </Button>

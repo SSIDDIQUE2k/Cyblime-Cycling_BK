@@ -93,7 +93,7 @@ const EventCard = ({ event, index, onViewDetails }) => {
         <Badge variant="outline" className="text-xs">{event.level}</Badge>
         {event.distance && <Badge variant="outline" className="text-xs">{event.distance}</Badge>}
         {event.organizer_name && (
-          <Badge variant="outline" className="text-xs bg-[#c9a227]/10 text-[#c9a227] border-[#c9a227]/30">
+          <Badge variant="outline" className="text-xs bg-[#ff6b35]/10 text-[#ff6b35] border-[#ff6b35]/30">
             By {event.organizer_name}
           </Badge>
         )}
@@ -101,7 +101,7 @@ const EventCard = ({ event, index, onViewDetails }) => {
       
       <Button
         onClick={() => onViewDetails(event)}
-        className="w-full bg-[#c9a227] hover:bg-[#b89123] text-white rounded-xl">
+        className="w-full bg-[#ff6b35] hover:bg-[#e55a2b] text-white rounded-xl">
 
         View Details
         <ChevronRight className="w-4 h-4 ml-2" />
@@ -176,7 +176,7 @@ const AdvancedFilters = ({ filters, onFilterChange, onReset }) => {
                 filters.skills.filter((s) => s !== skill);
                 onFilterChange({ ...filters, skills: newSkills });
               }}
-              className="w-4 h-4 rounded border-gray-300 text-[#c9a227] focus:ring-[#c9a227]" />
+              className="w-4 h-4 rounded border-gray-300 text-[#ff6b35] focus:ring-[#ff6b35]" />
 
               <span className="text-sm text-[#555555]">{skill}</span>
             </label>
@@ -345,7 +345,7 @@ export default function Events() {
             
             {user && (
               <Link to={createPageUrl("MyEvents")}>
-                <Button className="bg-[#c9a227] hover:bg-[#b89123] text-white rounded-full px-8 py-4">
+                <Button className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white rounded-full px-8 py-4">
                   Create Your Own Event
                 </Button>
               </Link>
@@ -498,7 +498,7 @@ export default function Events() {
           ) : user && filteredEvents.length > 0 ?
           <>
             {user && filteredEvents.length > 0 &&
-          <div className="mb-8 p-6 bg-gradient-to-r from-[#c9a227]/10 to-transparent rounded-2xl border-l-4 border-[#c9a227]">
+          <div className="mb-8 p-6 bg-gradient-to-r from-[#ff6b35]/10 to-transparent rounded-2xl border-l-4 border-[#ff6b35]">
               <h3 className="text-lg font-bold text-[#2A2A2A] mb-2">🎯 Recommended for You</h3>
               <p className="text-sm text-[#555555]">
                 Based on your interests, we think you'll enjoy these upcoming events

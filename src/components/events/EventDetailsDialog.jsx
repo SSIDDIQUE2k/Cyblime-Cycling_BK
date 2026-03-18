@@ -218,7 +218,7 @@ END:VCALENDAR`;
           <div>
             <Button
               onClick={() => rsvpMutation.mutate('going')}
-              className={`w-full ${userRsvp?.status === 'going' ? 'bg-[#A4FF4F] text-[#2A2A2A] font-bold' : 'bg-[#c9a227] hover:bg-[#b89123] text-white'}`}
+              className={`w-full ${userRsvp?.status === 'going' ? 'bg-[#A4FF4F] text-[#2A2A2A] font-bold' : 'bg-[#ff6b35] hover:bg-[#e55a2b] text-white'}`}
             >
               <Check className="w-4 h-4 mr-2" />
               {userRsvp?.status === 'going' ? `Going (${goingCount})` : 'RSVP Going'}
@@ -268,7 +268,7 @@ END:VCALENDAR`;
             <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
               {rsvps.filter(r => r.status === 'going').slice(0, 9).map((rsvp) => (
                 <div key={rsvp.id} className="flex items-center gap-2 p-2 bg-gray-50 rounded-lg">
-                  <div className="w-8 h-8 rounded-full bg-[#c9a227] flex items-center justify-center text-white text-sm font-semibold">
+                  <div className="w-8 h-8 rounded-full bg-[#ff6b35] flex items-center justify-center text-white text-sm font-semibold">
                     {rsvp.created_by.charAt(0).toUpperCase()}
                   </div>
                   <span className="text-sm text-[#555555] truncate">{rsvp.created_by.split('@')[0]}</span>

@@ -214,7 +214,7 @@ export default function MyEvents() {
                 resetForm();
                 setCreateDialogOpen(true);
               }}
-              className="bg-[#c9a227] hover:bg-[#b89123] text-white rounded-full px-8 py-6 text-lg"
+              className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white rounded-full px-8 py-6 text-lg"
             >
               <Plus className="w-5 h-5 mr-2" />
               Create New Event
@@ -504,7 +504,7 @@ export default function MyEvents() {
               <Button
                 type="submit"
                 disabled={createEventMutation.isPending || updateEventMutation.isPending || uploadingImage}
-                className="flex-1 bg-[#c9a227] hover:bg-[#b89123] text-white"
+                className="flex-1 bg-[#ff6b35] hover:bg-[#e55a2b] text-white"
               >
                 {editingEvent ? 'Update Event' : 'Create Event'}
               </Button>

@@ -89,7 +89,7 @@ export default function TicketPurchaseDialog({ event, open, onOpenChange }) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <Ticket className="w-5 h-5 text-[#c9a227]" />
+            <Ticket className="w-5 h-5 text-[#ff6b35]" />
             Purchase Ticket
           </DialogTitle>
         </DialogHeader>
@@ -129,7 +129,7 @@ export default function TicketPurchaseDialog({ event, open, onOpenChange }) {
             </div>
             <div className="border-t pt-2 flex items-center justify-between">
               <span className="font-semibold text-[#2A2A2A]">Total</span>
-              <span className="font-bold text-[#c9a227] text-xl">
+              <span className="font-bold text-[#ff6b35] text-xl">
                 ${(ticketTypes[ticketType].price + 2.5).toFixed(2)}
               </span>
             </div>
@@ -138,7 +138,7 @@ export default function TicketPurchaseDialog({ event, open, onOpenChange }) {
           <Button
             onClick={handlePurchase}
             disabled={processing}
-            className="w-full bg-[#c9a227] hover:bg-[#b89123] text-white"
+            className="w-full bg-[#ff6b35] hover:bg-[#e55a2b] text-white"
           >
             {processing ? (
               "Processing..."

@@ -97,7 +97,7 @@ export function EventMessaging({ event, isOrganizer }) {
             <Button 
               onClick={sendMessageToParticipants}
               disabled={sendingEmail || participants.length === 0}
-              className="w-full bg-[#c9a227] hover:bg-[#b89123]"
+              className="w-full bg-[#ff6b35] hover:bg-[#e55a2b]"
             >
               <Mail className="w-4 h-4 mr-2" />
               {sendingEmail ? "Sending..." : `Send to ${participants.length} Participants`}
@@ -148,11 +148,11 @@ export function EventMessaging({ event, isOrganizer }) {
         <CardContent>
           <div className="grid grid-cols-2 gap-4">
             <div className="p-4 bg-gray-50 rounded-lg">
-              <p className="text-2xl font-bold text-[#c9a227]">{participants.length}</p>
+              <p className="text-2xl font-bold text-[#ff6b35]">{participants.length}</p>
               <p className="text-sm text-gray-600">Registered</p>
             </div>
             <div className="p-4 bg-gray-50 rounded-lg">
-              <p className="text-2xl font-bold text-[#c9a227]">
+              <p className="text-2xl font-bold text-[#ff6b35]">
                 {event.max_participants ? `${Math.round((participants.length / event.max_participants) * 100)}%` : 'N/A'}
               </p>
               <p className="text-sm text-gray-600">Capacity</p>

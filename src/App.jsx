@@ -4,7 +4,7 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
 import NavigationTracker from '@/lib/NavigationTracker'
 import { pagesConfig } from './pages.config'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import AdminUserManagement from './pages/AdminUserManagement';
@@ -14,14 +14,25 @@ const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
 const MainPage = mainPageKey ? Pages[mainPageKey] : <></>;
 
+// Pages anyone can see without logging in
+const PUBLIC_PAGES = new Set([
+  "Home", "About", "Events", "Membership", "Blog", "BlogPost",
+  "AuthorPosts", "Gallery", "Routes", "RouteDetails", "CyclingHub",
+  "StravaClub", "Challenges", "Leaderboard", "Login"
+]);
+
 const LayoutWrapper = ({ children, currentPageName }) => Layout ?
   <Layout currentPageName={currentPageName}>{children}</Layout>
   : <>{children}</>;
 
-const AuthenticatedApp = () => {
-  const { isLoadingAuth, isAuthenticated } = useAuth();
+// Wrapper that enforces auth on protected pages
+const ProtectedRoute = ({ pageName, children }) => {
+  const { isAuthenticated, isLoadingAuth } = useAuth();
 
-  // Show loading spinner while checking auth
+  // Public pages render immediately
+  if (PUBLIC_PAGES.has(pageName)) return children;
+
+  // Protected page — show loader while checking auth
   if (isLoadingAuth) {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-[#0a0a0a]">
@@ -33,12 +44,30 @@ const AuthenticatedApp = () => {
     );
   }
 
-  // NOT logged in → show Login page, no matter what URL they hit
+  // Not authenticated → redirect to login
   if (!isAuthenticated) {
-    return <Login />;
+    return <Navigate to="/Login" replace />;
   }
 
-  // Logged in → show the full app
+  return children;
+};
+
+const AppRoutes = () => {
+  const { isLoadingAuth } = useAuth();
+
+  // Only show full-screen loader on initial app load (brief flash)
+  // Once auth state is known, render routes immediately
+  if (isLoadingAuth) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-[#0a0a0a]">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-10 h-10 border-4 border-[#ff6b35]/20 border-t-[#ff6b35] rounded-full animate-spin"></div>
+          <p className="text-gray-500 text-sm">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <Routes>
       <Route path="/" element={
@@ -51,13 +80,21 @@ const AuthenticatedApp = () => {
           key={path}
           path={`/${path}`}
           element={
-            <LayoutWrapper currentPageName={path}>
-              <Page />
-            </LayoutWrapper>
+            <ProtectedRoute pageName={path}>
+              <LayoutWrapper currentPageName={path}>
+                <Page />
+              </LayoutWrapper>
+            </ProtectedRoute>
           }
         />
       ))}
-      <Route path="/AdminUserManagement" element={<LayoutWrapper currentPageName="AdminUserManagement"><AdminUserManagement /></LayoutWrapper>} />
+      <Route path="/AdminUserManagement" element={
+        <ProtectedRoute pageName="AdminUserManagement">
+          <LayoutWrapper currentPageName="AdminUserManagement">
+            <AdminUserManagement />
+          </LayoutWrapper>
+        </ProtectedRoute>
+      } />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
@@ -71,7 +108,7 @@ function App() {
       <QueryClientProvider client={queryClientInstance}>
         <Router>
           <NavigationTracker />
-          <AuthenticatedApp />
+          <AppRoutes />
         </Router>
         <Toaster />
       </QueryClientProvider>

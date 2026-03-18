@@ -93,7 +93,7 @@ const GoalCard = ({ goal, onUpdate, onDelete }) => {
         </div>
         <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
           <div
-            className="h-full bg-[#c9a227] rounded-full transition-all duration-500"
+            className="h-full bg-[#ff6b35] rounded-full transition-all duration-500"
             style={{ width: `${goal.progress}%` }} />
 
         </div>
@@ -127,7 +127,7 @@ const AchievementBadge = ({ achievement }) => {
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="bg-gradient-to-br from-[#c9a227] to-[#b89123] rounded-xl p-4 text-white">
+      className="bg-gradient-to-br from-[#ff6b35] to-[#e55a2b] rounded-xl p-4 text-white">
 
       <div className="flex items-start gap-3">
         <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
@@ -223,7 +223,7 @@ const AddGoalDialog = ({ open, onOpenChange, onSave, editingGoal }) => {
               id="completed"
               checked={goalData.completed}
               onChange={(e) => setGoalData({ ...goalData, completed: e.target.checked })}
-              className="w-4 h-4 rounded border-gray-300 text-[#c9a227] focus:ring-[#c9a227]" />
+              className="w-4 h-4 rounded border-gray-300 text-[#ff6b35] focus:ring-[#ff6b35]" />
 
             <Label htmlFor="completed" className="cursor-pointer">Mark as completed</Label>
           </div>
@@ -232,7 +232,7 @@ const AddGoalDialog = ({ open, onOpenChange, onSave, editingGoal }) => {
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
               Cancel
             </Button>
-            <Button type="submit" className="bg-[#c9a227] hover:bg-[#b89123] text-white">
+            <Button type="submit" className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white">
               <Save className="w-4 h-4 mr-2" />
               Save Goal
             </Button>
@@ -406,7 +406,7 @@ export default function Profile() {
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-start gap-8">
             {/* Profile Picture */}
-            <div className="bg-orange-400 text-white text-4xl font-bold rounded-2xl w-32 h-32 from-[#c9a227] to-[#b89123] flex items-center justify-center flex-shrink-0">
+            <div className="bg-orange-400 text-white text-4xl font-bold rounded-2xl w-32 h-32 from-[#ff6b35] to-[#e55a2b] flex items-center justify-center flex-shrink-0">
               {user.full_name ? user.full_name.charAt(0).toUpperCase() : <User className="w-16 h-16" />}
             </div>
             
@@ -445,7 +445,7 @@ export default function Profile() {
               {profile?.achievements && profile.achievements.length > 0 &&
               <div className="flex gap-2 mb-4">
                   {profile.achievements.slice(0, 3).map((achievement, i) =>
-                <div key={i} className="w-10 h-10 rounded-full bg-[#c9a227] flex items-center justify-center">
+                <div key={i} className="w-10 h-10 rounded-full bg-[#ff6b35] flex items-center justify-center">
                       <Award className="w-5 h-5 text-white" />
                     </div>
                 )}
@@ -494,7 +494,7 @@ export default function Profile() {
               icon={Bike}
               value={profile?.total_rides || 0}
               label="Total Rides"
-              color="bg-[#c9a227]" />
+              color="bg-[#ff6b35]" />
 
             <StatCard
               icon={TrendingUp}
@@ -514,7 +514,7 @@ export default function Profile() {
               label="Active Goals"
               color="bg-[#2A2A2A]" />
 
-            <div className="bg-orange-400 text-white p-6 rounded-2xl from-[#c9a227] to-[#b89123] shadow-sm">
+            <div className="bg-orange-400 text-white p-6 rounded-2xl from-[#ff6b35] to-[#e55a2b] shadow-sm">
               <div className="text-sm mb-1 opacity-90">Level {userPoints?.level || 1}</div>
               <div className="text-3xl font-bold mb-1">{userPoints?.total_points || 0}</div>
               <div className="text-sm opacity-90">Total Points</div>
@@ -528,23 +528,23 @@ export default function Profile() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <Tabs defaultValue="events" className="space-y-8">
             <TabsList className="bg-white p-1 rounded-xl shadow-sm">
-              <TabsTrigger value="events" className="bg-transparent px-3 py-1 text-sm font-medium rounded-lg inline-flex items-center justify-center whitespace-nowrap ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow data-[state=active]:bg-[#c9a227] data-[state=active]:text-white">
+              <TabsTrigger value="events" className="bg-transparent px-3 py-1 text-sm font-medium rounded-lg inline-flex items-center justify-center whitespace-nowrap ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow data-[state=active]:bg-[#ff6b35] data-[state=active]:text-white">
                 <Calendar className="w-4 h-4 mr-2" />
                 My Events
               </TabsTrigger>
-              <TabsTrigger value="goals" className="rounded-lg data-[state=active]:bg-[#c9a227] data-[state=active]:text-white">
+              <TabsTrigger value="goals" className="rounded-lg data-[state=active]:bg-[#ff6b35] data-[state=active]:text-white">
                 <Target className="w-4 h-4 mr-2" />
                 Goals
               </TabsTrigger>
-              <TabsTrigger value="achievements" className="rounded-lg data-[state=active]:bg-[#c9a227] data-[state=active]:text-white">
+              <TabsTrigger value="achievements" className="rounded-lg data-[state=active]:bg-[#ff6b35] data-[state=active]:text-white">
                 <Award className="w-4 h-4 mr-2" />
                 Achievements
               </TabsTrigger>
-              <TabsTrigger value="routes" className="rounded-lg data-[state=active]:bg-[#c9a227] data-[state=active]:text-white">
+              <TabsTrigger value="routes" className="rounded-lg data-[state=active]:bg-[#ff6b35] data-[state=active]:text-white">
                 <MapPin className="w-4 h-4 mr-2" />
                 Saved Routes
               </TabsTrigger>
-              <TabsTrigger value="notes" className="rounded-lg data-[state=active]:bg-[#c9a227] data-[state=active]:text-white">
+              <TabsTrigger value="notes" className="rounded-lg data-[state=active]:bg-[#ff6b35] data-[state=active]:text-white">
                 <FileText className="w-4 h-4 mr-2" />
                 Private Notes
               </TabsTrigger>
@@ -560,7 +560,7 @@ export default function Profile() {
                   {myCreatedEvents.length > 0 ?
                   <div className="space-y-3">
                       {myCreatedEvents.map((event) =>
-                    <div key={event.id} className="flex items-center justify-between p-4 bg-gradient-to-r from-[#c9a227]/10 to-transparent rounded-xl border-l-4 border-[#c9a227]">
+                    <div key={event.id} className="flex items-center justify-between p-4 bg-gradient-to-r from-[#ff6b35]/10 to-transparent rounded-xl border-l-4 border-[#ff6b35]">
                           <div className="flex-1">
                             <h4 className="font-semibold text-[#2A2A2A] mb-1">{event.title}</h4>
                             <div className="flex items-center gap-4 text-sm text-[#555555]">
@@ -589,7 +589,7 @@ export default function Profile() {
                   {userTickets.filter((t) => t.payment_status === 'completed').length > 0 ?
                   <div className="grid md:grid-cols-2 gap-4">
                       {userTickets.filter((t) => t.payment_status === 'completed').map((ticket) =>
-                    <div key={ticket.id} className="p-4 border-2 border-[#c9a227] rounded-xl bg-gradient-to-br from-[#c9a227]/5 to-transparent">
+                    <div key={ticket.id} className="p-4 border-2 border-[#ff6b35] rounded-xl bg-gradient-to-br from-[#ff6b35]/5 to-transparent">
                           <div className="flex items-start justify-between mb-3">
                             <div>
                               <h4 className="font-semibold text-[#2A2A2A] mb-1">{ticket.event_name}</h4>
@@ -598,7 +598,7 @@ export default function Profile() {
                               </Badge>
                             </div>
                             <div className="text-right">
-                              <div className="font-bold text-[#c9a227]">${ticket.price}</div>
+                              <div className="font-bold text-[#ff6b35]">${ticket.price}</div>
                             </div>
                           </div>
                           <div className="text-xs text-[#555555] font-mono bg-gray-50 p-2 rounded">
@@ -632,7 +632,7 @@ export default function Profile() {
                               <Badge variant="outline" className="text-xs">{reg.event_type}</Badge>
                             </div>
                           </div>
-                          <Button size="sm" className="bg-[#c9a227] hover:bg-[#b89123] text-white">
+                          <Button size="sm" className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white">
                             View Details
                           </Button>
                         </div>
@@ -690,7 +690,7 @@ export default function Profile() {
                       setGoalDialogOpen(true);
                     }}
                     size="sm"
-                    className="bg-[#c9a227] hover:bg-[#b89123] text-white">
+                    className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white">
 
                     <Plus className="w-4 h-4 mr-2" />
                     Add Goal
@@ -727,7 +727,7 @@ export default function Profile() {
                   {userBadges.length > 0 ?
                   <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                       {userBadges.map((badge) =>
-                    <div key={badge.id} className="bg-gradient-to-br from-[#c9a227] to-[#b89123] rounded-xl p-4 text-white">
+                    <div key={badge.id} className="bg-gradient-to-br from-[#ff6b35] to-[#e55a2b] rounded-xl p-4 text-white">
                           <div className="flex items-start gap-3">
                             <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
                               <Trophy className="w-6 h-6" />
@@ -757,7 +757,7 @@ export default function Profile() {
                 </CardHeader>
                 <CardContent>
                   <div className="grid md:grid-cols-3 gap-4">
-                    <div className="p-4 bg-gradient-to-br from-[#c9a227]/10 to-[#c9a227]/5 rounded-xl">
+                    <div className="p-4 bg-gradient-to-br from-[#ff6b35]/10 to-[#ff6b35]/5 rounded-xl">
                       <div className="text-3xl font-bold text-[#2A2A2A] mb-1">{userPoints?.total_points || 0}</div>
                       <div className="text-sm text-[#555555]">Total Points</div>
                     </div>
@@ -776,19 +776,19 @@ export default function Profile() {
                     <div className="space-y-2 text-sm">
                       <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                         <span className="text-[#555555]">Post in Community Forum</span>
-                        <span className="font-semibold text-[#c9a227]">+10 pts</span>
+                        <span className="font-semibold text-[#ff6b35]">+10 pts</span>
                       </div>
                       <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                         <span className="text-[#555555]">Attend an Event</span>
-                        <span className="font-semibold text-[#c9a227]">+25 pts</span>
+                        <span className="font-semibold text-[#ff6b35]">+25 pts</span>
                       </div>
                       <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                         <span className="text-[#555555]">Upload a Route</span>
-                        <span className="font-semibold text-[#c9a227]">+50 pts</span>
+                        <span className="font-semibold text-[#ff6b35]">+50 pts</span>
                       </div>
                       <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                         <span className="text-[#555555]">Complete Challenge</span>
-                        <span className="font-semibold text-[#c9a227]">+100 pts</span>
+                        <span className="font-semibold text-[#ff6b35]">+100 pts</span>
                       </div>
                     </div>
                   </div>

@@ -124,7 +124,7 @@ const InstagramPost = ({ media, onClick, index, columns }) => {
         {media.media_type === "VIDEO" && (
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="w-16 h-16 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform">
-              <Play className="w-8 h-8 text-[#c9a227] ml-1" />
+              <Play className="w-8 h-8 text-[#ff6b35] ml-1" />
             </div>
           </div>
         )}
@@ -273,7 +273,7 @@ export default function InstagramGallery() {
         {/* Loading State */}
         {loading && (
           <div className="flex flex-col items-center justify-center py-20">
-            <Loader2 className={`w-12 h-12 animate-spin mb-4 ${settings.theme === 'dark' ? 'text-white' : 'text-[#c9a227]'}`} />
+            <Loader2 className={`w-12 h-12 animate-spin mb-4 ${settings.theme === 'dark' ? 'text-white' : 'text-[#ff6b35]'}`} />
             <p className={settings.theme === 'dark' ? 'text-gray-400' : 'text-[#555555]'}>
               Loading Instagram posts...
             </p>
@@ -291,7 +291,7 @@ export default function InstagramGallery() {
             </p>
             <Button
               onClick={fetchInstagramMedia}
-              className="bg-[#c9a227] hover:bg-[#b89123] text-white"
+              className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white"
             >
               Try Again
             </Button>

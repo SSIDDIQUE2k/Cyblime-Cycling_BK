@@ -39,7 +39,7 @@ const categoryColors = {
   gear: "bg-purple-100 text-purple-800",
   training: "bg-[#A4FF4F]/20 text-[#2A2A2A]",
   maintenance: "bg-orange-100 text-orange-800",
-  events: "bg-[#c9a227]/20 text-[#c9a227]"
+  events: "bg-[#ff6b35]/20 text-[#ff6b35]"
 };
 
 export default function Community() {
@@ -165,7 +165,7 @@ export default function Community() {
             </p>
             <Button
               onClick={() => setCreateDialogOpen(true)}
-              className="bg-[#c9a227] hover:bg-[#b89123] text-white rounded-full px-8 py-6 text-lg font-semibold"
+              className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white rounded-full px-8 py-6 text-lg font-semibold"
             >
               <Plus className="w-5 h-5 mr-2" />
               Start Discussion
@@ -219,14 +219,14 @@ export default function Community() {
                 className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-all cursor-pointer"
               >
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-[#c9a227] flex items-center justify-center text-white font-bold flex-shrink-0">
+                  <div className="w-12 h-12 rounded-xl bg-[#ff6b35] flex items-center justify-center text-white font-bold flex-shrink-0">
                     {post.created_by.charAt(0).toUpperCase()}
                   </div>
                   
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between gap-4 mb-2">
                       <div className="flex items-center gap-2 flex-wrap">
-                        {post.is_pinned && <Pin className="w-4 h-4 text-[#c9a227]" />}
+                        {post.is_pinned && <Pin className="w-4 h-4 text-[#ff6b35]" />}
                         <h3 className="text-xl font-semibold text-[#2A2A2A]">{post.title}</h3>
                       </div>
                       <div className="flex items-center gap-2">
@@ -313,7 +313,7 @@ export default function Community() {
               <Button type="button" variant="outline" onClick={() => setCreateDialogOpen(false)}>
                 Cancel
               </Button>
-              <Button type="submit" className="bg-[#c9a227] hover:bg-[#b89123] text-white">
+              <Button type="submit" className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white">
                 Post
               </Button>
             </div>
@@ -379,7 +379,7 @@ export default function Community() {
                       placeholder="Write a reply..."
                       rows={3}
                     />
-                    <Button type="submit" className="bg-[#c9a227] hover:bg-[#b89123] text-white">
+                    <Button type="submit" className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white">
                       <Send className="w-4 h-4 mr-2" />
                       Reply
                     </Button>

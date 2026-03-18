@@ -20,7 +20,7 @@ const FeedPost = ({ post, index }) => {
     routes: "bg-[#6BCBFF]/10 text-[#6BCBFF]",
     gear: "bg-[#A4FF4F]/10 text-[#A4FF4F]",
     training: "bg-[#ff6b35]/10 text-[#ff6b35]",
-    maintenance: "bg-[#ffa500]/10 text-[#ffa500]",
+    maintenance: "bg-[#ff6b35]/10 text-[#ff6b35]",
     events: "bg-purple-100 text-purple-800"
   };
 

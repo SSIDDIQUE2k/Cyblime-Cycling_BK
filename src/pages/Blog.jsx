@@ -121,7 +121,7 @@ export default function Blog() {
                 onClick={() => setSortBy("recent")}
                 className={`px-4 py-2 rounded-full font-medium text-sm transition-all ${
                   sortBy === "recent"
-                    ? 'bg-[#c9a227] text-white'
+                    ? 'bg-[#ff6b35] text-white'
                     : 'bg-gray-100 text-[#555555] hover:bg-gray-200'
                 }`}
               >
@@ -131,7 +131,7 @@ export default function Blog() {
                 onClick={() => setSortBy("popular")}
                 className={`px-4 py-2 rounded-full font-medium text-sm transition-all flex items-center gap-1 ${
                   sortBy === "popular"
-                    ? 'bg-[#c9a227] text-white'
+                    ? 'bg-[#ff6b35] text-white'
                     : 'bg-gray-100 text-[#555555] hover:bg-gray-200'
                 }`}
               >
@@ -149,7 +149,7 @@ export default function Blog() {
                   onClick={() => toggleCategory(cat)}
                   className={`px-4 py-2 rounded-full font-medium text-sm whitespace-nowrap transition-all ${
                     selectedCategories.includes(cat)
-                      ? 'bg-[#c9a227] text-white'
+                      ? 'bg-[#ff6b35] text-white'
                       : 'bg-gray-100 text-[#555555] hover:bg-gray-200'
                   }`}
                 >
@@ -189,7 +189,7 @@ export default function Blog() {
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-3xl font-bold text-[#2A2A2A]">Featured Articles</h2>
-              <Badge className="bg-[#c9a227] text-white border-0">
+              <Badge className="bg-[#ff6b35] text-white border-0">
                 <TrendingUp className="w-3 h-3 mr-1" />
                 Trending
               </Badge>
@@ -210,7 +210,7 @@ export default function Blog() {
                       alt={post.title}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
-                    <div className="absolute top-4 right-4 bg-[#c9a227] text-white px-3 py-1 rounded-full text-xs font-bold">
+                    <div className="absolute top-4 right-4 bg-[#ff6b35] text-white px-3 py-1 rounded-full text-xs font-bold">
                       #{index + 1} Trending
                     </div>
                   </div>
@@ -227,14 +227,14 @@ export default function Blog() {
                       </div>
                       <Link 
                         to={createPageUrl("AuthorPosts") + `?author=${encodeURIComponent(post.created_by)}`}
-                        className="flex items-center gap-1 hover:text-[#c9a227] transition-colors"
+                        className="flex items-center gap-1 hover:text-[#ff6b35] transition-colors"
                       >
                         <User className="w-3 h-3" />
                         <span>{post.created_by.split('@')[0]}</span>
                       </Link>
                     </div>
                     <Link to={createPageUrl("BlogPost") + `?id=${post.id}`}>
-                      <Button className="w-full bg-[#c9a227] hover:bg-[#b89123] text-white">
+                      <Button className="w-full bg-[#ff6b35] hover:bg-[#e55a2b] text-white">
                         Read Article
                         <ArrowRight className="w-4 h-4 ml-2" />
                       </Button>
@@ -289,13 +289,13 @@ export default function Blog() {
                   </div>
                   <Link 
                     to={createPageUrl("AuthorPosts") + `?author=${encodeURIComponent(post.created_by)}`}
-                    className="flex items-center gap-2 text-xs text-[#555555] hover:text-[#c9a227] transition-colors mb-4"
+                    className="flex items-center gap-2 text-xs text-[#555555] hover:text-[#ff6b35] transition-colors mb-4"
                   >
                     <User className="w-3 h-3" />
                     <span>By {post.created_by.split('@')[0]}</span>
                   </Link>
                   <Link to={createPageUrl("BlogPost") + `?id=${post.id}`}>
-                    <Button variant="ghost" className="w-full text-[#c9a227] hover:text-[#b89123]">
+                    <Button variant="ghost" className="w-full text-[#ff6b35] hover:text-[#e55a2b]">
                       Read Article
                       <ArrowRight className="w-4 h-4 ml-2" />
                     </Button>
@@ -324,7 +324,7 @@ export default function Blog() {
                         onClick={() => setCurrentPage(i + 1)}
                         className={`w-10 h-10 rounded-full font-medium transition-all ${
                           currentPage === i + 1
-                            ? 'bg-[#c9a227] text-white'
+                            ? 'bg-[#ff6b35] text-white'
                             : 'bg-gray-100 text-[#555555] hover:bg-gray-200'
                         }`}
                       >
@@ -347,7 +347,7 @@ export default function Blog() {
           ) : (
             <div className="text-center py-12">
               <p className="text-[#555555] text-lg">No posts found matching your criteria.</p>
-              <Button onClick={clearFilters} className="mt-4 bg-[#c9a227] hover:bg-[#b89123] text-white">
+              <Button onClick={clearFilters} className="mt-4 bg-[#ff6b35] hover:bg-[#e55a2b] text-white">
                 Clear Filters
               </Button>
             </div>

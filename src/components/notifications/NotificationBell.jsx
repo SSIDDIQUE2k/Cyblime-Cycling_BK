@@ -14,7 +14,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 const NotificationItem = ({ notification, onMarkRead, onDelete }) => {
   const typeColors = {
     event_reminder: "border-l-[#ff6b35]",
-    event_update: "border-l-[#ffa500]",
+    event_update: "border-l-[#ff6b35]",
     new_event: "border-l-[#6BCBFF]",
     challenge: "border-l-purple-500",
     badge: "border-l-[#FFD700]",
@@ -95,7 +95,7 @@ export default function NotificationBell({ user }) {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="ghost" className="relative text-[#ffa500] hover:text-[#ff6b35]">
+        <Button variant="ghost" className="relative text-[#ff6b35] hover:text-[#ff6b35]">
           <Bell className="w-5 h-5" />
           {unreadCount > 0 && (
             <span className="absolute -top-1 -right-1 w-5 h-5 bg-[#ff4500] text-white text-xs font-bold rounded-full flex items-center justify-center">

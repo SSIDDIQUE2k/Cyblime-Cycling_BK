@@ -20,14 +20,14 @@ const LeaderboardCard = ({ rank, user, points, level, badges, metric }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: rank * 0.05 }}
-      className={`p-4 rounded-xl ${rank <= 3 ? 'bg-gradient-to-r from-[#c9a227]/10 to-transparent border-2 border-[#c9a227]/20' : 'bg-white border border-gray-200'}`}
+      className={`p-4 rounded-xl ${rank <= 3 ? 'bg-gradient-to-r from-[#ff6b35]/10 to-transparent border-2 border-[#ff6b35]/20' : 'bg-white border border-gray-200'}`}
     >
       <div className="flex items-center gap-4">
         <div className="w-12 flex items-center justify-center">
           {getRankIcon()}
         </div>
         
-        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#c9a227] to-[#b89123] flex items-center justify-center flex-shrink-0">
+        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#ff6b35] to-[#e55a2b] flex items-center justify-center flex-shrink-0">
           <span className="text-white font-bold text-lg">
             {user.full_name?.charAt(0) || user.email.charAt(0).toUpperCase()}
           </span>
@@ -47,7 +47,7 @@ const LeaderboardCard = ({ rank, user, points, level, badges, metric }) => {
         </div>
 
         <div className="text-right">
-          <p className="text-2xl font-bold text-[#c9a227]">{metric}</p>
+          <p className="text-2xl font-bold text-[#ff6b35]">{metric}</p>
           <p className="text-xs text-gray-500">points</p>
         </div>
       </div>
@@ -116,7 +116,7 @@ export default function Leaderboard() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-[#c9a227] to-[#b89123] mb-6">
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-[#ff6b35] to-[#e55a2b] mb-6">
               <Trophy className="w-10 h-10 text-white" />
             </div>
             <h1 className="text-5xl font-bold text-gray-900 mb-4">Leaderboard</h1>
@@ -131,14 +131,14 @@ export default function Leaderboard() {
           <Card className="lg:col-span-1">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <TrendingUp className="w-5 h-5 text-[#c9a227]" />
+                <TrendingUp className="w-5 h-5 text-[#ff6b35]" />
                 Active Challenges
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               {challenges.length > 0 ? (
                 challenges.map(challenge => (
-                  <div key={challenge.id} className="p-3 rounded-lg bg-gradient-to-r from-[#c9a227]/10 to-transparent border-l-4 border-[#c9a227]">
+                  <div key={challenge.id} className="p-3 rounded-lg bg-gradient-to-r from-[#ff6b35]/10 to-transparent border-l-4 border-[#ff6b35]">
                     <p className="font-semibold text-sm text-gray-900">{challenge.title}</p>
                     <p className="text-xs text-gray-600 mt-1">{challenge.description}</p>
                     <div className="flex items-center justify-between mt-2">
@@ -177,7 +177,7 @@ export default function Leaderboard() {
                       className={`flex flex-col items-center ${index === 1 ? 'order-1' : index === 0 ? 'order-2' : 'order-3'}`}
                     >
                       <div className="relative mb-2">
-                        <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#c9a227] to-[#b89123] flex items-center justify-center border-4 border-white shadow-lg">
+                        <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#ff6b35] to-[#e55a2b] flex items-center justify-center border-4 border-white shadow-lg">
                           <span className="text-white font-bold text-2xl">
                             {item.user.full_name?.charAt(0) || item.user.email.charAt(0).toUpperCase()}
                           </span>

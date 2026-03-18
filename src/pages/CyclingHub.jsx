@@ -51,7 +51,7 @@ const RouteCard = ({ route, index }) => {
         <div className="flex items-start justify-between mb-3">
           <h3 className="text-xl font-bold text-[#2A2A2A] flex-1">{route.name}</h3>
           <div className="flex items-center gap-1 text-sm">
-            <Star className="w-4 h-4 fill-[#c9a227] text-[#c9a227]" />
+            <Star className="w-4 h-4 fill-[#ff6b35] text-[#ff6b35]" />
             <span className="font-semibold">{route.rating || "5.0"}</span>
           </div>
         </div>

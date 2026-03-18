@@ -20,7 +20,7 @@ const AchievementCard = ({ achievement, index }) => {
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay: index * 0.05 }}
-      className="bg-gradient-to-br from-[#c9a227] to-[#b89123] rounded-2xl p-6 text-white relative overflow-hidden"
+      className="bg-gradient-to-br from-[#ff6b35] to-[#e55a2b] rounded-2xl p-6 text-white relative overflow-hidden"
     >
       <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16" />
       <div className="relative">
@@ -96,7 +96,7 @@ export default function MyProgress() {
   return (
     <div className="min-h-screen bg-[#fafafa]">
       {/* Hero */}
-      <section className="relative bg-gradient-to-br from-[#c9a227] to-[#b89123] py-20 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-[#ff6b35] to-[#e55a2b] py-20 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 right-1/4 w-96 h-96 rounded-full bg-white blur-3xl" />
         </div>
@@ -140,7 +140,7 @@ export default function MyProgress() {
               initial={{ width: 0 }}
               animate={{ width: `${levelProgress}%` }}
               transition={{ duration: 1, ease: "easeOut" }}
-              className="h-full bg-gradient-to-r from-[#c9a227] to-[#b89123]"
+              className="h-full bg-gradient-to-r from-[#ff6b35] to-[#e55a2b]"
             />
           </div>
         </div>
@@ -169,7 +169,7 @@ export default function MyProgress() {
             </div>
             
             <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <Star className="w-8 h-8 text-[#c9a227] mb-3" />
+              <Star className="w-8 h-8 text-[#ff6b35] mb-3" />
               <div className="text-3xl font-bold text-[#2A2A2A] mb-1">
                 {userPoints?.reviews_left || 0}
               </div>
@@ -187,7 +187,7 @@ export default function MyProgress() {
 
           {/* Achievements */}
           <h2 className="text-3xl font-bold text-[#2A2A2A] mb-8">
-            <Award className="w-8 h-8 inline mr-3 text-[#c9a227]" />
+            <Award className="w-8 h-8 inline mr-3 text-[#ff6b35]" />
             Achievements ({achievements.length})
           </h2>
           

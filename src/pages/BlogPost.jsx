@@ -150,7 +150,7 @@ export default function BlogPost() {
         <div className="text-center">
           <h2 className="text-2xl font-bold text-[#2A2A2A] mb-4">Article not found</h2>
           <Link to={createPageUrl("Blog")}>
-            <Button className="bg-[#c9a227] hover:bg-[#b89123] text-white">
+            <Button className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white">
               Back to Blog
             </Button>
           </Link>
@@ -210,7 +210,7 @@ export default function BlogPost() {
             transition={{ duration: 0.4 }}
             className="mb-4"
           >
-            <Badge className="bg-[#c9a227] text-white border-0 uppercase tracking-wide text-xs font-bold px-3 py-1">
+            <Badge className="bg-[#ff6b35] text-white border-0 uppercase tracking-wide text-xs font-bold px-3 py-1">
               {post.category}
             </Badge>
           </motion.div>
@@ -246,7 +246,7 @@ export default function BlogPost() {
           >
             <Link 
               to={createPageUrl("AuthorPosts") + `?author=${encodeURIComponent(post.created_by)}`}
-              className="flex items-center gap-2 hover:text-[#c9a227] transition-colors"
+              className="flex items-center gap-2 hover:text-[#ff6b35] transition-colors"
             >
               <User className="w-4 h-4" />
               <span className="font-medium">{post.created_by?.split('@')[0] || 'Author'}</span>
@@ -310,7 +310,7 @@ export default function BlogPost() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl p-8 shadow-sm">
             <div className="flex items-center gap-2 mb-8">
-              <MessageCircle className="w-6 h-6 text-[#c9a227]" />
+              <MessageCircle className="w-6 h-6 text-[#ff6b35]" />
               <h3 className="text-2xl font-bold text-[#2A2A2A]">
                 Comments ({comments.length})
               </h3>
@@ -320,7 +320,7 @@ export default function BlogPost() {
             {user ? (
               <form onSubmit={handleSubmitComment} className="mb-8 pb-8 border-b border-gray-200">
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#c9a227] to-[#b89123] flex items-center justify-center text-white font-bold flex-shrink-0">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#ff6b35] to-[#e55a2b] flex items-center justify-center text-white font-bold flex-shrink-0">
                     {(user.full_name || user.email)?.charAt(0).toUpperCase()}
                   </div>
                   <div className="flex-1">
@@ -335,7 +335,7 @@ export default function BlogPost() {
                     <Button 
                       type="submit" 
                       disabled={!commentText.trim() || createCommentMutation.isPending}
-                      className="bg-[#c9a227] hover:bg-[#b89123] text-white"
+                      className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white"
                     >
                       <Send className="w-4 h-4 mr-2" />
                       {createCommentMutation.isPending ? 'Posting...' : 'Post Comment'}
@@ -400,7 +400,7 @@ export default function BlogPost() {
             Explore More Stories
           </h3>
           <Link to={createPageUrl("Blog")}>
-            <Button className="bg-[#c9a227] hover:bg-[#b89123] text-white rounded-full px-8 py-3 text-base font-semibold">
+            <Button className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white rounded-full px-8 py-3 text-base font-semibold">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Blog
             </Button>

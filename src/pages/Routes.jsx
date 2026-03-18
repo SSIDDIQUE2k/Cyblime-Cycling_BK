@@ -90,7 +90,7 @@ const RouteCard = ({ route, index }) => {
         <div className="flex items-start justify-between mb-3">
           <h3 className="text-xl font-bold text-[#2A2A2A] flex-1">{route.name}</h3>
           <div className="flex items-center gap-1 text-sm">
-            <Star className="w-4 h-4 fill-[#c9a227] text-[#c9a227]" />
+            <Star className="w-4 h-4 fill-[#ff6b35] text-[#ff6b35]" />
             <span className="font-semibold">{route.rating || "5.0"}</span>
           </div>
         </div>
@@ -125,7 +125,7 @@ const RouteCard = ({ route, index }) => {
           <Link to={createPageUrl("RouteDetails") + `?id=${route.id}`}>
             <Button
               variant="ghost"
-              className="text-[#c9a227] hover:text-[#b89123] p-0 h-auto font-medium"
+              className="text-[#ff6b35] hover:text-[#e55a2b] p-0 h-auto font-medium"
             >
               View Route
               <ChevronRight className="w-4 h-4 ml-1" />
@@ -322,7 +322,7 @@ const UploadRouteDialog = ({ open, onOpenChange }) => {
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
               Cancel
             </Button>
-            <Button type="submit" className="bg-[#c9a227] hover:bg-[#b89123] text-white">
+            <Button type="submit" className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white">
               Upload Route
             </Button>
           </div>
@@ -402,7 +402,7 @@ export default function Routes() {
               <AIRoutePlanner onRouteGenerated={refetchRoutes} />
               <Button
                 onClick={() => setUploadDialogOpen(true)}
-                className="bg-[#c9a227] hover:bg-[#b89123] text-white rounded-full px-8 py-6 text-lg font-semibold"
+                className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white rounded-full px-8 py-6 text-lg font-semibold"
               >
                 <Upload className="w-5 h-5 mr-2" />
                 Upload Your Route

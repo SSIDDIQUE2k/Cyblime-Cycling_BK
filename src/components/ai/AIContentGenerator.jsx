@@ -49,7 +49,7 @@ export function AIBlogGenerator({ open, onOpenChange, onGenerate }) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-[#c9a227]" />
+            <Sparkles className="w-5 h-5 text-[#ff6b35]" />
             AI Blog Generator
           </DialogTitle>
         </DialogHeader>
@@ -73,7 +73,7 @@ export function AIBlogGenerator({ open, onOpenChange, onGenerate }) {
           <Button
             onClick={generateBlog}
             disabled={loading || !topic}
-            className="w-full bg-[#c9a227] hover:bg-[#b89123] text-white"
+            className="w-full bg-[#ff6b35] hover:bg-[#e55a2b] text-white"
           >
             {loading ? (
               <>

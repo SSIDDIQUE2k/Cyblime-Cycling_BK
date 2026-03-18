@@ -46,7 +46,7 @@ export default function TeamChallengesPage() {
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-[#2A2A2A] to-[#1a1a1a] py-20 md:py-32 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 right-1/4 w-96 h-96 rounded-full bg-[#c9a227] blur-3xl" />
+          <div className="absolute top-0 right-1/4 w-96 h-96 rounded-full bg-[#ff6b35] blur-3xl" />
         </div>
         
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
@@ -71,7 +71,7 @@ export default function TeamChallengesPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <Tabs defaultValue="teams" className="space-y-8">
             <TabsList className="bg-white p-1 rounded-xl shadow-sm">
-              <TabsTrigger value="teams" className="rounded-lg data-[state=active]:bg-[#c9a227] data-[state=active]:text-white">
+              <TabsTrigger value="teams" className="rounded-lg data-[state=active]:bg-[#ff6b35] data-[state=active]:text-white">
                 <Users className="w-4 h-4 mr-2" />
                 Team Challenges
               </TabsTrigger>
