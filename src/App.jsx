@@ -1,4 +1,5 @@
 import './App.css'
+import { Suspense, lazy } from 'react'
 import { Toaster } from "@/components/ui/toaster"
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
@@ -7,8 +8,8 @@ import { pagesConfig } from './pages.config'
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
-import AdminUserManagement from './pages/AdminUserManagement';
-import Login from './pages/Login';
+
+const AdminUserManagement = lazy(() => import('./pages/AdminUserManagement'));
 
 const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
@@ -20,6 +21,16 @@ const PUBLIC_PAGES = new Set([
   "AuthorPosts", "Gallery", "Routes", "RouteDetails", "CyclingHub",
   "StravaClub", "Challenges", "Leaderboard", "Login"
 ]);
+
+// Shared loading spinner for lazy page loads
+const PageLoader = () => (
+  <div className="fixed inset-0 flex items-center justify-center bg-[#0a0a0a]">
+    <div className="flex flex-col items-center gap-4">
+      <div className="w-10 h-10 border-4 border-[#ff6b35]/20 border-t-[#ff6b35] rounded-full animate-spin"></div>
+      <p className="text-gray-500 text-sm">Loading...</p>
+    </div>
+  </div>
+);
 
 const LayoutWrapper = ({ children, currentPageName }) => Layout ?
   <Layout currentPageName={currentPageName}>{children}</Layout>
@@ -33,16 +44,7 @@ const ProtectedRoute = ({ pageName, children }) => {
   if (PUBLIC_PAGES.has(pageName)) return children;
 
   // Protected page — show loader while checking auth
-  if (isLoadingAuth) {
-    return (
-      <div className="fixed inset-0 flex items-center justify-center bg-[#0a0a0a]">
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-10 h-10 border-4 border-[#ff6b35]/20 border-t-[#ff6b35] rounded-full animate-spin"></div>
-          <p className="text-gray-500 text-sm">Loading...</p>
-        </div>
-      </div>
-    );
-  }
+  if (isLoadingAuth) return <PageLoader />;
 
   // Not authenticated → redirect to login
   if (!isAuthenticated) {
@@ -55,48 +57,40 @@ const ProtectedRoute = ({ pageName, children }) => {
 const AppRoutes = () => {
   const { isLoadingAuth } = useAuth();
 
-  // Only show full-screen loader on initial app load (brief flash)
-  // Once auth state is known, render routes immediately
-  if (isLoadingAuth) {
-    return (
-      <div className="fixed inset-0 flex items-center justify-center bg-[#0a0a0a]">
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-10 h-10 border-4 border-[#ff6b35]/20 border-t-[#ff6b35] rounded-full animate-spin"></div>
-          <p className="text-gray-500 text-sm">Loading...</p>
-        </div>
-      </div>
-    );
-  }
+  // Only show full-screen loader on initial app load
+  if (isLoadingAuth) return <PageLoader />;
 
   return (
-    <Routes>
-      <Route path="/" element={
-        <LayoutWrapper currentPageName={mainPageKey}>
-          <MainPage />
-        </LayoutWrapper>
-      } />
-      {Object.entries(Pages).map(([path, Page]) => (
-        <Route
-          key={path}
-          path={`/${path}`}
-          element={
-            <ProtectedRoute pageName={path}>
-              <LayoutWrapper currentPageName={path}>
-                <Page />
-              </LayoutWrapper>
-            </ProtectedRoute>
-          }
-        />
-      ))}
-      <Route path="/AdminUserManagement" element={
-        <ProtectedRoute pageName="AdminUserManagement">
-          <LayoutWrapper currentPageName="AdminUserManagement">
-            <AdminUserManagement />
+    <Suspense fallback={<PageLoader />}>
+      <Routes>
+        <Route path="/" element={
+          <LayoutWrapper currentPageName={mainPageKey}>
+            <MainPage />
           </LayoutWrapper>
-        </ProtectedRoute>
-      } />
-      <Route path="*" element={<PageNotFound />} />
-    </Routes>
+        } />
+        {Object.entries(Pages).map(([path, Page]) => (
+          <Route
+            key={path}
+            path={`/${path}`}
+            element={
+              <ProtectedRoute pageName={path}>
+                <LayoutWrapper currentPageName={path}>
+                  <Page />
+                </LayoutWrapper>
+              </ProtectedRoute>
+            }
+          />
+        ))}
+        <Route path="/AdminUserManagement" element={
+          <ProtectedRoute pageName="AdminUserManagement">
+            <LayoutWrapper currentPageName="AdminUserManagement">
+              <AdminUserManagement />
+            </LayoutWrapper>
+          </ProtectedRoute>
+        } />
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+    </Suspense>
   );
 };
 
