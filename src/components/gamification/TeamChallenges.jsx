@@ -48,8 +48,8 @@ export default function TeamChallenges({ user }) {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-[#2A2A2A]">Team Challenges</h2>
-          <p className="text-sm text-gray-600">Join forces with others to achieve goals</p>
+          <h2 className="text-2xl font-bold text-white">Team Challenges</h2>
+          <p className="text-sm text-gray-400">Join forces with others to achieve goals</p>
         </div>
         <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
           <DialogTrigger asChild>
@@ -62,7 +62,7 @@ export default function TeamChallenges({ user }) {
             <DialogHeader>
               <DialogTitle>Create Team Challenge</DialogTitle>
             </DialogHeader>
-            <p className="text-sm text-gray-600">Team creation coming soon! Check back later.</p>
+            <p className="text-sm text-gray-400">Team creation coming soon! Check back later.</p>
           </DialogContent>
         </Dialog>
       </div>
@@ -84,9 +84,9 @@ export default function TeamChallenges({ user }) {
                     <div className="flex items-start justify-between">
                       <div>
                         <CardTitle className="text-lg">{team.title}</CardTitle>
-                        <p className="text-sm text-gray-600 mt-1">{team.team_name}</p>
+                        <p className="text-sm text-gray-400 mt-1">{team.team_name}</p>
                       </div>
-                      <Badge className="bg-[#A4FF4F] text-[#2A2A2A] border-0">
+                      <Badge className="bg-[#A4FF4F] text-white border-0">
                         Active
                       </Badge>
                     </div>
@@ -94,7 +94,7 @@ export default function TeamChallenges({ user }) {
                   <CardContent className="space-y-4">
                     <div>
                       <div className="flex justify-between text-sm mb-2">
-                        <span className="text-gray-600">Progress</span>
+                        <span className="text-gray-400">Progress</span>
                         <span className="font-semibold">
                           {team.current_progress}/{team.goal_value} {team.goal_type}
                         </span>
@@ -106,7 +106,7 @@ export default function TeamChallenges({ user }) {
                     </div>
 
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <div className="flex items-center gap-2 text-sm text-gray-400">
                         <Users className="w-4 h-4" />
                         <span>{team.team_members?.length || 0}/{team.max_members} members</span>
                       </div>
@@ -140,22 +140,22 @@ export default function TeamChallenges({ user }) {
                 <Card>
                   <CardHeader>
                     <CardTitle className="text-lg">{team.title}</CardTitle>
-                    <p className="text-sm text-gray-600">{team.team_name}</p>
+                    <p className="text-sm text-gray-400">{team.team_name}</p>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <p className="text-sm text-gray-600">{team.description}</p>
+                    <p className="text-sm text-gray-400">{team.description}</p>
 
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
-                        <span className="text-gray-600">Goal:</span>
+                        <span className="text-gray-400">Goal:</span>
                         <span className="font-semibold">{team.goal_value} {team.goal_type}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-600">Members:</span>
+                        <span className="text-gray-400">Members:</span>
                         <span>{team.team_members?.length || 0}/{team.max_members}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-600">Reward:</span>
+                        <span className="text-gray-400">Reward:</span>
                         <span className="font-semibold text-[#ff6b35]">{team.reward_points} pts</span>
                       </div>
                     </div>

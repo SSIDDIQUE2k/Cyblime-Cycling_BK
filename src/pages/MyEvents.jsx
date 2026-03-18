@@ -189,14 +189,14 @@ export default function MyEvents() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-[#fafafa] flex items-center justify-center">
-        <p className="text-gray-600">Please sign in to manage your events</p>
+      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
+        <p className="text-gray-400">Please sign in to manage your events</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#fafafa]">
+    <div className="min-h-screen bg-[#0a0a0a]">
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-[#2A2A2A] to-[#1a1a1a] py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -228,13 +228,13 @@ export default function MyEvents() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           {isLoading ? (
             <div className="text-center py-20">
-              <p className="text-gray-600">Loading your events...</p>
+              <p className="text-gray-400">Loading your events...</p>
             </div>
           ) : myEvents.length === 0 ? (
             <div className="text-center py-20">
               <Calendar className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-[#2A2A2A] mb-2">No events yet</h3>
-              <p className="text-gray-600 mb-6">Create your first event to get started!</p>
+              <h3 className="text-xl font-semibold text-white mb-2">No events yet</h3>
+              <p className="text-gray-400 mb-6">Create your first event to get started!</p>
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -249,7 +249,7 @@ export default function MyEvents() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
                   >
-                    <Card className="overflow-hidden hover:shadow-xl transition-all">
+                    <Card className="overflow-hidden hover:shadow-lg hover:shadow-black/30 transition-all">
                       {event.banner_image_url && (
                         <div className="h-48 overflow-hidden">
                           <img
@@ -262,7 +262,7 @@ export default function MyEvents() {
                       <CardContent className="p-6">
                         <div className="flex items-start justify-between mb-4">
                           <div className="w-12 h-12 rounded-xl bg-[#A4FF4F]/10 flex items-center justify-center">
-                            <Icon className="w-6 h-6 text-[#2A2A2A]" />
+                            <Icon className="w-6 h-6 text-white" />
                           </div>
                           <div className="flex gap-2">
                             <Badge className={event.status === 'published' ? 'bg-green-500 text-white border-0' : 'bg-gray-400 text-white border-0'}>
@@ -274,23 +274,23 @@ export default function MyEvents() {
                           </div>
                         </div>
 
-                        <h3 className="text-xl font-bold text-[#2A2A2A] mb-2">{event.title}</h3>
-                        <p className="text-sm text-gray-600 mb-4 line-clamp-2">{event.description}</p>
+                        <h3 className="text-xl font-bold text-white mb-2">{event.title}</h3>
+                        <p className="text-sm text-gray-400 mb-4 line-clamp-2">{event.description}</p>
 
                         <div className="space-y-2 mb-4">
-                          <div className="flex items-center gap-2 text-sm text-gray-600">
+                          <div className="flex items-center gap-2 text-sm text-gray-400">
                             <Calendar className="w-4 h-4" />
                             <span>{new Date(event.date).toLocaleDateString()}</span>
                           </div>
-                          <div className="flex items-center gap-2 text-sm text-gray-600">
+                          <div className="flex items-center gap-2 text-sm text-gray-400">
                             <Clock className="w-4 h-4" />
                             <span>{event.time}</span>
                           </div>
-                          <div className="flex items-center gap-2 text-sm text-gray-600">
+                          <div className="flex items-center gap-2 text-sm text-gray-400">
                             <MapPin className="w-4 h-4" />
                             <span>{event.location}</span>
                           </div>
-                          <div className="flex items-center gap-2 text-sm text-gray-600">
+                          <div className="flex items-center gap-2 text-sm text-gray-400">
                             <Users className="w-4 h-4" />
                             <span>{event.current_participants || 0} / {event.max_participants || '∞'} participants</span>
                           </div>
@@ -354,7 +354,7 @@ export default function MyEvents() {
                       variant="ghost"
                       size="sm"
                       onClick={() => setFormData({ ...formData, banner_image_url: "" })}
-                      className="absolute top-2 right-2 bg-white/90 hover:bg-white"
+                      className="absolute top-2 right-2 bg-[#141414]/90 hover:bg-[#141414]"
                     >
                       <X className="w-4 h-4" />
                     </Button>
@@ -362,7 +362,7 @@ export default function MyEvents() {
                 ) : (
                   <label className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
                     <Upload className="w-8 h-8 text-gray-400 mb-2" />
-                    <span className="text-sm text-gray-600">Click to upload banner image</span>
+                    <span className="text-sm text-gray-400">Click to upload banner image</span>
                     <input
                       type="file"
                       accept="image/*"

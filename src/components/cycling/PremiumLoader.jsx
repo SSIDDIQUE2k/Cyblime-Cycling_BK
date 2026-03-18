@@ -33,7 +33,7 @@ export default function PremiumLoader({ isLoading, message = "Loading Cycling Hu
                 repeat: Infinity,
                 ease: "easeInOut"
               }}
-              className="w-24 h-24 mx-auto mb-6 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center"
+              className="w-24 h-24 mx-auto mb-6 rounded-full bg-[#141414]/20 backdrop-blur-sm flex items-center justify-center"
             >
               <div className="w-20 h-20 rounded-full border-4 border-white border-t-transparent animate-spin" />
             </motion.div>

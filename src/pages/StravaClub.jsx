@@ -17,7 +17,7 @@ export default function StravaClub() {
             <ArrowLeft className="w-5 h-5" />
             Back
           </button>
-          <div className="w-px h-6 bg-white/20" />
+          <div className="w-px h-6 bg-[#141414]/20" />
           <span className="text-white font-bold text-lg tracking-wide">
             CYB<span className="text-[#FC4C02]">LIME</span>
           </span>

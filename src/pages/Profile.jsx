@@ -56,29 +56,29 @@ import {
 
 const StatCard = ({ icon: Icon, value, label, color }) => {
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-sm">
+    <div className="bg-[#141414] rounded-2xl p-6 border border-white/5">
       <div className={`w-12 h-12 rounded-xl ${color} flex items-center justify-center mb-4`}>
         <Icon className="w-6 h-6 text-white" />
       </div>
-      <div className="text-3xl font-bold text-[#2A2A2A] mb-1">{value}</div>
-      <div className="text-sm text-[#555555]">{label}</div>
+      <div className="text-3xl font-bold text-white mb-1">{value}</div>
+      <div className="text-sm text-gray-400">{label}</div>
     </div>);
 
 };
 
 const GoalCard = ({ goal, onUpdate, onDelete }) => {
   return (
-    <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+    <div className="bg-[#141414] rounded-xl p-4 shadow-none border border-white/5">
       <div className="flex items-start justify-between mb-3">
         <div className="flex-1">
-          <h4 className="font-semibold text-[#2A2A2A] mb-1">{goal.title}</h4>
-          <div className="flex items-center gap-2 text-sm text-[#555555]">
+          <h4 className="font-semibold text-white mb-1">{goal.title}</h4>
+          <div className="flex items-center gap-2 text-sm text-gray-400">
             <Calendar className="w-3 h-3" />
             <span>Target: {new Date(goal.target_date).toLocaleDateString()}</span>
           </div>
         </div>
         {goal.completed &&
-        <Badge className="bg-[#A4FF4F] text-[#2A2A2A] border-0">
+        <Badge className="bg-[#A4FF4F] text-white border-0">
             <CheckCircle2 className="w-3 h-3 mr-1" />
             Complete
           </Badge>
@@ -87,7 +87,7 @@ const GoalCard = ({ goal, onUpdate, onDelete }) => {
       
       {/* Progress Bar */}
       <div className="mb-3">
-        <div className="flex items-center justify-between text-xs text-[#555555] mb-1">
+        <div className="flex items-center justify-between text-xs text-gray-400 mb-1">
           <span>Progress</span>
           <span>{goal.progress}%</span>
         </div>
@@ -130,7 +130,7 @@ const AchievementBadge = ({ achievement }) => {
       className="bg-gradient-to-br from-[#ff6b35] to-[#e55a2b] rounded-xl p-4 text-white">
 
       <div className="flex items-start gap-3">
-        <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+        <div className="w-12 h-12 rounded-full bg-[#141414]/20 flex items-center justify-center flex-shrink-0">
           <Trophy className="w-6 h-6" />
         </div>
         <div className="flex-1 min-w-0">
@@ -177,7 +177,7 @@ const AddGoalDialog = ({ open, onOpenChange, onSave, editingGoal }) => {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="text-[#2A2A2A]">
+          <DialogTitle className="text-white">
             {editingGoal ? 'Edit Goal' : 'Add New Goal'}
           </DialogTitle>
         </DialogHeader>
@@ -420,7 +420,7 @@ export default function Profile() {
               {profile &&
               <div className="flex flex-wrap gap-3 mb-4">
                   {profile.skill_level &&
-                <Badge className="bg-[#A4FF4F] text-[#2A2A2A] border-0">
+                <Badge className="bg-[#A4FF4F] text-white border-0">
                       {profile.skill_level}
                     </Badge>
                 }
@@ -450,7 +450,7 @@ export default function Profile() {
                     </div>
                 )}
                   {profile.achievements.length > 3 &&
-                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white text-sm font-semibold">
+                <div className="w-10 h-10 rounded-full bg-[#141414]/20 flex items-center justify-center text-white text-sm font-semibold">
                       +{profile.achievements.length - 3}
                     </div>
                 }
@@ -460,7 +460,7 @@ export default function Profile() {
               <div className="flex gap-3">
                 <Button
                   onClick={() => setIsEditingProfile(!isEditingProfile)}
-                  variant="outline" className="bg-orange-400 text-white px-4 py-2 text-sm font-medium rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border shadow-sm hover:text-accent-foreground h-9 border-white/30 hover:bg-white/10">
+                  variant="outline" className="bg-orange-400 text-white px-4 py-2 text-sm font-medium rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border shadow-none hover:text-accent-foreground h-9 border-white/30 hover:bg-[#141414]/10">
 
 
                   <Edit2 className="w-4 h-4 mr-2" />
@@ -482,7 +482,7 @@ export default function Profile() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-12 bg-white border-b border-gray-100">
+      <section className="py-12 bg-[#141414] border-b border-white/5">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           {/* Points Tracker */}
           <div className="mb-8">
@@ -514,7 +514,7 @@ export default function Profile() {
               label="Active Goals"
               color="bg-[#2A2A2A]" />
 
-            <div className="bg-orange-400 text-white p-6 rounded-2xl from-[#ff6b35] to-[#e55a2b] shadow-sm">
+            <div className="bg-orange-400 text-white p-6 rounded-2xl from-[#ff6b35] to-[#e55a2b] shadow-none">
               <div className="text-sm mb-1 opacity-90">Level {userPoints?.level || 1}</div>
               <div className="text-3xl font-bold mb-1">{userPoints?.total_points || 0}</div>
               <div className="text-sm opacity-90">Total Points</div>
@@ -527,7 +527,7 @@ export default function Profile() {
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <Tabs defaultValue="events" className="space-y-8">
-            <TabsList className="bg-white p-1 rounded-xl shadow-sm">
+            <TabsList className="bg-[#141414] p-1 rounded-xl shadow-none">
               <TabsTrigger value="events" className="bg-transparent px-3 py-1 text-sm font-medium rounded-lg inline-flex items-center justify-center whitespace-nowrap ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow data-[state=active]:bg-[#ff6b35] data-[state=active]:text-white">
                 <Calendar className="w-4 h-4 mr-2" />
                 My Events
@@ -554,7 +554,7 @@ export default function Profile() {
             <TabsContent value="events" className="space-y-6">
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-[#2A2A2A]">My Created Events ({myCreatedEvents.length})</CardTitle>
+                  <CardTitle className="text-white">My Created Events ({myCreatedEvents.length})</CardTitle>
                 </CardHeader>
                 <CardContent>
                   {myCreatedEvents.length > 0 ?
@@ -562,8 +562,8 @@ export default function Profile() {
                       {myCreatedEvents.map((event) =>
                     <div key={event.id} className="flex items-center justify-between p-4 bg-gradient-to-r from-[#ff6b35]/10 to-transparent rounded-xl border-l-4 border-[#ff6b35]">
                           <div className="flex-1">
-                            <h4 className="font-semibold text-[#2A2A2A] mb-1">{event.title}</h4>
-                            <div className="flex items-center gap-4 text-sm text-[#555555]">
+                            <h4 className="font-semibold text-white mb-1">{event.title}</h4>
+                            <div className="flex items-center gap-4 text-sm text-gray-400">
                               <div className="flex items-center gap-1">
                                 <Calendar className="w-3 h-3" />
                                 <span>{new Date(event.date).toLocaleDateString()}</span>
@@ -576,14 +576,14 @@ export default function Profile() {
                     )}
                     </div> :
 
-                  <p className="text-center text-[#555555] py-8">No events created yet</p>
+                  <p className="text-center text-gray-400 py-8">No events created yet</p>
                   }
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-[#2A2A2A]">My Tickets ({userTickets.filter((t) => t.payment_status === 'completed').length})</CardTitle>
+                  <CardTitle className="text-white">My Tickets ({userTickets.filter((t) => t.payment_status === 'completed').length})</CardTitle>
                 </CardHeader>
                 <CardContent>
                   {userTickets.filter((t) => t.payment_status === 'completed').length > 0 ?
@@ -592,8 +592,8 @@ export default function Profile() {
                     <div key={ticket.id} className="p-4 border-2 border-[#ff6b35] rounded-xl bg-gradient-to-br from-[#ff6b35]/5 to-transparent">
                           <div className="flex items-start justify-between mb-3">
                             <div>
-                              <h4 className="font-semibold text-[#2A2A2A] mb-1">{ticket.event_name}</h4>
-                              <Badge className="bg-[#A4FF4F] text-[#2A2A2A] border-0 text-xs">
+                              <h4 className="font-semibold text-white mb-1">{ticket.event_name}</h4>
+                              <Badge className="bg-[#A4FF4F] text-white border-0 text-xs">
                                 {ticket.ticket_type}
                               </Badge>
                             </div>
@@ -601,21 +601,21 @@ export default function Profile() {
                               <div className="font-bold text-[#ff6b35]">${ticket.price}</div>
                             </div>
                           </div>
-                          <div className="text-xs text-[#555555] font-mono bg-gray-50 p-2 rounded">
+                          <div className="text-xs text-gray-400 font-mono bg-gray-50 p-2 rounded">
                             Ticket ID: {ticket.ticket_id}
                           </div>
                         </div>
                     )}
                     </div> :
 
-                  <p className="text-center text-[#555555] py-8">No tickets purchased yet</p>
+                  <p className="text-center text-gray-400 py-8">No tickets purchased yet</p>
                   }
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-[#2A2A2A]">Upcoming Events ({upcomingEvents.length})</CardTitle>
+                  <CardTitle className="text-white">Upcoming Events ({upcomingEvents.length})</CardTitle>
                 </CardHeader>
                 <CardContent>
                   {upcomingEvents.length > 0 ?
@@ -623,8 +623,8 @@ export default function Profile() {
                       {upcomingEvents.map((reg) =>
                     <div key={reg.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
                           <div className="flex-1">
-                            <h4 className="font-semibold text-[#2A2A2A] mb-1">{reg.event_name}</h4>
-                            <div className="flex items-center gap-4 text-sm text-[#555555]">
+                            <h4 className="font-semibold text-white mb-1">{reg.event_name}</h4>
+                            <div className="flex items-center gap-4 text-sm text-gray-400">
                               <div className="flex items-center gap-1">
                                 <Calendar className="w-3 h-3" />
                                 <span>{new Date(reg.event_date).toLocaleDateString()}</span>
@@ -639,23 +639,23 @@ export default function Profile() {
                     )}
                     </div> :
 
-                  <p className="text-center text-[#555555] py-8">No upcoming events registered</p>
+                  <p className="text-center text-gray-400 py-8">No upcoming events registered</p>
                   }
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-[#2A2A2A]">Past Events ({pastEvents.length})</CardTitle>
+                  <CardTitle className="text-white">Past Events ({pastEvents.length})</CardTitle>
                 </CardHeader>
                 <CardContent>
                   {pastEvents.length > 0 ?
                   <div className="space-y-3">
                       {pastEvents.slice(0, 5).map((reg) =>
-                    <div key={reg.id} className="flex items-center justify-between p-4 border border-gray-200 rounded-xl">
+                    <div key={reg.id} className="flex items-center justify-between p-4 border border-white/10 rounded-xl">
                           <div className="flex-1">
-                            <h4 className="font-semibold text-[#2A2A2A] mb-1">{reg.event_name}</h4>
-                            <div className="flex items-center gap-4 text-sm text-[#555555]">
+                            <h4 className="font-semibold text-white mb-1">{reg.event_name}</h4>
+                            <div className="flex items-center gap-4 text-sm text-gray-400">
                               <div className="flex items-center gap-1">
                                 <Clock className="w-3 h-3" />
                                 <span>{new Date(reg.event_date).toLocaleDateString()}</span>
@@ -664,7 +664,7 @@ export default function Profile() {
                             </div>
                           </div>
                           {reg.status === 'attended' &&
-                      <Badge className="bg-[#A4FF4F] text-[#2A2A2A] border-0 font-bold">
+                      <Badge className="bg-[#A4FF4F] text-white border-0 font-bold">
                               <CheckCircle2 className="w-3 h-3 mr-1" />
                               Attended
                             </Badge>
@@ -673,7 +673,7 @@ export default function Profile() {
                     )}
                     </div> :
 
-                  <p className="text-center text-[#555555] py-8">No past events</p>
+                  <p className="text-center text-gray-400 py-8">No past events</p>
                   }
                 </CardContent>
               </Card>
@@ -683,7 +683,7 @@ export default function Profile() {
             <TabsContent value="goals">
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between">
-                  <CardTitle className="text-[#2A2A2A]">Cycling Goals</CardTitle>
+                  <CardTitle className="text-white">Cycling Goals</CardTitle>
                   <Button
                     onClick={() => {
                       setEditingGoal(null);
@@ -709,7 +709,7 @@ export default function Profile() {
                     )}
                     </div> :
 
-                  <p className="text-center text-[#555555] py-8">
+                  <p className="text-center text-gray-400 py-8">
                       No goals yet. Set your first cycling goal!
                     </p>
                   }
@@ -721,7 +721,7 @@ export default function Profile() {
             <TabsContent value="achievements" className="space-y-6">
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-[#2A2A2A]">Badges ({userBadges.length})</CardTitle>
+                  <CardTitle className="text-white">Badges ({userBadges.length})</CardTitle>
                 </CardHeader>
                 <CardContent>
                   {userBadges.length > 0 ?
@@ -729,7 +729,7 @@ export default function Profile() {
                       {userBadges.map((badge) =>
                     <div key={badge.id} className="bg-gradient-to-br from-[#ff6b35] to-[#e55a2b] rounded-xl p-4 text-white">
                           <div className="flex items-start gap-3">
-                            <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+                            <div className="w-12 h-12 rounded-full bg-[#141414]/20 flex items-center justify-center flex-shrink-0">
                               <Trophy className="w-6 h-6" />
                             </div>
                             <div className="flex-1 min-w-0">
@@ -744,7 +744,7 @@ export default function Profile() {
                     )}
                     </div> :
 
-                  <p className="text-center text-[#555555] py-8">
+                  <p className="text-center text-gray-400 py-8">
                       No badges yet. Complete challenges to earn your first badge!
                     </p>
                   }
@@ -753,41 +753,41 @@ export default function Profile() {
 
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-[#2A2A2A]">Points Breakdown</CardTitle>
+                  <CardTitle className="text-white">Points Breakdown</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="grid md:grid-cols-3 gap-4">
                     <div className="p-4 bg-gradient-to-br from-[#ff6b35]/10 to-[#ff6b35]/5 rounded-xl">
-                      <div className="text-3xl font-bold text-[#2A2A2A] mb-1">{userPoints?.total_points || 0}</div>
-                      <div className="text-sm text-[#555555]">Total Points</div>
+                      <div className="text-3xl font-bold text-white mb-1">{userPoints?.total_points || 0}</div>
+                      <div className="text-sm text-gray-400">Total Points</div>
                     </div>
                     <div className="p-4 bg-gradient-to-br from-[#6BCBFF]/10 to-[#6BCBFF]/5 rounded-xl">
-                      <div className="text-3xl font-bold text-[#2A2A2A] mb-1">{userPoints?.weekly_points || 0}</div>
-                      <div className="text-sm text-[#555555]">This Week</div>
+                      <div className="text-3xl font-bold text-white mb-1">{userPoints?.weekly_points || 0}</div>
+                      <div className="text-sm text-gray-400">This Week</div>
                     </div>
                     <div className="p-4 bg-gradient-to-br from-[#A4FF4F]/10 to-[#A4FF4F]/5 rounded-xl">
-                      <div className="text-3xl font-bold text-[#2A2A2A] mb-1">{userPoints?.monthly_points || 0}</div>
-                      <div className="text-sm text-[#555555]">This Month</div>
+                      <div className="text-3xl font-bold text-white mb-1">{userPoints?.monthly_points || 0}</div>
+                      <div className="text-sm text-gray-400">This Month</div>
                     </div>
                   </div>
                   
                   <div className="mt-6">
-                    <h4 className="font-semibold text-[#2A2A2A] mb-3">How to Earn Points</h4>
+                    <h4 className="font-semibold text-white mb-3">How to Earn Points</h4>
                     <div className="space-y-2 text-sm">
                       <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                        <span className="text-[#555555]">Post in Community Forum</span>
+                        <span className="text-gray-400">Post in Community Forum</span>
                         <span className="font-semibold text-[#ff6b35]">+10 pts</span>
                       </div>
                       <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                        <span className="text-[#555555]">Attend an Event</span>
+                        <span className="text-gray-400">Attend an Event</span>
                         <span className="font-semibold text-[#ff6b35]">+25 pts</span>
                       </div>
                       <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                        <span className="text-[#555555]">Upload a Route</span>
+                        <span className="text-gray-400">Upload a Route</span>
                         <span className="font-semibold text-[#ff6b35]">+50 pts</span>
                       </div>
                       <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                        <span className="text-[#555555]">Complete Challenge</span>
+                        <span className="text-gray-400">Complete Challenge</span>
                         <span className="font-semibold text-[#ff6b35]">+100 pts</span>
                       </div>
                     </div>
@@ -800,15 +800,15 @@ export default function Profile() {
             <TabsContent value="routes">
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-[#2A2A2A]">Saved Routes ({savedRoutes.length})</CardTitle>
+                  <CardTitle className="text-white">Saved Routes ({savedRoutes.length})</CardTitle>
                 </CardHeader>
                 <CardContent>
                   {savedRoutes.length > 0 ?
                   <div className="grid md:grid-cols-2 gap-4">
                       {savedRoutes.map((route) =>
-                    <div key={route.id} className="p-4 border border-gray-200 rounded-xl hover:shadow-md transition-shadow">
-                          <h4 className="font-semibold text-[#2A2A2A] mb-2">{route.name}</h4>
-                          <div className="flex items-center gap-4 text-sm text-[#555555] mb-3">
+                    <div key={route.id} className="p-4 border border-white/10 rounded-xl hover:shadow-md transition-shadow">
+                          <h4 className="font-semibold text-white mb-2">{route.name}</h4>
+                          <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
                             <span>{route.distance}km</span>
                             <span>•</span>
                             <span>{route.difficulty}</span>
@@ -820,7 +820,7 @@ export default function Profile() {
                     )}
                     </div> :
 
-                  <p className="text-center text-[#555555] py-8">
+                  <p className="text-center text-gray-400 py-8">
                       No saved routes yet. Explore and save your favorites!
                     </p>
                   }
@@ -832,7 +832,7 @@ export default function Profile() {
             <TabsContent value="notes">
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-[#2A2A2A]">Private Notes</CardTitle>
+                  <CardTitle className="text-white">Private Notes</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <Textarea
@@ -844,7 +844,7 @@ export default function Profile() {
                     rows={12}
                     className="resize-none" />
 
-                  <p className="text-xs text-[#555555] mt-2">
+                  <p className="text-xs text-gray-400 mt-2">
                     These notes are private and only visible to you.
                   </p>
                 </CardContent>

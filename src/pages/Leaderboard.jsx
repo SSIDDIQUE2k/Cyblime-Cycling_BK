@@ -20,7 +20,7 @@ const LeaderboardCard = ({ rank, user, points, level, badges, metric }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: rank * 0.05 }}
-      className={`p-4 rounded-xl ${rank <= 3 ? 'bg-gradient-to-r from-[#ff6b35]/10 to-transparent border-2 border-[#ff6b35]/20' : 'bg-white border border-gray-200'}`}
+      className={`p-4 rounded-xl ${rank <= 3 ? 'bg-gradient-to-r from-[#ff6b35]/10 to-transparent border-2 border-[#ff6b35]/20' : 'bg-[#141414] border border-white/10'}`}
     >
       <div className="flex items-center gap-4">
         <div className="w-12 flex items-center justify-center">
@@ -35,7 +35,7 @@ const LeaderboardCard = ({ rank, user, points, level, badges, metric }) => {
 
         <div className="flex-1 min-w-0">
           <p className="font-semibold text-gray-900 truncate">{user.full_name || user.email.split('@')[0]}</p>
-          <div className="flex items-center gap-2 text-sm text-gray-600">
+          <div className="flex items-center gap-2 text-sm text-gray-400">
             <Badge variant="outline" className="text-xs">Level {level}</Badge>
             {badges > 0 && (
               <span className="flex items-center gap-1">
@@ -120,7 +120,7 @@ export default function Leaderboard() {
               <Trophy className="w-10 h-10 text-white" />
             </div>
             <h1 className="text-5xl font-bold text-gray-900 mb-4">Leaderboard</h1>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-gray-400">
               Compete with fellow cyclists and climb to the top!
             </p>
           </motion.div>
@@ -140,7 +140,7 @@ export default function Leaderboard() {
                 challenges.map(challenge => (
                   <div key={challenge.id} className="p-3 rounded-lg bg-gradient-to-r from-[#ff6b35]/10 to-transparent border-l-4 border-[#ff6b35]">
                     <p className="font-semibold text-sm text-gray-900">{challenge.title}</p>
-                    <p className="text-xs text-gray-600 mt-1">{challenge.description}</p>
+                    <p className="text-xs text-gray-400 mt-1">{challenge.description}</p>
                     <div className="flex items-center justify-between mt-2">
                       <Badge variant="outline" className="text-xs">{challenge.reward_points} pts</Badge>
                       <span className="text-xs text-gray-500">
@@ -177,7 +177,7 @@ export default function Leaderboard() {
                       className={`flex flex-col items-center ${index === 1 ? 'order-1' : index === 0 ? 'order-2' : 'order-3'}`}
                     >
                       <div className="relative mb-2">
-                        <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#ff6b35] to-[#e55a2b] flex items-center justify-center border-4 border-white shadow-lg">
+                        <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#ff6b35] to-[#e55a2b] flex items-center justify-center border-4 border-white shadow-xl shadow-black/20">
                           <span className="text-white font-bold text-2xl">
                             {item.user.full_name?.charAt(0) || item.user.email.charAt(0).toUpperCase()}
                           </span>
@@ -191,7 +191,7 @@ export default function Leaderboard() {
                       </p>
                       <div className={`${heights[index]} ${colors[index]} w-24 rounded-t-lg flex items-center justify-center flex-col px-2`}>
                         <p className="text-2xl font-bold text-gray-900">{item.total_points}</p>
-                        <p className="text-xs text-gray-700">points</p>
+                        <p className="text-xs text-gray-300">points</p>
                       </div>
                     </motion.div>
                   );

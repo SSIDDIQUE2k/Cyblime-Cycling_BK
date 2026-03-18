@@ -147,7 +147,7 @@ export default function PointsTracker({ userEmail }) {
       <CardContent className="space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-sm text-gray-600">Level {currentLevel}</p>
+            <p className="text-sm text-gray-400">Level {currentLevel}</p>
             <p className="text-3xl font-bold text-[#ff6b35]">{userPoints.total_points} pts</p>
           </div>
           <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#ff6b35] to-[#e55a2b] flex items-center justify-center">
@@ -157,7 +157,7 @@ export default function PointsTracker({ userEmail }) {
 
         <div>
           <div className="flex justify-between text-sm mb-2">
-            <span className="text-gray-600">Progress to Level {currentLevel + 1}</span>
+            <span className="text-gray-400">Progress to Level {currentLevel + 1}</span>
             <span className="font-semibold">{Math.round(progressToNextLevel)}%</span>
           </div>
           <Progress value={progressToNextLevel} className="h-2" />

@@ -67,12 +67,12 @@ export default function UnlocksDisplay({ user, userPoints }) {
                     <CardContent className="p-4">
                       <div className="flex items-start gap-3">
                         <div className="w-12 h-12 rounded-full bg-[#A4FF4F] flex items-center justify-center">
-                          <Icon className="w-6 h-6 text-[#2A2A2A]" />
+                          <Icon className="w-6 h-6 text-white" />
                         </div>
                         <div className="flex-1">
-                          <h4 className="font-semibold text-[#2A2A2A]">{unlock.title}</h4>
-                          <p className="text-sm text-gray-600 mt-1">{unlock.description}</p>
-                          <Badge className="mt-2 bg-[#A4FF4F] text-[#2A2A2A] border-0">
+                          <h4 className="font-semibold text-white">{unlock.title}</h4>
+                          <p className="text-sm text-gray-400 mt-1">{unlock.description}</p>
+                          <Badge className="mt-2 bg-[#A4FF4F] text-white border-0">
                             Unlocked!
                           </Badge>
                         </div>
@@ -104,7 +104,7 @@ export default function UnlocksDisplay({ user, userPoints }) {
                         <Lock className="w-6 h-6 text-gray-500" />
                       </div>
                       <div className="flex-1">
-                        <h4 className="font-semibold text-gray-700">{unlock.title}</h4>
+                        <h4 className="font-semibold text-gray-300">{unlock.title}</h4>
                         <p className="text-sm text-gray-500 mt-1">{unlock.description}</p>
                         <Badge variant="outline" className="mt-2">
                           {unlock.unlock_requirement === 'level' && `Level ${unlock.unlock_value}`}

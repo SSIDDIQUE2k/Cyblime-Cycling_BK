@@ -70,8 +70,8 @@ export default function BuddySystem({ user }) {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-[#2A2A2A]">Cycling Buddies</h2>
-          <p className="text-sm text-gray-600">Connect and motivate each other</p>
+          <h2 className="text-2xl font-bold text-white">Cycling Buddies</h2>
+          <p className="text-sm text-gray-400">Connect and motivate each other</p>
         </div>
         <Dialog open={inviteDialogOpen} onOpenChange={setInviteDialogOpen}>
           <DialogTrigger asChild>
@@ -112,13 +112,13 @@ export default function BuddySystem({ user }) {
               <div key={request.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                 <div>
                   <p className="font-semibold">{request.user_email}</p>
-                  <p className="text-sm text-gray-600">Wants to be your buddy</p>
+                  <p className="text-sm text-gray-400">Wants to be your buddy</p>
                 </div>
                 <div className="flex gap-2">
                   <Button
                     size="sm"
                     onClick={() => respondToInviteMutation.mutate({ buddyId: request.id, status: 'accepted' })}
-                    className="bg-[#A4FF4F] text-[#2A2A2A] hover:bg-[#94ef3f]"
+                    className="bg-[#A4FF4F] text-white hover:bg-[#94ef3f]"
                   >
                     <Check className="w-4 h-4" />
                   </Button>

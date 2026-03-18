@@ -34,11 +34,11 @@ export default function StravaEmbed({
 
   if (hasError) {
     return (
-      <div className="bg-white rounded-3xl shadow-xl border border-gray-200 p-12 text-center" style={{ minHeight: height }}>
+      <div className="bg-[#141414] rounded-3xl shadow-xl border border-white/10 p-12 text-center" style={{ minHeight: height }}>
         <div className="max-w-md mx-auto">
           <Activity className="w-16 h-16 text-[#FC4C02] mx-auto mb-4" />
-          <h3 className="text-2xl font-bold text-[#2A2A2A] mb-2">Unable to Load</h3>
-          <p className="text-[#555555] mb-6">
+          <h3 className="text-2xl font-bold text-white mb-2">Unable to Load</h3>
+          <p className="text-gray-400 mb-6">
             We couldn't load the {title} section. Please try again or visit Strava directly.
           </p>
           <div className="flex gap-3 justify-center">

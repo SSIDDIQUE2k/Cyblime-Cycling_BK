@@ -35,14 +35,14 @@ export default function TeamChallengesPage() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-[#fafafa] flex items-center justify-center">
-        <p className="text-gray-600">Please log in to view team challenges</p>
+      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
+        <p className="text-gray-400">Please log in to view team challenges</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#fafafa]">
+    <div className="min-h-screen bg-[#0a0a0a]">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-[#2A2A2A] to-[#1a1a1a] py-20 md:py-32 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
@@ -70,7 +70,7 @@ export default function TeamChallengesPage() {
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <Tabs defaultValue="teams" className="space-y-8">
-            <TabsList className="bg-white p-1 rounded-xl shadow-sm">
+            <TabsList className="bg-[#141414] p-1 rounded-xl shadow-none">
               <TabsTrigger value="teams" className="rounded-lg data-[state=active]:bg-[#ff6b35] data-[state=active]:text-white">
                 <Users className="w-4 h-4 mr-2" />
                 Team Challenges

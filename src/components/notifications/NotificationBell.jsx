@@ -22,9 +22,9 @@ const NotificationItem = ({ notification, onMarkRead, onDelete }) => {
   };
 
   return (
-    <div className={`p-3 border-l-4 ${typeColors[notification.type]} bg-white hover:bg-gray-50 transition-colors ${!notification.read ? 'bg-orange-50/50' : ''}`}>
+    <div className={`p-3 border-l-4 ${typeColors[notification.type]} bg-[#141414] hover:bg-gray-50 transition-colors ${!notification.read ? 'bg-orange-50/50' : ''}`}>
       <div className="flex items-start justify-between gap-2 mb-1">
-        <h4 className="font-semibold text-sm text-[#2A2A2A]">{notification.title}</h4>
+        <h4 className="font-semibold text-sm text-white">{notification.title}</h4>
         <div className="flex gap-1">
           {!notification.read && (
             <button
@@ -44,7 +44,7 @@ const NotificationItem = ({ notification, onMarkRead, onDelete }) => {
           </button>
         </div>
       </div>
-      <p className="text-xs text-[#555555] mb-2">{notification.message}</p>
+      <p className="text-xs text-gray-400 mb-2">{notification.message}</p>
       <span className="text-xs text-gray-400">
         {new Date(notification.created_date).toLocaleString()}
       </span>
@@ -106,7 +106,7 @@ export default function NotificationBell({ user }) {
       </PopoverTrigger>
       <PopoverContent align="end" className="w-96 p-0">
         <div className="flex items-center justify-between p-4 border-b">
-          <h3 className="font-bold text-[#2A2A2A]">Notifications</h3>
+          <h3 className="font-bold text-white">Notifications</h3>
           {unreadCount > 0 && (
             <Button
               onClick={markAllAsRead}
@@ -133,7 +133,7 @@ export default function NotificationBell({ user }) {
           ) : (
             <div className="flex flex-col items-center justify-center py-12 text-center">
               <Bell className="w-12 h-12 text-gray-300 mb-3" />
-              <p className="text-[#555555] text-sm">No notifications yet</p>
+              <p className="text-gray-400 text-sm">No notifications yet</p>
             </div>
           )}
         </ScrollArea>

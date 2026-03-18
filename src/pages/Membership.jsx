@@ -122,17 +122,17 @@ const ContactDialog = ({ isOpen, onClose, planName, contactEmail = "info@cyblime
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ duration: 0.3 }}
-          className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl"
+          className="bg-[#1a1a1a] rounded-3xl p-8 border border-white/10 max-w-md w-full shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="text-center">
             <div className="w-16 h-16 rounded-2xl bg-[#ff6b35]/10 flex items-center justify-center mx-auto mb-4">
               <Mail className="w-8 h-8 text-[#ff6b35]" />
             </div>
-            <h3 className="text-2xl font-bold text-[#1a1a1a] mb-2">
+            <h3 className="text-2xl font-bold text-white mb-2">
               Get Started with {planName}
             </h3>
-            <p className="text-gray-600 mb-6">
+            <p className="text-gray-400 mb-6">
               Contact us to get started with the <span className="font-semibold">{planName}</span> plan. We'll help you set everything up!
             </p>
             <a
@@ -144,7 +144,7 @@ const ContactDialog = ({ isOpen, onClose, planName, contactEmail = "info@cyblime
             </a>
             <button
               onClick={onClose}
-              className="w-full text-gray-500 hover:text-gray-700 py-2 text-sm font-medium transition-colors"
+              className="w-full text-gray-500 hover:text-gray-300 py-2 text-sm font-medium transition-colors"
             >
               Close
             </button>
@@ -161,8 +161,8 @@ const PricingCard = ({ plan, isPopular, index, onGetStarted }) => {
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
-      className={`relative bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 ${
-        isPopular ? 'border-2 border-[#ff6b35] scale-105' : 'border border-gray-100'
+      className={`relative bg-[#1a1a1a] rounded-3xl p-8 border border-white/10 shadow-none hover:shadow-lg hover:shadow-black/30 transition-all duration-300 ${
+        isPopular ? 'border-2 border-[#ff6b35] scale-105' : 'border border-white/5'
       }`}
     >
       {isPopular && (
@@ -177,13 +177,13 @@ const PricingCard = ({ plan, isPopular, index, onGetStarted }) => {
         <div className="w-16 h-16 rounded-2xl bg-[#ff6b35]/10 flex items-center justify-center mx-auto mb-4">
           {plan.icon}
         </div>
-        <h3 className="text-2xl font-bold text-[#1a1a1a] mb-2">{plan.name}</h3>
-        <p className="text-gray-600 text-sm">{plan.description}</p>
+        <h3 className="text-2xl font-bold text-white mb-2">{plan.name}</h3>
+        <p className="text-gray-400 text-sm">{plan.description}</p>
       </div>
 
       <div className="text-center mb-8">
         <div className="flex items-end justify-center gap-2 mb-2">
-          <span className="text-5xl font-bold text-[#1a1a1a]">${plan.price}</span>
+          <span className="text-5xl font-bold text-white">${plan.price}</span>
           <span className="text-gray-500 mb-2">/{plan.period}</span>
         </div>
         {plan.savings && (
@@ -204,7 +204,7 @@ const PricingCard = ({ plan, isPopular, index, onGetStarted }) => {
       </Button>
 
       <div className="space-y-4">
-        <div className="text-sm font-semibold text-[#1a1a1a] mb-3">What's included:</div>
+        <div className="text-sm font-semibold text-white mb-3">What's included:</div>
         {plan.features.map((feature, i) => (
           <div key={i} className="flex items-start gap-3">
             {feature.included ? (
@@ -212,7 +212,7 @@ const PricingCard = ({ plan, isPopular, index, onGetStarted }) => {
             ) : (
               <X className="w-5 h-5 text-gray-300 flex-shrink-0 mt-0.5" />
             )}
-            <span className={`text-sm ${feature.included ? 'text-gray-700' : 'text-gray-400'}`}>
+            <span className={`text-sm ${feature.included ? 'text-gray-300' : 'text-gray-400'}`}>
               {feature.text}
             </span>
           </div>
@@ -235,8 +235,8 @@ const FeatureCard = ({ icon: Icon, title, description, index }) => {
         <Icon className="w-6 h-6 text-white" />
       </div>
       <div>
-        <h3 className="text-lg font-semibold text-[#1a1a1a] mb-2">{title}</h3>
-        <p className="text-gray-600 text-sm">{description}</p>
+        <h3 className="text-lg font-semibold text-white mb-2">{title}</h3>
+        <p className="text-gray-400 text-sm">{description}</p>
       </div>
     </motion.div>
   );
@@ -259,7 +259,7 @@ export default function Membership() {
     ...tier,
     icon: (() => {
       const IconComp = tierIconMap[tier.icon] || Users;
-      return <IconComp className="w-7 h-7 text-[#1a1a1a]" />;
+      return <IconComp className="w-7 h-7 text-white" />;
     })()
   }));
 
@@ -272,7 +272,7 @@ export default function Membership() {
   const contactEmail = content.contact_email || "info@cyblimecycling.com";
 
   return (
-    <div className="min-h-screen bg-[#fafafa]">
+    <div className="min-h-screen bg-[#0a0a0a]">
       <ContactDialog
         isOpen={contactDialogOpen}
         onClose={() => setContactDialogOpen(false)}
@@ -303,7 +303,7 @@ export default function Membership() {
             <div className="flex items-center justify-center gap-8 flex-wrap">
               {(content.hero?.stats || []).map((stat, i) => (
                 <React.Fragment key={i}>
-                  {i > 0 && <div className="hidden md:block w-px h-12 bg-white/10" />}
+                  {i > 0 && <div className="hidden md:block w-px h-12 bg-[#141414]/10" />}
                   <div className="text-center">
                     <div className="text-4xl font-bold text-[#ff6b35] mb-1">{stat.value}</div>
                     <div className="text-sm text-gray-400 uppercase tracking-wider">{stat.label}</div>
@@ -316,7 +316,7 @@ export default function Membership() {
       </section>
 
       {/* Pricing Section */}
-      <section className="py-24 bg-[#fafafa]">
+      <section className="py-24 bg-[#0a0a0a]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -326,10 +326,10 @@ export default function Membership() {
             className="text-center max-w-2xl mx-auto mb-16"
           >
             <span className="inline-block text-xs font-semibold tracking-widest text-[#ff6b35] uppercase mb-4">Membership Plans</span>
-            <h2 className="text-4xl md:text-5xl font-bold text-[#1a1a1a] mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
               Find Your Perfect Plan
             </h2>
-            <p className="text-lg text-gray-600">
+            <p className="text-lg text-gray-400">
               Whether you're just starting out or ready for the full experience, we have a plan that fits your goals.
             </p>
           </motion.div>
@@ -361,7 +361,7 @@ export default function Membership() {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-[#141414]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -371,10 +371,10 @@ export default function Membership() {
             className="text-center max-w-2xl mx-auto mb-16"
           >
             <span className="inline-block text-xs font-semibold tracking-widest text-[#ff6b35] uppercase mb-4">Member Benefits</span>
-            <h2 className="text-4xl md:text-5xl font-bold text-[#1a1a1a] mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
               More Than Just Rides
             </h2>
-            <p className="text-lg text-gray-600">
+            <p className="text-lg text-gray-400">
               Your membership unlocks a complete cycling ecosystem designed to support your journey.
             </p>
           </motion.div>
@@ -388,7 +388,7 @@ export default function Membership() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-24 bg-[#fafafa]">
+      <section className="py-24 bg-[#0a0a0a]">
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -398,7 +398,7 @@ export default function Membership() {
             className="text-center mb-16"
           >
             <span className="inline-block text-xs font-semibold tracking-widest text-[#ff6b35] uppercase mb-4">FAQ</span>
-            <h2 className="text-4xl md:text-5xl font-bold text-[#1a1a1a] mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
               Common Questions
             </h2>
           </motion.div>
@@ -411,10 +411,10 @@ export default function Membership() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.05 }}
-                className="bg-white rounded-2xl p-6 shadow-sm"
+                className="bg-[#141414] rounded-2xl p-6 border border-white/5"
               >
-                <h3 className="text-lg font-semibold text-[#1a1a1a] mb-3">{faq.question}</h3>
-                <p className="text-gray-600">{faq.answer}</p>
+                <h3 className="text-lg font-semibold text-white mb-3">{faq.question}</h3>
+                <p className="text-gray-400">{faq.answer}</p>
               </motion.div>
             ))}
           </div>
@@ -437,7 +437,7 @@ export default function Membership() {
               Start your 7-day trial today. No commitment, cancel anytime.
             </p>
             <Button
-              className="bg-[#1a1a1a] hover:bg-[#2a2a2a] text-white rounded-full px-8 py-6 text-base font-semibold shadow-lg"
+              className="bg-[#1a1a1a] hover:bg-[#2a2a2a] text-white rounded-full px-8 py-6 text-base font-semibold shadow-xl shadow-black/20"
               onClick={() => handleGetStarted("Free Trial")}
             >
               Start Free Trial

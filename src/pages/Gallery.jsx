@@ -19,7 +19,7 @@ export default function Gallery() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#fafafa]">
+    <div className="min-h-screen bg-[#0a0a0a]">
       {/* Hero */}
       <section className="relative bg-gradient-to-br from-[#2A2A2A] to-[#1a1a1a] py-20 md:py-32 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
@@ -53,17 +53,17 @@ export default function Gallery() {
       </section>
 
       {/* Additional Content */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-[#141414]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl font-bold text-[#2A2A2A] mb-4">
+            <h2 className="text-3xl font-bold text-white mb-4">
               Share Your Moments
             </h2>
-            <p className="text-lg text-[#555555] max-w-2xl mx-auto">
+            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
               Tag us in your cycling photos and be featured in our gallery. 
               Use <span className="font-semibold text-[#ff6b35]">#CyblimeCycling</span> to join the community showcase.
             </p>

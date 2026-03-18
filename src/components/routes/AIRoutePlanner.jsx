@@ -136,7 +136,7 @@ Return as a JSON array of route objects.`;
             <Sparkles className="w-6 h-6 text-purple-600" />
             AI Route Planner
           </DialogTitle>
-          <p className="text-sm text-gray-600">Let AI design the perfect cycling route for you</p>
+          <p className="text-sm text-gray-400">Let AI design the perfect cycling route for you</p>
         </DialogHeader>
 
         {!generatedRoutes ? (
@@ -241,7 +241,7 @@ Return as a JSON array of route objects.`;
                     <div className="flex items-start justify-between">
                       <div>
                         <CardTitle className="text-xl text-purple-900">{route.name}</CardTitle>
-                        <p className="text-sm text-gray-600 mt-1">{route.description}</p>
+                        <p className="text-sm text-gray-400 mt-1">{route.description}</p>
                       </div>
                       <Badge className="bg-purple-100 text-purple-800 border-0">
                         Route {index + 1}
@@ -252,15 +252,15 @@ Return as a JSON array of route objects.`;
                     {/* Stats Grid */}
                     <div className="grid grid-cols-3 gap-3">
                       <div className="p-3 bg-gray-50 rounded-lg">
-                        <div className="text-xs text-gray-600">Distance</div>
+                        <div className="text-xs text-gray-400">Distance</div>
                         <div className="text-lg font-bold text-gray-900">{preferences.distance}km</div>
                       </div>
                       <div className="p-3 bg-gray-50 rounded-lg">
-                        <div className="text-xs text-gray-600">Elevation</div>
+                        <div className="text-xs text-gray-400">Elevation</div>
                         <div className="text-lg font-bold text-gray-900">{route.elevation_gain}m</div>
                       </div>
                       <div className="p-3 bg-gray-50 rounded-lg">
-                        <div className="text-xs text-gray-600">Time</div>
+                        <div className="text-xs text-gray-400">Time</div>
                         <div className="text-lg font-bold text-gray-900">{route.estimated_time}h</div>
                       </div>
                     </div>
@@ -270,12 +270,12 @@ Return as a JSON array of route objects.`;
                       <div className="flex items-center gap-2 text-sm">
                         <MapPin className="w-4 h-4 text-green-600" />
                         <span className="font-semibold">Start:</span>
-                        <span className="text-gray-600">{route.start_location}</span>
+                        <span className="text-gray-400">{route.start_location}</span>
                       </div>
                       <div className="flex items-center gap-2 text-sm">
                         <MapPin className="w-4 h-4 text-red-600" />
                         <span className="font-semibold">End:</span>
-                        <span className="text-gray-600">{route.end_location}</span>
+                        <span className="text-gray-400">{route.end_location}</span>
                       </div>
                     </div>
 
@@ -285,7 +285,7 @@ Return as a JSON array of route objects.`;
                         <TrendingUp className="w-4 h-4 text-purple-600" />
                         <span className="font-semibold text-sm">Elevation Profile</span>
                       </div>
-                      <p className="text-sm text-gray-700">{route.elevation_profile}</p>
+                      <p className="text-sm text-gray-300">{route.elevation_profile}</p>
                     </div>
 
                     {/* Highlights */}
@@ -296,7 +296,7 @@ Return as a JSON array of route objects.`;
                       </div>
                       <ul className="space-y-1">
                         {route.highlights.map((highlight, i) => (
-                          <li key={i} className="text-sm text-gray-600 flex items-start gap-2">
+                          <li key={i} className="text-sm text-gray-400 flex items-start gap-2">
                             <span className="text-purple-600 mt-1">•</span>
                             <span>{highlight}</span>
                           </li>

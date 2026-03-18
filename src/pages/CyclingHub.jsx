@@ -23,8 +23,8 @@ import PremiumLoader from "../components/cycling/PremiumLoader";
 
 const RouteCard = ({ route, index }) => {
   const difficultyColors = {
-    Easy: "bg-[#A4FF4F] text-[#2A2A2A]",
-    Moderate: "bg-yellow-400 text-[#2A2A2A]",
+    Easy: "bg-[#A4FF4F] text-white",
+    Moderate: "bg-yellow-400 text-white",
     Challenging: "bg-orange-500 text-white",
     Expert: "bg-red-600 text-white"
   };
@@ -34,7 +34,7 @@ const RouteCard = ({ route, index }) => {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05 }}
-      className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group"
+      className="bg-[#141414] rounded-2xl overflow-hidden border border-white/5 hover:shadow-lg hover:shadow-black/30 transition-all duration-300 group"
     >
       <div className="relative h-48 overflow-hidden">
         <img
@@ -49,27 +49,27 @@ const RouteCard = ({ route, index }) => {
 
       <div className="p-6">
         <div className="flex items-start justify-between mb-3">
-          <h3 className="text-xl font-bold text-[#2A2A2A] flex-1">{route.name}</h3>
+          <h3 className="text-xl font-bold text-white flex-1">{route.name}</h3>
           <div className="flex items-center gap-1 text-sm">
             <Star className="w-4 h-4 fill-[#ff6b35] text-[#ff6b35]" />
             <span className="font-semibold">{route.rating || "5.0"}</span>
           </div>
         </div>
 
-        <p className="text-sm text-[#555555] mb-4 line-clamp-2">{route.description}</p>
+        <p className="text-sm text-gray-400 mb-4 line-clamp-2">{route.description}</p>
 
         <div className="grid grid-cols-3 gap-3 mb-4">
           <div className="flex items-center gap-2 text-sm">
             <MapPin className="w-4 h-4 text-[#FC4C02]" />
-            <span className="text-[#555555]">{route.distance}km</span>
+            <span className="text-gray-400">{route.distance}km</span>
           </div>
           <div className="flex items-center gap-2 text-sm">
             <TrendingUp className="w-4 h-4 text-[#FC4C02]" />
-            <span className="text-[#555555]">{route.elevation_gain}m</span>
+            <span className="text-gray-400">{route.elevation_gain}m</span>
           </div>
           <div className="flex items-center gap-2 text-sm">
             <Mountain className="w-4 h-4 text-[#FC4C02]" />
-            <span className="text-[#555555]">{route.surface_type}</span>
+            <span className="text-gray-400">{route.surface_type}</span>
           </div>
         </div>
 
@@ -143,13 +143,13 @@ export default function CyclingHub() {
   }, [routes, events]);
 
   return (
-    <div className="min-h-screen bg-[#fafafa]">
+    <div className="min-h-screen bg-[#0a0a0a]">
       <PremiumLoader isLoading={routesLoading || eventsLoading || isLoadingTab} />
 
       {/* Hero */}
       <section className="relative bg-gradient-to-br from-[#FC4C02] to-[#FF7A00] py-20 md:py-32 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 right-1/4 w-96 h-96 rounded-full bg-white blur-3xl" />
+          <div className="absolute top-0 right-1/4 w-96 h-96 rounded-full bg-[#141414] blur-3xl" />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
@@ -169,24 +169,24 @@ export default function CyclingHub() {
       </section>
 
       {/* Stats Bar */}
-      <section className="py-8 bg-white border-b border-gray-200">
+      <section className="py-8 bg-[#141414] border-b border-white/10">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="text-center">
               <div className="text-3xl font-bold text-[#FC4C02] mb-1">{routes.length}</div>
-              <div className="text-sm text-[#555555]">Routes Available</div>
+              <div className="text-sm text-gray-400">Routes Available</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-[#FC4C02] mb-1">{events.length}</div>
-              <div className="text-sm text-[#555555]">Total Events</div>
+              <div className="text-sm text-gray-400">Total Events</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-[#FC4C02] mb-1">{clubStats.totalDistance.toLocaleString()}</div>
-              <div className="text-sm text-[#555555]">Total km in Routes</div>
+              <div className="text-sm text-gray-400">Total km in Routes</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-[#FC4C02] mb-1">{clubStats.totalElevation.toLocaleString()}</div>
-              <div className="text-sm text-[#555555]">Total Elevation (m)</div>
+              <div className="text-sm text-gray-400">Total Elevation (m)</div>
             </div>
           </div>
         </div>
@@ -196,7 +196,7 @@ export default function CyclingHub() {
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <Tabs value={activeTab} onValueChange={handleTabChange}>
-            <TabsList className="mb-8 bg-white p-2 rounded-2xl shadow-sm">
+            <TabsList className="mb-8 bg-[#141414] p-2 rounded-2xl shadow-none">
               <TabsTrigger
                 value="routes"
                 className="rounded-xl data-[state=active]:bg-[#FC4C02] data-[state=active]:text-white px-6 py-3"
@@ -223,7 +223,7 @@ export default function CyclingHub() {
             {/* Routes Tab */}
             <TabsContent value="routes" className="space-y-8">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-3xl font-bold text-[#2A2A2A]">Featured Routes</h2>
+                <h2 className="text-3xl font-bold text-white">Featured Routes</h2>
                 <Link to={createPageUrl("Routes")}>
                   <Button variant="outline" className="rounded-full">
                     View All Routes
@@ -241,15 +241,15 @@ export default function CyclingHub() {
 
             {/* Strava Club Tab - single embed */}
             <TabsContent value="strava" className="h-[calc(100vh-250px)]">
-              <div className="bg-white rounded-2xl overflow-hidden shadow-sm h-full flex flex-col">
-                <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+              <div className="bg-[#141414] rounded-2xl overflow-hidden border border-white/5 h-full flex flex-col">
+                <div className="flex items-center justify-between px-6 py-4 border-b border-white/5">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-xl bg-[#FC4C02] flex items-center justify-center">
                       <Activity className="w-5 h-5 text-white" />
                     </div>
                     <div>
-                      <h3 className="font-bold text-[#2A2A2A]">CYBLIME on Strava</h3>
-                      <p className="text-sm text-[#555555]">Club feed, activities, leaderboard & events</p>
+                      <h3 className="font-bold text-white">CYBLIME on Strava</h3>
+                      <p className="text-sm text-gray-400">Club feed, activities, leaderboard & events</p>
                     </div>
                   </div>
                   <a href="https://www.strava.com/clubs/762372" target="_blank" rel="noopener noreferrer">
@@ -269,36 +269,36 @@ export default function CyclingHub() {
 
             {/* Club Stats Tab - real data from Route & Event entities */}
             <TabsContent value="stats" className="space-y-8">
-              <h2 className="text-3xl font-bold text-[#2A2A2A]">Club Stats</h2>
+              <h2 className="text-3xl font-bold text-white">Club Stats</h2>
 
               {/* Summary cards */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div className="bg-white rounded-2xl p-6 shadow-sm text-center">
+                <div className="bg-[#141414] rounded-2xl p-6 shadow-none text-center">
                   <MapPin className="w-8 h-8 text-[#FC4C02] mx-auto mb-3" />
-                  <div className="text-3xl font-bold text-[#2A2A2A]">{clubStats.totalRoutes}</div>
-                  <div className="text-sm text-[#555555] mt-1">Total Routes</div>
+                  <div className="text-3xl font-bold text-white">{clubStats.totalRoutes}</div>
+                  <div className="text-sm text-gray-400 mt-1">Total Routes</div>
                 </div>
-                <div className="bg-white rounded-2xl p-6 shadow-sm text-center">
+                <div className="bg-[#141414] rounded-2xl p-6 shadow-none text-center">
                   <TrendingUp className="w-8 h-8 text-[#FC4C02] mx-auto mb-3" />
-                  <div className="text-3xl font-bold text-[#2A2A2A]">{clubStats.avgDistance}</div>
-                  <div className="text-sm text-[#555555] mt-1">Avg Distance (km)</div>
+                  <div className="text-3xl font-bold text-white">{clubStats.avgDistance}</div>
+                  <div className="text-sm text-gray-400 mt-1">Avg Distance (km)</div>
                 </div>
-                <div className="bg-white rounded-2xl p-6 shadow-sm text-center">
+                <div className="bg-[#141414] rounded-2xl p-6 shadow-none text-center">
                   <Mountain className="w-8 h-8 text-[#FC4C02] mx-auto mb-3" />
-                  <div className="text-3xl font-bold text-[#2A2A2A]">{clubStats.totalElevation.toLocaleString()}</div>
-                  <div className="text-sm text-[#555555] mt-1">Total Elevation (m)</div>
+                  <div className="text-3xl font-bold text-white">{clubStats.totalElevation.toLocaleString()}</div>
+                  <div className="text-sm text-gray-400 mt-1">Total Elevation (m)</div>
                 </div>
-                <div className="bg-white rounded-2xl p-6 shadow-sm text-center">
+                <div className="bg-[#141414] rounded-2xl p-6 shadow-none text-center">
                   <Calendar className="w-8 h-8 text-[#FC4C02] mx-auto mb-3" />
-                  <div className="text-3xl font-bold text-[#2A2A2A]">{clubStats.upcomingEvents}</div>
-                  <div className="text-sm text-[#555555] mt-1">Upcoming Events</div>
+                  <div className="text-3xl font-bold text-white">{clubStats.upcomingEvents}</div>
+                  <div className="text-sm text-gray-400 mt-1">Upcoming Events</div>
                 </div>
               </div>
 
               {/* Route difficulty breakdown */}
               <div className="grid md:grid-cols-2 gap-6">
-                <div className="bg-white rounded-2xl p-6 shadow-sm">
-                  <h3 className="text-lg font-bold text-[#2A2A2A] mb-4 flex items-center gap-2">
+                <div className="bg-[#141414] rounded-2xl p-6 border border-white/5">
+                  <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
                     <Trophy className="w-5 h-5 text-[#FC4C02]" />
                     Routes by Difficulty
                   </h3>
@@ -315,8 +315,8 @@ export default function CyclingHub() {
                       return (
                         <div key={difficulty}>
                           <div className="flex justify-between text-sm mb-1">
-                            <span className="font-medium text-[#2A2A2A]">{difficulty}</span>
-                            <span className="text-[#555555]">{count} ({pct}%)</span>
+                            <span className="font-medium text-white">{difficulty}</span>
+                            <span className="text-gray-400">{count} ({pct}%)</span>
                           </div>
                           <div className="w-full bg-gray-100 rounded-full h-2.5">
                             <div
@@ -328,13 +328,13 @@ export default function CyclingHub() {
                       );
                     })}
                     {Object.keys(clubStats.difficultyCounts).length === 0 && (
-                      <p className="text-sm text-[#555555]">No routes yet.</p>
+                      <p className="text-sm text-gray-400">No routes yet.</p>
                     )}
                   </div>
                 </div>
 
-                <div className="bg-white rounded-2xl p-6 shadow-sm">
-                  <h3 className="text-lg font-bold text-[#2A2A2A] mb-4 flex items-center gap-2">
+                <div className="bg-[#141414] rounded-2xl p-6 border border-white/5">
+                  <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
                     <Mountain className="w-5 h-5 text-[#FC4C02]" />
                     Routes by Surface
                   </h3>
@@ -344,8 +344,8 @@ export default function CyclingHub() {
                       return (
                         <div key={surface}>
                           <div className="flex justify-between text-sm mb-1">
-                            <span className="font-medium text-[#2A2A2A]">{surface}</span>
-                            <span className="text-[#555555]">{count} ({pct}%)</span>
+                            <span className="font-medium text-white">{surface}</span>
+                            <span className="text-gray-400">{count} ({pct}%)</span>
                           </div>
                           <div className="w-full bg-gray-100 rounded-full h-2.5">
                             <div
@@ -357,15 +357,15 @@ export default function CyclingHub() {
                       );
                     })}
                     {Object.keys(clubStats.surfaceCounts).length === 0 && (
-                      <p className="text-sm text-[#555555]">No routes yet.</p>
+                      <p className="text-sm text-gray-400">No routes yet.</p>
                     )}
                   </div>
                 </div>
               </div>
 
               {/* Upcoming events list */}
-              <div className="bg-white rounded-2xl p-6 shadow-sm">
-                <h3 className="text-lg font-bold text-[#2A2A2A] mb-4 flex items-center gap-2">
+              <div className="bg-[#141414] rounded-2xl p-6 border border-white/5">
+                <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
                   <Calendar className="w-5 h-5 text-[#FC4C02]" />
                   Upcoming Events
                 </h3>
@@ -380,13 +380,13 @@ export default function CyclingHub() {
                           {new Date(event.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="font-semibold text-[#2A2A2A] truncate">{event.title || event.name}</p>
-                          <p className="text-sm text-[#555555] truncate">{event.location || "Location TBD"}</p>
+                          <p className="font-semibold text-white truncate">{event.title || event.name}</p>
+                          <p className="text-sm text-gray-400 truncate">{event.location || "Location TBD"}</p>
                         </div>
                       </div>
                     ))}
                   {events.filter(e => new Date(e.date) >= new Date()).length === 0 && (
-                    <p className="text-sm text-[#555555]">No upcoming events scheduled.</p>
+                    <p className="text-sm text-gray-400">No upcoming events scheduled.</p>
                   )}
                 </div>
               </div>
@@ -416,7 +416,7 @@ export default function CyclingHub() {
                 </Button>
               </Link>
               <a href="https://www.strava.com/clubs/762372" target="_blank" rel="noopener noreferrer">
-                <Button className="bg-white text-[#2A2A2A] hover:bg-gray-100 border-2 border-white rounded-full px-8 py-6 text-lg font-semibold">
+                <Button className="bg-[#141414] text-white hover:bg-gray-100 border-2 border-white rounded-full px-8 py-6 text-lg font-semibold">
                   <Users className="w-5 h-5 mr-2" />
                   Join Club
                 </Button>

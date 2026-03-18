@@ -37,7 +37,7 @@ const categoryColors = {
   general: "bg-gray-100 text-gray-800",
   routes: "bg-[#6BCBFF]/20 text-[#6BCBFF]",
   gear: "bg-purple-100 text-purple-800",
-  training: "bg-[#A4FF4F]/20 text-[#2A2A2A]",
+  training: "bg-[#A4FF4F]/20 text-white",
   maintenance: "bg-orange-100 text-orange-800",
   events: "bg-[#ff6b35]/20 text-[#ff6b35]"
 };
@@ -144,7 +144,7 @@ export default function Community() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fafafa]">
+    <div className="min-h-screen bg-[#0a0a0a]">
       {/* Hero */}
       <section className="relative bg-gradient-to-br from-[#2A2A2A] to-[#1a1a1a] py-20 md:py-32 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
@@ -175,7 +175,7 @@ export default function Community() {
       </section>
 
       {/* Filters */}
-      <section className="sticky top-20 z-40 bg-white border-b border-gray-200 shadow-sm">
+      <section className="sticky top-20 z-40 bg-[#141414] border-b border-white/10 shadow-none">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 relative">
@@ -216,7 +216,7 @@ export default function Community() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05 }}
                 onClick={() => setSelectedPost(post)}
-                className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-all cursor-pointer"
+                className="bg-[#141414] rounded-2xl p-6 border border-white/5 hover:shadow-md transition-all cursor-pointer"
               >
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 rounded-xl bg-[#ff6b35] flex items-center justify-center text-white font-bold flex-shrink-0">
@@ -227,7 +227,7 @@ export default function Community() {
                     <div className="flex items-start justify-between gap-4 mb-2">
                       <div className="flex items-center gap-2 flex-wrap">
                         {post.is_pinned && <Pin className="w-4 h-4 text-[#ff6b35]" />}
-                        <h3 className="text-xl font-semibold text-[#2A2A2A]">{post.title}</h3>
+                        <h3 className="text-xl font-semibold text-white">{post.title}</h3>
                       </div>
                       <div className="flex items-center gap-2">
                         <Badge className={`${categoryColors[post.category]} border-0 flex-shrink-0`}>
@@ -238,16 +238,16 @@ export default function Community() {
                             e.stopPropagation();
                             handleReport('forum_post', post.id);
                           }}
-                          className="text-[#555555] hover:text-red-600"
+                          className="text-gray-400 hover:text-red-600"
                         >
                           <Flag className="w-4 h-4" />
                         </button>
                       </div>
                     </div>
                     
-                    <p className="text-[#555555] mb-3 line-clamp-2">{post.content}</p>
+                    <p className="text-gray-400 mb-3 line-clamp-2">{post.content}</p>
                     
-                    <div className="flex items-center gap-6 text-sm text-[#555555]">
+                    <div className="flex items-center gap-6 text-sm text-gray-400">
                       <span>by {post.created_by.split('@')[0]}</span>
                       <div className="flex items-center gap-1">
                         <MessageCircle className="w-4 h-4" />
@@ -271,7 +271,7 @@ export default function Community() {
       <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle className="text-[#2A2A2A]">Start New Discussion</DialogTitle>
+            <DialogTitle className="text-white">Start New Discussion</DialogTitle>
           </DialogHeader>
           <form onSubmit={handleCreatePost} className="space-y-4">
             <div>
@@ -328,7 +328,7 @@ export default function Community() {
             <>
               <DialogHeader>
                 <div className="flex items-start justify-between gap-4">
-                  <DialogTitle className="text-2xl font-bold text-[#2A2A2A]">
+                  <DialogTitle className="text-2xl font-bold text-white">
                     {selectedPost.title}
                   </DialogTitle>
                   <Badge className={`${categoryColors[selectedPost.category]} border-0`}>
@@ -339,35 +339,35 @@ export default function Community() {
 
               <div className="space-y-6">
                 <div className="p-4 bg-gray-50 rounded-xl">
-                  <div className="flex items-center gap-2 mb-3 text-sm text-[#555555]">
-                    <span className="font-semibold text-[#2A2A2A]">{selectedPost.created_by.split('@')[0]}</span>
+                  <div className="flex items-center gap-2 mb-3 text-sm text-gray-400">
+                    <span className="font-semibold text-white">{selectedPost.created_by.split('@')[0]}</span>
                     <span>•</span>
                     <span>{new Date(selectedPost.created_date).toLocaleDateString()}</span>
                   </div>
-                  <p className="text-[#555555]">{selectedPost.content}</p>
+                  <p className="text-gray-400">{selectedPost.content}</p>
                 </div>
 
                 <div>
-                  <h3 className="font-semibold text-[#2A2A2A] mb-4">
+                  <h3 className="font-semibold text-white mb-4">
                     Replies ({replies.length})
                   </h3>
                   <div className="space-y-3 mb-4">
                     {replies.map((reply) => (
-                      <div key={reply.id} className="p-4 border border-gray-200 rounded-xl">
+                      <div key={reply.id} className="p-4 border border-white/10 rounded-xl">
                         <div className="flex items-center justify-between mb-2">
                           <div className="flex items-center gap-2 text-sm">
-                            <span className="font-semibold text-[#2A2A2A]">{reply.created_by.split('@')[0]}</span>
-                            <span className="text-[#555555]">•</span>
-                            <span className="text-[#555555]">{new Date(reply.created_date).toLocaleDateString()}</span>
+                            <span className="font-semibold text-white">{reply.created_by.split('@')[0]}</span>
+                            <span className="text-gray-400">•</span>
+                            <span className="text-gray-400">{new Date(reply.created_date).toLocaleDateString()}</span>
                           </div>
                           <button
                             onClick={() => handleReport('forum_reply', reply.id)}
-                            className="text-[#555555] hover:text-red-600"
+                            className="text-gray-400 hover:text-red-600"
                           >
                             <Flag className="w-3 h-3" />
                           </button>
                         </div>
-                        <p className="text-[#555555]">{reply.content}</p>
+                        <p className="text-gray-400">{reply.content}</p>
                       </div>
                     ))}
                   </div>

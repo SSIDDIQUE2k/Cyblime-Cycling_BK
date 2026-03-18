@@ -124,7 +124,7 @@ export default function Home() {
                   </Button>
                 </Link>
                 <Link to={createPageUrl("Membership")}>
-                  <Button variant="outline" className="rounded-full px-8 py-6 text-base font-semibold border-white/20 text-white hover:bg-white/10 backdrop-blur-sm">
+                  <Button variant="outline" className="rounded-full px-8 py-6 text-base font-semibold border-white/20 text-white hover:bg-[#141414]/10 backdrop-blur-sm">
                     Join the Club
                   </Button>
                 </Link>
@@ -220,7 +220,7 @@ export default function Home() {
             </div>
           ) : (
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="text-center py-16 rounded-2xl border border-white/5 bg-[#141414]">
-              <Clock className="w-10 h-10 text-gray-600 mx-auto mb-4" />
+              <Clock className="w-10 h-10 text-gray-400 mx-auto mb-4" />
               <p className="text-gray-400 mb-6">No upcoming events right now</p>
               <Link to={createPageUrl("Events")}>
                 <Button className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white rounded-full px-6">

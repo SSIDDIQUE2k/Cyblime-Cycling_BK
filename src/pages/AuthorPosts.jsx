@@ -26,17 +26,17 @@ export default function AuthorPosts() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#fafafa] flex items-center justify-center">
-        <div className="text-[#555555]">Loading author posts...</div>
+      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
+        <div className="text-gray-400">Loading author posts...</div>
       </div>
     );
   }
 
   if (!authorEmail || posts.length === 0) {
     return (
-      <div className="min-h-screen bg-[#fafafa] flex items-center justify-center">
+      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-[#2A2A2A] mb-4">No posts found</h2>
+          <h2 className="text-2xl font-bold text-white mb-4">No posts found</h2>
           <Link to={createPageUrl("Blog")}>
             <Button className="bg-[#ff6b35] hover:bg-[#e55a2b] text-white">
               <ArrowLeft className="w-4 h-4 mr-2" />
@@ -52,12 +52,12 @@ export default function AuthorPosts() {
   const totalViews = posts.reduce((sum, post) => sum + (post.view_count || 0), 0);
 
   return (
-    <div className="min-h-screen bg-[#fafafa]">
+    <div className="min-h-screen bg-[#0a0a0a]">
       {/* Top Navigation */}
-      <div className="bg-white border-b border-gray-200">
+      <div className="bg-[#141414] border-b border-white/10">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4">
           <Link to={createPageUrl("Blog")}>
-            <Button variant="ghost" className="text-[#555555] hover:bg-gray-100">
+            <Button variant="ghost" className="text-gray-400 hover:bg-gray-100">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Blog
             </Button>
@@ -86,7 +86,7 @@ export default function AuthorPosts() {
                 <div className="text-3xl font-bold text-[#A4FF4F]">{posts.length}</div>
                 <div className="text-sm text-gray-400">Articles</div>
               </div>
-              <div className="w-px h-12 bg-white/20" />
+              <div className="w-px h-12 bg-[#141414]/20" />
               <div>
                 <div className="text-3xl font-bold text-[#A4FF4F]">{totalViews.toLocaleString()}</div>
                 <div className="text-sm text-gray-400">Total Views</div>
@@ -99,7 +99,7 @@ export default function AuthorPosts() {
       {/* Author's Posts */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-[#2A2A2A] mb-8">
+          <h2 className="text-3xl font-bold text-white mb-8">
             All Articles by {authorName}
           </h2>
           
@@ -110,7 +110,7 @@ export default function AuthorPosts() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all"
+                className="bg-[#141414] rounded-2xl overflow-hidden border border-white/5 hover:shadow-lg hover:shadow-black/30 transition-all"
               >
                 <div className="relative h-48 overflow-hidden">
                   <img
@@ -123,9 +123,9 @@ export default function AuthorPosts() {
                   <Badge className="bg-[#6BCBFF]/20 text-[#6BCBFF] border-0 mb-3">
                     {post.category}
                   </Badge>
-                  <h3 className="text-xl font-bold text-[#2A2A2A] mb-3">{post.title}</h3>
-                  <p className="text-[#555555] mb-4 line-clamp-3">{post.excerpt}</p>
-                  <div className="flex items-center justify-between text-sm text-[#555555] mb-4">
+                  <h3 className="text-xl font-bold text-white mb-3">{post.title}</h3>
+                  <p className="text-gray-400 mb-4 line-clamp-3">{post.excerpt}</p>
+                  <div className="flex items-center justify-between text-sm text-gray-400 mb-4">
                     <div className="flex items-center gap-2">
                       <Calendar className="w-4 h-4" />
                       <span>{new Date(post.created_date).toLocaleDateString()}</span>

@@ -96,8 +96,8 @@ export default function TicketPurchaseDialog({ event, open, onOpenChange }) {
 
         <div className="space-y-4">
           <div className="p-4 bg-gray-50 rounded-xl">
-            <h3 className="font-semibold text-[#2A2A2A] mb-2">{event.title}</h3>
-            <div className="text-sm text-[#555555]">
+            <h3 className="font-semibold text-white mb-2">{event.title}</h3>
+            <div className="text-sm text-gray-400">
               {event.date} • {event.location}
             </div>
           </div>
@@ -120,15 +120,15 @@ export default function TicketPurchaseDialog({ event, open, onOpenChange }) {
 
           <div className="p-4 border-2 border-dashed border-gray-300 rounded-xl">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-[#555555]">Ticket Price</span>
-              <span className="font-bold text-[#2A2A2A]">${ticketTypes[ticketType].price}</span>
+              <span className="text-gray-400">Ticket Price</span>
+              <span className="font-bold text-white">${ticketTypes[ticketType].price}</span>
             </div>
             <div className="flex items-center justify-between mb-2">
-              <span className="text-[#555555]">Service Fee</span>
-              <span className="font-bold text-[#2A2A2A]">$2.50</span>
+              <span className="text-gray-400">Service Fee</span>
+              <span className="font-bold text-white">$2.50</span>
             </div>
             <div className="border-t pt-2 flex items-center justify-between">
-              <span className="font-semibold text-[#2A2A2A]">Total</span>
+              <span className="font-semibold text-white">Total</span>
               <span className="font-bold text-[#ff6b35] text-xl">
                 ${(ticketTypes[ticketType].price + 2.5).toFixed(2)}
               </span>
@@ -150,7 +150,7 @@ export default function TicketPurchaseDialog({ event, open, onOpenChange }) {
             )}
           </Button>
 
-          <p className="text-xs text-[#555555] text-center">
+          <p className="text-xs text-gray-400 text-center">
             Powered by Stripe • Secure payment processing
           </p>
         </div>

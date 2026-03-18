@@ -27,7 +27,7 @@ const InstagramLightbox = ({ media, onClose, allMedia, currentIndex, onNavigate 
     >
       <button
         onClick={onClose}
-        className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors z-10"
+        className="absolute top-4 right-4 w-10 h-10 rounded-full bg-[#141414]/10 hover:bg-[#141414]/20 flex items-center justify-center transition-colors z-10"
       >
         <X className="w-6 h-6 text-white" />
       </button>
@@ -35,7 +35,7 @@ const InstagramLightbox = ({ media, onClose, allMedia, currentIndex, onNavigate 
       {currentIndex > 0 && (
         <button
           onClick={(e) => { e.stopPropagation(); onNavigate(currentIndex - 1); }}
-          className="absolute left-4 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+          className="absolute left-4 w-12 h-12 rounded-full bg-[#141414]/10 hover:bg-[#141414]/20 flex items-center justify-center transition-colors"
         >
           <span className="text-white text-2xl">‹</span>
         </button>
@@ -44,7 +44,7 @@ const InstagramLightbox = ({ media, onClose, allMedia, currentIndex, onNavigate 
       {currentIndex < allMedia.length - 1 && (
         <button
           onClick={(e) => { e.stopPropagation(); onNavigate(currentIndex + 1); }}
-          className="absolute right-4 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+          className="absolute right-4 w-12 h-12 rounded-full bg-[#141414]/10 hover:bg-[#141414]/20 flex items-center justify-center transition-colors"
         >
           <span className="text-white text-2xl">›</span>
         </button>
@@ -123,7 +123,7 @@ const InstagramPost = ({ media, onClick, index, columns }) => {
         
         {media.media_type === "VIDEO" && (
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-16 h-16 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform">
+            <div className="w-16 h-16 rounded-full bg-[#141414]/90 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform">
               <Play className="w-8 h-8 text-[#ff6b35] ml-1" />
             </div>
           </div>
@@ -248,7 +248,7 @@ export default function InstagramGallery() {
   };
 
   return (
-    <section className={`py-16 ${settings.theme === 'dark' ? 'bg-[#1a1a1a]' : 'bg-[#fafafa]'}`}>
+    <section className={`py-16 ${settings.theme === 'dark' ? 'bg-[#1a1a1a]' : 'bg-[#0a0a0a]'}`}>
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -261,11 +261,11 @@ export default function InstagramGallery() {
             <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#833AB4] via-[#FD1D1D] to-[#F77737] flex items-center justify-center">
               <Instagram className="w-6 h-6 text-white" />
             </div>
-            <h2 className={`text-4xl font-bold ${settings.theme === 'dark' ? 'text-white' : 'text-[#2A2A2A]'}`}>
+            <h2 className={`text-4xl font-bold ${settings.theme === 'dark' ? 'text-white' : 'text-white'}`}>
               Follow Our Journey
             </h2>
           </div>
-          <p className={`text-lg ${settings.theme === 'dark' ? 'text-gray-400' : 'text-[#555555]'} max-w-2xl mx-auto`}>
+          <p className={`text-lg ${settings.theme === 'dark' ? 'text-gray-400' : 'text-gray-400'} max-w-2xl mx-auto`}>
             Stay connected with our latest rides, adventures, and cycling community moments
           </p>
         </motion.div>
@@ -274,7 +274,7 @@ export default function InstagramGallery() {
         {loading && (
           <div className="flex flex-col items-center justify-center py-20">
             <Loader2 className={`w-12 h-12 animate-spin mb-4 ${settings.theme === 'dark' ? 'text-white' : 'text-[#ff6b35]'}`} />
-            <p className={settings.theme === 'dark' ? 'text-gray-400' : 'text-[#555555]'}>
+            <p className={settings.theme === 'dark' ? 'text-gray-400' : 'text-gray-400'}>
               Loading Instagram posts...
             </p>
           </div>
@@ -286,7 +286,7 @@ export default function InstagramGallery() {
             <div className="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center mb-4">
               <AlertCircle className="w-8 h-8 text-red-600" />
             </div>
-            <p className={`text-lg mb-4 ${settings.theme === 'dark' ? 'text-gray-400' : 'text-[#555555]'}`}>
+            <p className={`text-lg mb-4 ${settings.theme === 'dark' ? 'text-gray-400' : 'text-gray-400'}`}>
               {error}
             </p>
             <Button

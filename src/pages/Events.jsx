@@ -56,34 +56,34 @@ const EventCard = ({ event, index, onViewDetails }) => {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.05 }}
-      className="group bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300">
+      className="group bg-[#141414] rounded-2xl p-6 border border-white/5 hover:shadow-lg hover:shadow-black/30 transition-all duration-300">
 
       <div className="flex items-start justify-between mb-4">
         <div className="w-12 h-12 rounded-xl bg-[#A4FF4F]/10 flex items-center justify-center group-hover:bg-[#A4FF4F] transition-colors">
-          <Icon className="w-5 h-5 text-[#2A2A2A]" />
+          <Icon className="w-5 h-5 text-white" />
         </div>
-        <Badge className={`${(event.current_participants || 0) < (event.max_participants || 999) ? 'bg-[#A4FF4F] text-[#2A2A2A]' : 'bg-red-100 text-red-800'} border-0`}>
+        <Badge className={`${(event.current_participants || 0) < (event.max_participants || 999) ? 'bg-[#A4FF4F] text-white' : 'bg-red-100 text-red-800'} border-0`}>
           {(event.current_participants || 0) < (event.max_participants || 999) ? 'Open' : 'Full'}
         </Badge>
       </div>
       
-      <h3 className="text-xl font-semibold text-[#2A2A2A] mb-2">{event.title}</h3>
-      <p className="text-gray-600 text-sm mb-4">{event.description}</p>
+      <h3 className="text-xl font-semibold text-white mb-2">{event.title}</h3>
+      <p className="text-gray-400 text-sm mb-4">{event.description}</p>
       
       <div className="space-y-2 mb-4">
-        <div className="flex items-center gap-2 text-sm text-[#555555]">
+        <div className="flex items-center gap-2 text-sm text-gray-400">
           <Calendar className="w-4 h-4" />
           <span>{new Date(event.date).toLocaleDateString()}</span>
         </div>
-        <div className="flex items-center gap-2 text-sm text-[#555555]">
+        <div className="flex items-center gap-2 text-sm text-gray-400">
           <Clock className="w-4 h-4" />
           <span>{event.time}</span>
         </div>
-        <div className="flex items-center gap-2 text-sm text-[#555555]">
+        <div className="flex items-center gap-2 text-sm text-gray-400">
           <MapPin className="w-4 h-4" />
           <span>{event.location}</span>
         </div>
-        <div className="flex items-center gap-2 text-sm text-[#555555]">
+        <div className="flex items-center gap-2 text-sm text-gray-400">
           <Users className="w-4 h-4" />
           <span>{event.current_participants || 0} / {event.max_participants || '∞'} participants</span>
         </div>
@@ -115,10 +115,10 @@ const AdvancedFilters = ({ filters, onFilterChange, onReset }) => {
     <div className="space-y-6">
       {/* Date Range */}
       <div>
-        <Label className="text-sm font-semibold text-[#2A2A2A] mb-3 block">Date Range</Label>
+        <Label className="text-sm font-semibold text-white mb-3 block">Date Range</Label>
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <Label className="text-xs text-[#555555]">From</Label>
+            <Label className="text-xs text-gray-400">From</Label>
             <Input
               type="date"
               value={filters.dateFrom}
@@ -126,7 +126,7 @@ const AdvancedFilters = ({ filters, onFilterChange, onReset }) => {
 
           </div>
           <div>
-            <Label className="text-xs text-[#555555]">To</Label>
+            <Label className="text-xs text-gray-400">To</Label>
             <Input
               type="date"
               value={filters.dateTo}
@@ -138,10 +138,10 @@ const AdvancedFilters = ({ filters, onFilterChange, onReset }) => {
 
       {/* Distance Range */}
       <div>
-        <Label className="text-sm font-semibold text-[#2A2A2A] mb-3 block">Distance (km)</Label>
+        <Label className="text-sm font-semibold text-white mb-3 block">Distance (km)</Label>
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <Label className="text-xs text-[#555555]">Min</Label>
+            <Label className="text-xs text-gray-400">Min</Label>
             <Input
               type="number"
               value={filters.distanceMin}
@@ -150,7 +150,7 @@ const AdvancedFilters = ({ filters, onFilterChange, onReset }) => {
 
           </div>
           <div>
-            <Label className="text-xs text-[#555555]">Max</Label>
+            <Label className="text-xs text-gray-400">Max</Label>
             <Input
               type="number"
               value={filters.distanceMax}
@@ -163,7 +163,7 @@ const AdvancedFilters = ({ filters, onFilterChange, onReset }) => {
 
       {/* Workshop Skills */}
       <div>
-        <Label className="text-sm font-semibold text-[#2A2A2A] mb-3 block">Workshop Skills</Label>
+        <Label className="text-sm font-semibold text-white mb-3 block">Workshop Skills</Label>
         <div className="space-y-2">
           {['Bike Handling', 'Climbing', 'Nutrition', 'Maintenance', 'Safety', 'Endurance'].map((skill) =>
           <label key={skill} className="flex items-center gap-2 cursor-pointer">
@@ -178,7 +178,7 @@ const AdvancedFilters = ({ filters, onFilterChange, onReset }) => {
               }}
               className="w-4 h-4 rounded border-gray-300 text-[#ff6b35] focus:ring-[#ff6b35]" />
 
-              <span className="text-sm text-[#555555]">{skill}</span>
+              <span className="text-sm text-gray-400">{skill}</span>
             </label>
           )}
         </div>
@@ -186,7 +186,7 @@ const AdvancedFilters = ({ filters, onFilterChange, onReset }) => {
 
       {/* Location */}
       <div>
-        <Label className="text-sm font-semibold text-[#2A2A2A] mb-3 block">Location</Label>
+        <Label className="text-sm font-semibold text-white mb-3 block">Location</Label>
         <Input
           type="text"
           placeholder="Enter location..."
@@ -321,7 +321,7 @@ export default function Events() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fafafa]">
+    <div className="min-h-screen bg-[#0a0a0a]">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-[#2A2A2A] to-[#1a1a1a] py-20 md:py-32 overflow-hidden">
         <div className="absolute inset-0">
@@ -374,7 +374,7 @@ export default function Events() {
       <ForYouSection user={user} profile={profile} onEventClick={setSelectedEvent} />
 
       {/* Filters Section */}
-      <section className="sticky top-20 z-40 bg-white border-b border-gray-200 shadow-sm">
+      <section className="sticky top-20 z-40 bg-[#141414] border-b border-white/10 shadow-none">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 relative">
@@ -465,7 +465,7 @@ export default function Events() {
                 </SheetTrigger>
                 <SheetContent>
                   <SheetHeader>
-                    <SheetTitle className="text-[#2A2A2A]">Advanced Filters</SheetTitle>
+                    <SheetTitle className="text-white">Advanced Filters</SheetTitle>
                   </SheetHeader>
                   <div className="mt-6">
                     <AdvancedFilters
@@ -481,7 +481,7 @@ export default function Events() {
           
           <div className="flex items-center gap-2 mt-4">
             <Filter className="w-4 h-4 text-gray-400" />
-            <span className="text-sm text-[#555555]">
+            <span className="text-sm text-gray-400">
               Showing {filteredEvents.length} of {events.length} events
             </span>
           </div>
@@ -493,14 +493,14 @@ export default function Events() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           {isLoading ? (
             <div className="text-center py-20">
-              <p className="text-gray-600">Loading events...</p>
+              <p className="text-gray-400">Loading events...</p>
             </div>
           ) : user && filteredEvents.length > 0 ?
           <>
             {user && filteredEvents.length > 0 &&
           <div className="mb-8 p-6 bg-gradient-to-r from-[#ff6b35]/10 to-transparent rounded-2xl border-l-4 border-[#ff6b35]">
-              <h3 className="text-lg font-bold text-[#2A2A2A] mb-2">🎯 Recommended for You</h3>
-              <p className="text-sm text-[#555555]">
+              <h3 className="text-lg font-bold text-white mb-2">🎯 Recommended for You</h3>
+              <p className="text-sm text-gray-400">
                 Based on your interests, we think you'll enjoy these upcoming events
               </p>
             </div>
@@ -517,8 +517,8 @@ export default function Events() {
               <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
                 <Search className="w-8 h-8 text-gray-400" />
               </div>
-              <h3 className="text-xl font-semibold text-[#2A2A2A] mb-2">No events found</h3>
-              <p className="text-[#555555] mb-4">Try adjusting your filters or search query</p>
+              <h3 className="text-xl font-semibold text-white mb-2">No events found</h3>
+              <p className="text-gray-400 mb-4">Try adjusting your filters or search query</p>
               <Button onClick={resetFilters} variant="outline">
                 Reset All Filters
               </Button>
@@ -531,10 +531,10 @@ export default function Events() {
       {/* CTA Section */}
       <section className="bg-amber-600 py-20 from-[#A4FF4F] to-[#8FE640]">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-[#2A2A2A] mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Can't Find What You're Looking For?
           </h2>
-          <p className="text-lg text-[#2A2A2A]/80">
+          <p className="text-lg text-white/80">
             We're constantly adding new events. Check back regularly for new rides and exclusive events.
           </p>
         </div>

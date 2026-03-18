@@ -47,8 +47,8 @@ import { Label } from "@/components/ui/label";
 
 const RouteCard = ({ route, index }) => {
   const difficultyColors = {
-    Easy: "bg-[#A4FF4F] text-[#2A2A2A]",
-    Moderate: "bg-yellow-400 text-[#2A2A2A]",
+    Easy: "bg-[#A4FF4F] text-white",
+    Moderate: "bg-yellow-400 text-white",
     Challenging: "bg-orange-500 text-white",
     Expert: "bg-red-600 text-white"
   };
@@ -65,7 +65,7 @@ const RouteCard = ({ route, index }) => {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.05 }}
-      className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group"
+      className="bg-[#141414] rounded-2xl overflow-hidden border border-white/5 hover:shadow-lg hover:shadow-black/30 transition-all duration-300 group"
     >
       <div className="relative h-48 overflow-hidden">
         <img
@@ -77,47 +77,47 @@ const RouteCard = ({ route, index }) => {
           {route.difficulty}
         </Badge>
         <div className="absolute top-4 right-4 flex gap-2">
-          <button className="w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors">
-            <Heart className="w-4 h-4 text-[#555555]" />
+          <button className="w-8 h-8 rounded-full bg-[#141414]/90 backdrop-blur-sm flex items-center justify-center hover:bg-[#141414] transition-colors">
+            <Heart className="w-4 h-4 text-gray-400" />
           </button>
-          <button className="w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors">
-            <Share2 className="w-4 h-4 text-[#555555]" />
+          <button className="w-8 h-8 rounded-full bg-[#141414]/90 backdrop-blur-sm flex items-center justify-center hover:bg-[#141414] transition-colors">
+            <Share2 className="w-4 h-4 text-gray-400" />
           </button>
         </div>
       </div>
       
       <div className="p-6">
         <div className="flex items-start justify-between mb-3">
-          <h3 className="text-xl font-bold text-[#2A2A2A] flex-1">{route.name}</h3>
+          <h3 className="text-xl font-bold text-white flex-1">{route.name}</h3>
           <div className="flex items-center gap-1 text-sm">
             <Star className="w-4 h-4 fill-[#ff6b35] text-[#ff6b35]" />
             <span className="font-semibold">{route.rating || "5.0"}</span>
           </div>
         </div>
         
-        <p className="text-sm text-[#555555] mb-4 line-clamp-2">{route.description}</p>
+        <p className="text-sm text-gray-400 mb-4 line-clamp-2">{route.description}</p>
         
         <div className="grid grid-cols-2 gap-3 mb-4">
           <div className="flex items-center gap-2 text-sm">
             <MapPin className="w-4 h-4 text-[#6BCBFF]" />
-            <span className="text-[#555555]">{route.distance}km</span>
+            <span className="text-gray-400">{route.distance}km</span>
           </div>
           <div className="flex items-center gap-2 text-sm">
             <TrendingUp className="w-4 h-4 text-[#6BCBFF]" />
-            <span className="text-[#555555]">{route.elevation_gain}m</span>
+            <span className="text-gray-400">{route.elevation_gain}m</span>
           </div>
           <div className="flex items-center gap-2 text-sm">
             <Mountain className="w-4 h-4 text-[#6BCBFF]" />
-            <span className="text-[#555555]">{route.surface_type}</span>
+            <span className="text-gray-400">{route.surface_type}</span>
           </div>
           <div className="flex items-center gap-2 text-sm">
             <Calendar className="w-4 h-4 text-[#6BCBFF]" />
-            <span className="text-[#555555]">{route.estimated_time}h</span>
+            <span className="text-gray-400">{route.estimated_time}h</span>
           </div>
         </div>
         
-        <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-          <div className="flex items-center gap-2 text-sm text-[#555555]">
+        <div className="flex items-center justify-between pt-4 border-t border-white/5">
+          <div className="flex items-center gap-2 text-sm text-gray-400">
             <span>{route.total_rides || 0} rides</span>
             <span>•</span>
             <span>by {route.created_by}</span>
@@ -195,7 +195,7 @@ const UploadRouteDialog = ({ open, onOpenChange }) => {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-[#2A2A2A]">Upload New Route</DialogTitle>
+          <DialogTitle className="text-2xl font-bold text-white">Upload New Route</DialogTitle>
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -377,7 +377,7 @@ export default function Routes() {
     });
 
   return (
-    <div className="min-h-screen bg-[#fafafa]">
+    <div className="min-h-screen bg-[#0a0a0a]">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-[#2A2A2A] to-[#1a1a1a] py-20 md:py-32 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
@@ -409,7 +409,7 @@ export default function Routes() {
               </Button>
               <Link to={createPageUrl("StravaClub")}>
                 <Button
-                  className="bg-white text-[#2A2A2A] hover:bg-gray-100 rounded-full px-8 py-6 text-lg font-semibold border-2 border-white"
+                  className="bg-[#141414] text-white hover:bg-gray-100 rounded-full px-8 py-6 text-lg font-semibold border-2 border-white"
                 >
                   <Activity className="w-5 h-5 mr-2" />
                   Strava Club
@@ -421,7 +421,7 @@ export default function Routes() {
       </section>
 
       {/* Filters Section */}
-      <section className="sticky top-20 z-40 bg-white border-b border-gray-200 shadow-sm">
+      <section className="sticky top-20 z-40 bg-[#141414] border-b border-white/10 shadow-none">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 relative">
@@ -478,7 +478,7 @@ export default function Routes() {
           
           <div className="flex items-center gap-2 mt-4">
             <Filter className="w-4 h-4 text-gray-400" />
-            <span className="text-sm text-[#555555]">
+            <span className="text-sm text-gray-400">
               Showing {filteredRoutes.length} of {routes.length} routes
             </span>
           </div>
@@ -486,7 +486,7 @@ export default function Routes() {
       </section>
 
       {/* Leaderboards */}
-      <section className="py-8 bg-white border-b border-gray-100">
+      <section className="py-8 bg-[#141414] border-b border-white/5">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid md:grid-cols-3 gap-6">
             <LeaderboardCard
@@ -525,15 +525,15 @@ export default function Routes() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           {user && filteredRoutes.length > 0 && (
             <div className="mb-8 p-6 bg-gradient-to-r from-[#6BCBFF]/10 to-transparent rounded-2xl border-l-4 border-[#6BCBFF]">
-              <h3 className="text-lg font-bold text-[#2A2A2A] mb-2">✨ Perfect Routes for Your Level</h3>
-              <p className="text-sm text-[#555555]">
+              <h3 className="text-lg font-bold text-white mb-2">✨ Perfect Routes for Your Level</h3>
+              <p className="text-sm text-gray-400">
                 These routes match your skill level and riding preferences
               </p>
             </div>
           )}
           {isLoading ? (
             <div className="text-center py-20">
-              <div className="text-[#555555]">Loading routes...</div>
+              <div className="text-gray-400">Loading routes...</div>
             </div>
           ) : filteredRoutes.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -550,8 +550,8 @@ export default function Routes() {
               <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
                 <Search className="w-8 h-8 text-gray-400" />
               </div>
-              <h3 className="text-xl font-semibold text-[#2A2A2A] mb-2">No routes found</h3>
-              <p className="text-[#555555]">Try adjusting your filters or upload a new route</p>
+              <h3 className="text-xl font-semibold text-white mb-2">No routes found</h3>
+              <p className="text-gray-400">Try adjusting your filters or upload a new route</p>
             </div>
           )}
         </div>
