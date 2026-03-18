@@ -198,7 +198,7 @@ export default function MyEvents() {
   return (
     <div className="min-h-screen bg-[var(--cy-bg)]">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-[#2A2A2A] to-[#1a1a1a] py-20">
+      <section className="bg-gradient-to-br from-[var(--cy-gradient-from)] to-[var(--cy-gradient-to)] py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

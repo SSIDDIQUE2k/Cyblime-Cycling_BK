@@ -409,7 +409,7 @@ export default function CyclingHub() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-gradient-to-br from-[#2A2A2A] to-[#1a1a1a]">
+      <section className="py-20 bg-gradient-to-br from-[var(--cy-gradient-from)] to-[var(--cy-gradient-to)]">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

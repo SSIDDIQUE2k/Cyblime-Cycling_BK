@@ -66,7 +66,7 @@ export default function AuthorPosts() {
       </div>
 
       {/* Author Header */}
-      <section className="bg-gradient-to-br from-[#2A2A2A] to-[#1a1a1a] py-16">
+      <section className="bg-gradient-to-br from-[var(--cy-gradient-from)] to-[var(--cy-gradient-to)] py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

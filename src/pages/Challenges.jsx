@@ -238,7 +238,7 @@ export default function Challenges() {
   return (
     <div className="min-h-screen bg-[var(--cy-bg)]">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#2A2A2A] to-[#1a1a1a] py-20 md:py-32 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-[var(--cy-gradient-from)] to-[var(--cy-gradient-to)] py-20 md:py-32 overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-0 right-1/4 w-96 h-96 rounded-full bg-[#ff6b35]/20 blur-3xl" />
           <div className="absolute bottom-0 left-1/4 w-96 h-96 rounded-full bg-[#ff6b35]/20 blur-3xl" />

@@ -90,8 +90,8 @@ export default function Login() {
           }}
         />
         {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-[#0a0a0a]/40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[var(--cy-bg)] via-[var(--cy-bg)]/80 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[var(--cy-bg)] via-transparent to-[var(--cy-bg)]/40" />
 
         {/* Content */}
         <div className="relative z-10 flex flex-col justify-center px-12 xl:px-16">

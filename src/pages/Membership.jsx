@@ -281,7 +281,7 @@ export default function Membership() {
       />
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] py-24 md:py-32 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-[var(--cy-gradient-to)] to-[var(--cy-gradient-from)] py-24 md:py-32 overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-[#ff6b35]/10 blur-3xl" />
           <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-[#ff6b35]/5 blur-3xl" />

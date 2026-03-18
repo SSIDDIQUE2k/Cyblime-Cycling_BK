@@ -28,13 +28,13 @@ const LeaderboardCard = ({ rank, user, points, level, badges, metric }) => {
         </div>
         
         <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#ff6b35] to-[#e55a2b] flex items-center justify-center flex-shrink-0">
-          <span className="text-[var(--cy-text)] font-bold text-lg">
+          <span className="text-white font-bold text-lg">
             {user.full_name?.charAt(0) || user.email.charAt(0).toUpperCase()}
           </span>
         </div>
 
         <div className="flex-1 min-w-0">
-          <p className="font-semibold text-gray-900 truncate">{user.full_name || user.email.split('@')[0]}</p>
+          <p className="font-semibold text-[var(--cy-text)] truncate">{user.full_name || user.email.split('@')[0]}</p>
           <div className="flex items-center gap-2 text-sm text-[var(--cy-text-muted)]">
             <Badge variant="outline" className="text-xs">Level {level}</Badge>
             {badges > 0 && (
@@ -117,9 +117,9 @@ export default function Leaderboard() {
             animate={{ opacity: 1, y: 0 }}
           >
             <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-[#ff6b35] to-[#e55a2b] mb-6">
-              <Trophy className="w-10 h-10 text-[var(--cy-text)]" />
+              <Trophy className="w-10 h-10 text-white" />
             </div>
-            <h1 className="text-5xl font-bold text-gray-900 mb-4">Leaderboard</h1>
+            <h1 className="text-5xl font-bold text-[var(--cy-text)] mb-4">Leaderboard</h1>
             <p className="text-xl text-[var(--cy-text-muted)]">
               Compete with fellow cyclists and climb to the top!
             </p>
@@ -139,7 +139,7 @@ export default function Leaderboard() {
               {challenges.length > 0 ? (
                 challenges.map(challenge => (
                   <div key={challenge.id} className="p-3 rounded-lg bg-gradient-to-r from-[#ff6b35]/10 to-transparent border-l-4 border-[#ff6b35]">
-                    <p className="font-semibold text-sm text-gray-900">{challenge.title}</p>
+                    <p className="font-semibold text-sm text-[var(--cy-text)]">{challenge.title}</p>
                     <p className="text-xs text-[var(--cy-text-muted)] mt-1">{challenge.description}</p>
                     <div className="flex items-center justify-between mt-2">
                       <Badge variant="outline" className="text-xs">{challenge.reward_points} pts</Badge>
@@ -178,7 +178,7 @@ export default function Leaderboard() {
                     >
                       <div className="relative mb-2">
                         <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#ff6b35] to-[#e55a2b] flex items-center justify-center border-4 border-white shadow-xl shadow-black/20">
-                          <span className="text-[var(--cy-text)] font-bold text-2xl">
+                          <span className="text-white font-bold text-2xl">
                             {item.user.full_name?.charAt(0) || item.user.email.charAt(0).toUpperCase()}
                           </span>
                         </div>
@@ -190,7 +190,7 @@ export default function Leaderboard() {
                         {item.user.full_name || item.user.email.split('@')[0]}
                       </p>
                       <div className={`${heights[index]} ${colors[index]} w-24 rounded-t-lg flex items-center justify-center flex-col px-2`}>
-                        <p className="text-2xl font-bold text-gray-900">{item.total_points}</p>
+                        <p className="text-2xl font-bold text-[var(--cy-text)]">{item.total_points}</p>
                         <p className="text-xs text-[var(--cy-text-secondary)]">points</p>
                       </div>
                     </motion.div>

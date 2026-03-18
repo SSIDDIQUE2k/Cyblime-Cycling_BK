@@ -125,7 +125,7 @@ export default function About() {
   return (
     <div className="min-h-screen bg-[var(--cy-bg)]">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] py-24 md:py-32 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-[var(--cy-gradient-to)] to-[var(--cy-gradient-from)] py-24 md:py-32 overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-[#ff6b35]/10 blur-3xl" />
         </div>
@@ -324,7 +324,7 @@ export default function About() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a]">
+      <section className="py-24 bg-gradient-to-br from-[var(--cy-gradient-to)] to-[var(--cy-gradient-from)]">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

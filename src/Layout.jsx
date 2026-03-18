@@ -169,7 +169,7 @@ export default function Layout({ children, currentPageName }) {
                       </DropdownMenuItem>
                       {user?.role === 'admin' && (
                         <>
-                          <DropdownMenuSeparator className="bg-white/10" />
+                          <DropdownMenuSeparator className="bg-[var(--cy-border-strong)]" />
                           <DropdownMenuItem asChild>
                             <Link to={createPageUrl("AdminDashboard")} className="cursor-pointer text-[#ff6b35] hover:text-[#ff8555]">
                               <Shield className="w-4 h-4 mr-2" />
@@ -178,7 +178,7 @@ export default function Layout({ children, currentPageName }) {
                           </DropdownMenuItem>
                         </>
                       )}
-                      <DropdownMenuSeparator className="bg-white/10" />
+                      <DropdownMenuSeparator className="bg-[var(--cy-border-strong)]" />
                       <DropdownMenuItem
                         onClick={() => base44.auth.logout()}
                         className="cursor-pointer text-red-400 hover:text-red-300"
