@@ -62,11 +62,12 @@ const RouteCard = ({ route, index }) => {
   };
 
   return (
+    <Link to={createPageUrl("RouteDetails") + `?id=${route.id}`} className="block">
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.05 }}
-      className="bg-[var(--cy-bg-card)] rounded-2xl overflow-hidden border border-[var(--cy-border)] hover:shadow-lg hover:shadow-black/30 transition-all duration-300 group"
+      className="bg-[var(--cy-bg-card)] rounded-2xl overflow-hidden border border-[var(--cy-border)] hover:shadow-lg hover:shadow-black/30 transition-all duration-300 group cursor-pointer"
     >
       <div className="relative h-48 overflow-hidden">
         <img
@@ -77,7 +78,7 @@ const RouteCard = ({ route, index }) => {
         <Badge className={`absolute top-4 left-4 ${difficultyColors[route.difficulty]} border-0 font-semibold`}>
           {route.difficulty}
         </Badge>
-        <div className="absolute top-4 right-4 flex gap-2">
+        <div className="absolute top-4 right-4 flex gap-2" onClick={(e) => e.preventDefault()}>
           <button className="w-8 h-8 rounded-full bg-[var(--cy-bg-card)]/90 backdrop-blur-sm flex items-center justify-center hover:bg-[var(--cy-bg-card)] transition-colors">
             <Heart className="w-4 h-4 text-[var(--cy-text-muted)]" />
           </button>
@@ -123,18 +124,14 @@ const RouteCard = ({ route, index }) => {
             <span>•</span>
             <span>by {route.created_by}</span>
           </div>
-          <Link to={createPageUrl("RouteDetails") + `?id=${route.id}`}>
-            <Button
-              variant="ghost"
-              className="text-[#ff6b35] hover:text-[#e55a2b] p-0 h-auto font-medium"
-            >
-              View Route
-              <ChevronRight className="w-4 h-4 ml-1" />
-            </Button>
-          </Link>
+          <span className="text-[#ff6b35] font-medium flex items-center">
+            View Route
+            <ChevronRight className="w-4 h-4 ml-1" />
+          </span>
         </div>
       </div>
     </motion.div>
+    </Link>
   );
 };
 

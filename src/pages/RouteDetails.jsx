@@ -22,10 +22,12 @@ import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/lib/AuthContext";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function RouteDetails() {
   const queryClient = useQueryClient();
   const { user } = useAuth();
+  const { toast } = useToast();
   const urlParams = new URLSearchParams(window.location.search);
   const routeId = urlParams.get('id');
   const [comment, setComment] = useState("");
@@ -52,6 +54,11 @@ export default function RouteDetails() {
       queryClient.invalidateQueries({ queryKey: ['routeComments', routeId] });
       setComment("");
       setRating(5);
+      toast({ title: "Review posted!", description: "Thanks for sharing your experience." });
+    },
+    onError: (error) => {
+      console.error("Failed to post review:", error);
+      toast({ title: "Failed to post review", description: error?.message || "Please try again.", variant: "destructive" });
     }
   });
 
@@ -352,7 +359,7 @@ export default function RouteDetails() {
 
             {/* Add Comment Form */}
             {user ? (
-              <form onSubmit={handleAddComment} className="mb-8 p-6 bg-gray-50 rounded-2xl">
+              <form onSubmit={handleAddComment} className="mb-8 p-6 bg-[var(--cy-bg-section)] rounded-2xl">
                 <div className="mb-4">
                   <Label className="text-sm font-semibold mb-2 block">Your Rating</Label>
                   <div className="flex gap-1">
@@ -387,7 +394,7 @@ export default function RouteDetails() {
                 </Button>
               </form>
             ) : (
-              <div className="mb-8 p-6 bg-gray-50 rounded-2xl text-center">
+              <div className="mb-8 p-6 bg-[var(--cy-bg-section)] rounded-2xl text-center">
                 <p className="text-[var(--cy-text-muted)]">Please sign in to leave a review</p>
               </div>
             )}
