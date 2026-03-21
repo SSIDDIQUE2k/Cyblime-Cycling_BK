@@ -15,32 +15,21 @@ import {
   Heart,
   Star,
   MessageCircle,
-  User
+  User as UserIcon
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { useAuth } from "@/lib/AuthContext";
 
 export default function RouteDetails() {
   const queryClient = useQueryClient();
+  const { user } = useAuth();
   const urlParams = new URLSearchParams(window.location.search);
   const routeId = urlParams.get('id');
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(5);
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const currentUser = await base44.auth.me();
-        setUser(currentUser);
-      } catch (error) {
-        console.log("Not authenticated");
-      }
-    };
-    fetchUser();
-  }, []);
 
   const { data: route, isLoading } = useQuery({
     queryKey: ['route', routeId],
@@ -415,7 +404,7 @@ export default function RouteDetails() {
                   >
                     <div className="flex items-start gap-4">
                       <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#ff6b35] to-[#e55a2b] flex items-center justify-center text-[var(--cy-text)] font-bold flex-shrink-0">
-                        <User className="w-6 h-6" />
+                        <UserIcon className="w-6 h-6" />
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-2">
