@@ -97,7 +97,7 @@ export default function Home() {
             className="w-full h-full object-cover"
           />
           {/* Gradient overlay — dark at bottom for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[var(--cy-bg)] via-[var(--cy-bg)]/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
           <div className="absolute inset-0 bg-black/20" />
         </div>
 
