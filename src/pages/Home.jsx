@@ -124,9 +124,9 @@ export default function Home() {
                   </Button>
                 </Link>
                 <Link to={createPageUrl("Membership")}>
-                  <Button variant="outline" className="rounded-full px-8 py-6 text-base font-semibold border-white/20 text-white hover:bg-white/10 backdrop-blur-sm">
+                  <button className="rounded-full px-8 py-6 text-base font-semibold border border-white/30 text-white hover:bg-white/10 bg-transparent backdrop-blur-sm transition-colors">
                     Join the Club
-                  </Button>
+                  </button>
                 </Link>
               </div>
             </motion.div>
